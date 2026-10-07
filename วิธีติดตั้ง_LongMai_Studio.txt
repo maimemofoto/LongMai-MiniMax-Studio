@@ -1,0 +1,57 @@
+📦 สิ่งที่ต้องติดตั้งก่อนใช้ (ดาวน์โหลดจากไหน / วางไว้ที่ไหน)
+
+⬇️ ดาวน์โหลด workflow + custom node LongMai-Tools (เวอร์ชันล่าสุด):
+   https://github.com/maimemofoto/LongMai-MiniMax-Studio
+   กด Code → Download ZIP หรือ git clone
+
+ต้องใช้ ComfyUI เวอร์ชัน 0.37 ขึ้นไป (มี node MiniMax H3 ในตัว)
+ทุกโฟลเดอร์ด้านล่างนับจากโฟลเดอร์ ComfyUI/ · วางไฟล์แล้วรีสตาร์ต ComfyUI
+จะสร้างโฟลเดอร์ย่อยแยกไว้จัดระเบียบเองก็ได้ (เช่น loras/MINIMAX/...) แล้วเลือกไฟล์ใหม่ในแต่ละ node
+
+━━ 1) Custom nodes → วางใน custom_nodes/ ━━
+ติดตั้งง่ายสุด: ComfyUI Manager → Install Missing Custom Nodes / ค้นชื่อ · หรือ git clone ลิงก์ด้านล่าง
+• ComfyUI-KJNodes — https://github.com/kijai/ComfyUI-KJNodes  (เสียงแจ้งเตือน, Chunk / Low VRAM)
+• Pixaroma — https://github.com/pixaroma/ComfyUI-Pixaroma  (สวิตช์กลุ่ม, LoRA loader, ป้ายหัว)
+• ComfyUI-Easy-Use — https://github.com/yolain/ComfyUI-Easy-Use  (ปุ่ม 🎲 seed)
+• rgthree-comfy — https://github.com/rgthree/rgthree-comfy  (Any Switch)
+• Fantastic MiniMax H3 PromptBuilder — https://github.com/Adudeguyman/ComfyUI-Fantastic-MiniMaxH3-PromptBuilder  (Media Loader)
+• H3 Prompt IDE — https://github.com/ethanfel/ComfyUI-H3-Prompt-IDE  (ช่องเขียน Prompt)
+• MiniMax H3 Audio T8 — https://github.com/T8mars/comfyui-minimax-h3-audio-T8  (Action Bridge, AV Decode)
+• H3 Motion Context — https://github.com/NikoDemon80/ComfyUI-H3-Motion-Context  (บันทึก Stage 1)
+• MiniMax H3 Latent Upscaler — https://github.com/LBH-123-AI/Comfyui_Minimax_h3_latent_Upscaler  (อัปสเกล Stage 2)
+• ComfyUI-Frame-Interpolation — https://github.com/Fannovel16/ComfyUI-Frame-Interpolation  (RIFE 48 fps)
+• ComfyUI-LongMai-Tools — อยู่ใน repo ด้านบน: โฟลเดอร์ custom_nodes/ComfyUI-LongMai-Tools
+  (คัดลอกทั้งโฟลเดอร์ไปวางใน ComfyUI/custom_nodes/)
+  ใช้ทำ 48 fps ตัดช็อตสะอาด / โหลด Stage 1 ที่บันทึกไว้ / Join Clips (ต้องมี ffmpeg ในเครื่อง)
+
+━━ 2) โมเดลหลัก (จำเป็น) ━━
+ลิงก์ทางการ: https://huggingface.co/Comfy-Org/MiniMax-H3
+• Base model → models/diffusion_models/
+   Minimax-h3_Singularity_ref2va_Pruned_v1.3_int8.safetensors (19.6 GB)
+   จาก https://huggingface.co/WarmBloodAban/Minimax-h3_Singularity
+   (ทางเลือก: minimax_h3_ref2va_pruned_int8_convrot.safetensors จาก Comfy-Org/MiniMax-H3)
+• Text encoder → models/text_encoders/
+   qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors (14.6 GB) จาก Comfy-Org/MiniMax-H3
+• VAE → models/vae/  (ต้องใช้ทั้ง 2 ไฟล์) จาก Comfy-Org/MiniMax-H3
+   minimax_h3_video_vae_fp16.safetensors (ภาพ)
+   minimax_h3_audio_vae_fp32.safetensors (เสียง)
+• Turbo LoRA → models/loras/
+   minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors
+   จาก Comfy-Org/MiniMax-H3 (โฟลเดอร์ loras) หรือ https://huggingface.co/lightx2v/Minimax-h3-Turbo
+• Realism LoRA (โหมดสมจริง) → models/loras/
+   h3-realism-people-t2v-i2v-r2v.safetensors จาก https://huggingface.co/fal/MiniMax-H3-Realism-People-LoRA
+• Latent Upscaler → models/latent_upscale_models/
+   minimax_h3_latent_upscaler_3d_conv_v1_fp16.safetensors จาก https://huggingface.co/LBH-123-AI/Minimax_h3_latent_Upscaler
+• Action Bridge → models/semantic_bridge/t8_compat/
+   BUNNY_H3_ActionLogic_Bridge_V1_T8_Compat.safetensors จาก https://huggingface.co/t8star/Semantic-Bridge-Comfy
+• RIFE (48 fps) → rife49.pth ดาวน์โหลดให้อัตโนมัติตอนใช้ครั้งแรก
+
+━━ 3) LoRA เสริม (ไม่บังคับ — ปิดไว้ในแถว LoRA) → models/loras/ ━━
+Cinematic Realism / Motion Repair / Combat V2 / GunFu / LMS (Stage 2)
+ไม่มีก็ใช้งานได้ปกติ · ถ้าต้องการให้ค้นชื่อไฟล์บน Hugging Face / Civitai แล้วเลือกไฟล์ใหม่ในแถว LoRA
+
+━━ 4) ไฟล์ที่ผู้ใช้ใส่เอง ━━
+• ภาพ / เพลง / วิดีโออ้างอิง → input/ (หรือลากใส่ Media Loader)
+• ผลลัพธ์อยู่ที่ output/LongMai/ (Stage 1 ที่บันทึกไว้: output/LongMai/stage1_latent/)
+
+เปิด workflow แล้วถ้ามี node สีแดง = ยังขาด custom node · ถ้าเลือกไฟล์โมเดลไม่ได้ = วางผิดโฟลเดอร์ / ยังไม่รีสตาร์ต
