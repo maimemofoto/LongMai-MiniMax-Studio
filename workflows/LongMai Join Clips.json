@@ -26,7 +26,9 @@
    ],
    "color": "#3f8f5f",
    "font_size": 28,
-   "flags": {}
+   "flags": {
+    "pinned": true
+   }
   }
  ],
  "nodes": [
@@ -41,7 +43,9 @@
     760,
     640
    ],
-   "flags": {},
+   "flags": {
+    "pinned": true
+   },
    "order": 0,
    "mode": 0,
    "inputs": [],
@@ -92,7 +96,9 @@
     880,
     300
    ],
-   "flags": {},
+   "flags": {
+    "pinned": true
+   },
    "order": 1,
    "mode": 0,
    "inputs": [
@@ -125,7 +131,9 @@
     880,
     560
    ],
-   "flags": {},
+   "flags": {
+    "pinned": true
+   },
    "order": 2,
    "mode": 0,
    "inputs": [],
