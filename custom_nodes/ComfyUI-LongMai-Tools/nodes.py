@@ -119,7 +119,7 @@ def _resolve(path):
         p = os.path.join(base, path)
         if os.path.exists(p):
             return p
-    raise FileNotFoundError(f"LongMai Join Clips: file not found: {path}")
+    raise FileNotFoundError(f"LongMai: file not found: {path} (looked in ComfyUI/output and ComfyUI/input)")
 
 
 class LongMaiJoinClips:
