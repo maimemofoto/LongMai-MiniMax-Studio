@@ -8,7 +8,7 @@
    "id": 1,
    "type": "UNETLoader",
    "pos": [
-    2480,
+    2840,
     100
    ],
    "size": [
@@ -72,7 +72,7 @@
    "id": 2,
    "type": "CLIPLoader",
    "pos": [
-    2480,
+    2840,
     220
    ],
    "size": [
@@ -149,7 +149,7 @@
    "id": 3,
    "type": "VAELoader",
    "pos": [
-    2480,
+    2840,
     370
    ],
    "size": [
@@ -203,7 +203,7 @@
    "id": 4,
    "type": "VAELoader",
    "pos": [
-    2480,
+    2840,
     470
    ],
    "size": [
@@ -258,7 +258,7 @@
    "id": 7,
    "type": "PixaromaLoraLoader",
    "pos": [
-    2480,
+    2840,
     570
    ],
    "size": [
@@ -466,7 +466,7 @@
    "id": 8,
    "type": "PixaromaLoraLoader",
    "pos": [
-    2480,
+    2840,
     890
    ],
    "size": [
@@ -584,7 +584,7 @@
    "id": 9,
    "type": "Note",
    "pos": [
-    2480,
+    2840,
     1250
    ],
    "size": [
@@ -621,8 +621,8 @@
     100
    ],
    "size": [
-    660,
-    562
+    1000,
+    820
    ],
    "flags": {},
    "order": 5,
@@ -678,7 +678,7 @@
    "id": 13,
    "type": "H3PromptIDE",
    "pos": [
-    700,
+    1060,
     470
    ],
    "size": [
@@ -745,7 +745,7 @@
    "id": 14,
    "type": "ResolutionSelector",
    "pos": [
-    1680,
+    2040,
     250
    ],
    "size": [
@@ -840,7 +840,7 @@
    "id": 15,
    "type": "PrimitiveFloat",
    "pos": [
-    2050,
+    2410,
     250
    ],
    "size": [
@@ -893,7 +893,7 @@
    "id": 18,
    "type": "KSamplerSelect",
    "pos": [
-    1680,
+    2040,
     440
    ],
    "size": [
@@ -946,7 +946,7 @@
    "id": 19,
    "type": "BasicScheduler",
    "pos": [
-    2050,
+    2410,
     440
    ],
    "size": [
@@ -1027,7 +1027,7 @@
    "id": 20,
    "type": "Note",
    "pos": [
-    1680,
+    2040,
     1440
    ],
    "size": [
@@ -1060,7 +1060,7 @@
    "id": 22,
    "type": "MiniMaxH3SemanticBridgeConfigT8",
    "pos": [
-    1680,
+    2040,
     590
    ],
    "size": [
@@ -1188,7 +1188,7 @@
    "id": 28,
    "type": "SaveVideo",
    "pos": [
-    3360,
+    3720,
     70
    ],
    "size": [
@@ -1291,7 +1291,7 @@
    "id": 43,
    "type": "SaveVideo",
    "pos": [
-    4250,
+    4610,
     910
    ],
    "size": [
@@ -1394,7 +1394,7 @@
    "id": 44,
    "type": "Note",
    "pos": [
-    1680,
+    2040,
     2590
    ],
    "size": [
@@ -1427,7 +1427,7 @@
    "id": 45,
    "type": "easy seed",
    "pos": [
-    1680,
+    2040,
     100
    ],
    "size": [
@@ -1486,7 +1486,7 @@
    "id": 46,
    "type": "PrimitiveFloat",
    "pos": [
-    1680,
+    2040,
     1830
    ],
    "size": [
@@ -1539,7 +1539,7 @@
    "id": 47,
    "type": "ComfyMathExpression",
    "pos": [
-    1680,
+    2040,
     1930
    ],
    "size": [
@@ -1617,7 +1617,7 @@
    "id": 48,
    "type": "TrimAudioDuration",
    "pos": [
-    1680,
+    2040,
     2100
    ],
    "size": [
@@ -1687,7 +1687,7 @@
    "id": 49,
    "type": "VAEEncodeAudio",
    "pos": [
-    1680,
+    2040,
     2250
    ],
    "size": [
@@ -1736,7 +1736,7 @@
    "id": 50,
    "type": "SolidMask",
    "pos": [
-    1680,
+    2040,
     2350
    ],
    "size": [
@@ -1812,7 +1812,7 @@
    "id": 51,
    "type": "SetLatentNoiseMask",
    "pos": [
-    2140,
+    2500,
     1830
    ],
    "size": [
@@ -1862,7 +1862,7 @@
    "id": 52,
    "type": "LTXVSeparateAVLatent",
    "pos": [
-    2140,
+    2500,
     1930
    ],
    "size": [
@@ -1911,7 +1911,7 @@
    "id": 53,
    "type": "LTXVConcatAVLatent",
    "pos": [
-    2140,
+    2500,
     2030
    ],
    "size": [
@@ -1961,7 +1961,7 @@
    "id": 54,
    "type": "SetLatentNoiseMask",
    "pos": [
-    2140,
+    2500,
     2130
    ],
    "size": [
@@ -2011,7 +2011,7 @@
    "id": 57,
    "type": "SaveVideo",
    "pos": [
-    4250,
+    4610,
     1770
    ],
    "size": [
@@ -2114,7 +2114,7 @@
    "id": 58,
    "type": "PixaromaGroupSwitch",
    "pos": [
-    1680,
+    2040,
     910
    ],
    "size": [
@@ -2181,7 +2181,7 @@
    "id": 59,
    "type": "PixaromaGroupSwitch",
    "pos": [
-    1680,
+    2040,
     1050
    ],
    "size": [
@@ -2245,8 +2245,8 @@
    "id": 60,
    "type": "RegexReplace",
    "pos": [
-    700,
-    100
+    1060,
+    110
    ],
    "size": [
     920,
@@ -2320,7 +2320,7 @@
    "id": 61,
    "type": "MiniMaxH3MotionContextSaveLatent",
    "pos": [
-    4250,
+    4610,
     70
    ],
    "size": [
@@ -2388,7 +2388,7 @@
    "id": 62,
    "type": "Any Switch (rgthree)",
    "pos": [
-    4250,
+    4610,
     190
    ],
    "size": [
@@ -2454,7 +2454,7 @@
    "id": 63,
    "type": "LongMaiLoadStage1Latent",
    "pos": [
-    3360,
+    3720,
     740
    ],
    "size": [
@@ -2498,7 +2498,7 @@
    "id": 64,
    "type": "Any Switch (rgthree)",
    "pos": [
-    820,
+    1180,
     1830
    ],
    "size": [
@@ -2565,7 +2565,7 @@
    "id": 65,
    "type": "PixaromaGroupSwitch",
    "pos": [
-    1680,
+    2040,
     1160
    ],
    "size": [
@@ -2636,7 +2636,7 @@
     -260
    ],
    "size": [
-    3000,
+    3360,
     90
    ],
    "flags": {
@@ -2673,7 +2673,7 @@
     -130
    ],
    "size": [
-    3000,
+    3360,
     50
    ],
    "flags": {
@@ -3052,7 +3052,7 @@
    "id": 69,
    "type": "ce6015cb-0608-4376-a896-81a3e3370d38",
    "pos": [
-    3360,
+    3720,
     910
    ],
    "size": [
@@ -3333,7 +3333,7 @@
    "id": 70,
    "type": "b47a352b-ab75-4ff6-810f-52ec650efc31",
    "pos": [
-    3360,
+    3720,
     1770
    ],
    "size": [
@@ -3383,7 +3383,7 @@
    "id": 71,
    "type": "LoraLoaderModelOnly",
    "pos": [
-    2480,
+    2840,
     1100
    ],
    "size": [
@@ -3424,7 +3424,7 @@
    "id": 72,
    "type": "PixaromaGroupSwitch",
    "pos": [
-    1680,
+    2040,
     1300
    ],
    "size": [
@@ -3490,7 +3490,7 @@
    "id": 73,
    "type": "PlaySoundKJ",
    "pos": [
-    4250,
+    4610,
     260
    ],
    "size": [
@@ -3576,7 +3576,7 @@
    "id": 74,
    "type": "PlaySoundKJ",
    "pos": [
-    4250,
+    4610,
     1510
    ],
    "size": [
@@ -3666,7 +3666,7 @@
     2590
    ],
    "size": [
-    1600,
+    1960,
     1180
    ],
    "flags": {},
@@ -4284,7 +4284,7 @@
    "bounding": [
     0,
     0,
-    1640,
+    2000,
     1700
    ],
    "color": "#8a6f3c",
@@ -4294,7 +4294,7 @@
    "id": 2,
    "title": "② ตั้งค่า + สวิตช์",
    "bounding": [
-    1660,
+    2020,
     0,
     760,
     1700
@@ -4306,7 +4306,7 @@
    "id": 3,
    "title": "③ โมเดล + LoRA",
    "bounding": [
-    2460,
+    2820,
     0,
     860,
     1700
@@ -4320,7 +4320,7 @@
    "bounding": [
     0,
     1760,
-    1640,
+    2000,
     760
    ],
    "color": "#444444",
@@ -9329,7 +9329,7 @@
    {
     "id": "pg_longmai_force_audio",
     "title": "🎤 Force Audio — ร้อง/ขยับปากตาม <Audio 1> (+ล็อกเสียงตอนอัปสเกล)",
-    "x": 1660,
+    "x": 2020,
     "y": 1760,
     "w": 1660,
     "h": 740,
@@ -9346,7 +9346,7 @@
    {
     "id": "pg_lm_s1",
     "title": "④ Stage 1 — Preview (บันทึก latent ไว้อัปสเกลทีหลังด้วย)",
-    "x": 3340,
+    "x": 3700,
     "y": 0,
     "w": 1800,
     "h": 680,
@@ -9363,7 +9363,7 @@
    {
     "id": "pg_lm_saved",
     "title": "④-B ใช้ Stage 1 ล่าสุดที่บันทึกไว้ (ไม่ต้องเจนใหม่)",
-    "x": 3340,
+    "x": 3700,
     "y": 690,
     "w": 1800,
     "h": 150,
@@ -9380,7 +9380,7 @@
    {
     "id": "pg_lm_s2",
     "title": "⑤ Stage 2 — อัปสเกล 1.0MP (24 fps)",
-    "x": 3340,
+    "x": 3700,
     "y": 850,
     "w": 1800,
     "h": 830,
@@ -9397,7 +9397,7 @@
    {
     "id": "pg_lm_48",
     "title": "⑥ 48 fps — RIFE ตัดช็อตสะอาด (ต้องเปิด Stage 2)",
-    "x": 3340,
+    "x": 3700,
     "y": 1700,
     "w": 1800,
     "h": 660,
@@ -9421,7 +9421,7 @@
     "showLinks": true,
     "id": "pg_lm_real_trig",
     "title": "🧑 โหมดสมจริง: trigger",
-    "x": 690,
+    "x": 1050,
     "y": 40,
     "w": 940,
     "h": 370,
@@ -9438,7 +9438,7 @@
     "showLinks": true,
     "id": "pg_lm_real_lora",
     "title": "🧑 โหมดสมจริง: Realism LoRA",
-    "x": 2470,
+    "x": 2830,
     "y": 1030,
     "w": 840,
     "h": 170,
