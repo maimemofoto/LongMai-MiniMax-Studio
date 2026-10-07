@@ -26,16 +26,45 @@ Workflow ComfyUI สำหรับสร้างวิดีโอพร้อ
 
 ต้องใช้ **ComfyUI 0.37 ขึ้นไป** (มี node MiniMax H3 ในตัว) และ **ffmpeg** สำหรับ Join Clips
 
-### 1. ดาวน์โหลด repo นี้
-กด **Code → Download ZIP** หรือ:
-```bash
-git clone https://github.com/maimemofoto/LongMai-MiniMax-Studio.git
-```
-- คัดลอกโฟลเดอร์ `custom_nodes/ComfyUI-LongMai-Tools` ไปไว้ใน `ComfyUI/custom_nodes/`
-- เปิดไฟล์ในโฟลเดอร์ `workflows/` ด้วย ComfyUI (ลากไฟล์ใส่หน้าจอได้เลย)
+### 1. ComfyUI-LongMai-Tools (custom node ของ workflow นี้)
+ตัวนี้ใช้วิธี**คัดลอก** ไม่ใช่ git clone หรือ Manager
+1. ดาวน์โหลด repo นี้: กด **Code → Download ZIP** แล้วแตกไฟล์
+2. คัดลอกโฟลเดอร์ `custom_nodes/ComfyUI-LongMai-Tools` ไปวางใน `ComfyUI/custom_nodes/`
+3. เปิดไฟล์ในโฟลเดอร์ `workflows/` ด้วย ComfyUI (ลากไฟล์ใส่หน้าจอได้เลย)
 
-### 2. Custom nodes อื่น → `ComfyUI/custom_nodes/`
-วิธีที่ง่ายที่สุดคือเปิด workflow แล้วใช้ **ComfyUI Manager → Install Missing Custom Nodes**
+> ⚠️ อย่า git clone repo นี้ลงใน `custom_nodes/` ตรงๆ เพราะ ComfyUI จะหา node ไม่เจอ (node อยู่ในโฟลเดอร์ย่อย) และตัวนี้ไม่ต้อง pip install
+
+### 2. Custom nodes อื่น (ต้องไปอยู่ใน `ComfyUI/custom_nodes/`)
+
+**วิธี A (แนะนำ): ComfyUI Manager**
+เปิด workflow แล้วกด Manager → **Install Missing Custom Nodes** → ติดตั้งทุกตัว → รีสตาร์ต ComfyUI
+Manager จะ git clone ลง `custom_nodes/` และติดตั้งไลบรารีที่ต้องใช้ให้เอง
+
+**วิธี B: git clone เอง**
+1. เปิด Terminal ที่โฟลเดอร์ `ComfyUI/custom_nodes`
+2. clone ทีละตัว (โฟลเดอร์ที่ได้จะอยู่ใน `custom_nodes/` เอง):
+```bash
+git clone https://github.com/kijai/ComfyUI-KJNodes
+git clone https://github.com/pixaroma/ComfyUI-Pixaroma
+git clone https://github.com/yolain/ComfyUI-Easy-Use
+git clone https://github.com/rgthree/rgthree-comfy
+git clone https://github.com/Adudeguyman/ComfyUI-Fantastic-MiniMaxH3-PromptBuilder
+git clone https://github.com/ethanfel/ComfyUI-H3-Prompt-IDE
+git clone https://github.com/T8mars/comfyui-minimax-h3-audio-T8
+git clone https://github.com/NikoDemon80/ComfyUI-H3-Motion-Context
+git clone https://github.com/LBH-123-AI/Comfyui_Minimax_h3_latent_Upscaler
+git clone https://github.com/Fannovel16/ComfyUI-Frame-Interpolation
+```
+3. ติดตั้งไลบรารีของแต่ละ node โดยใช้ **python ของ ComfyUI เอง** (ไม่ใช่ python ของเครื่อง)
+   - ตัวที่มี `requirements.txt`: KJNodes, Pixaroma, Easy-Use, rgthree, Fantastic PromptBuilder, Audio T8
+   - **ComfyUI portable** (รันจากโฟลเดอร์ `custom_nodes`):
+     ```bash
+     ..\..\python_embeded\python.exe -m pip install -r ComfyUI-KJNodes\requirements.txt
+     ```
+     (เปลี่ยน `ComfyUI-KJNodes` เป็นชื่อโฟลเดอร์ของแต่ละตัว)
+   - **ComfyUI แบบ venv:** เปิด venv ก่อน แล้วรัน `pip install -r <ชื่อโฟลเดอร์>/requirements.txt`
+   - **ComfyUI-Frame-Interpolation:** เข้าโฟลเดอร์นั้นแล้วรัน `python install.py` (ด้วย python ของ ComfyUI)
+4. รีสตาร์ต ComfyUI
 
 | Custom node | ใช้ทำอะไร |
 |---|---|
