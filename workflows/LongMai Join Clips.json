@@ -39,7 +39,7 @@
    ],
    "size": [
     760,
-    520
+    640
    ],
    "flags": {},
    "order": 0,
@@ -119,11 +119,11 @@
    "type": "Note",
    "pos": [
     800,
-    380
+    410
    ],
    "size": [
     880,
-    470
+    560
    ],
    "flags": {},
    "order": 2,
@@ -135,7 +135,7 @@
    "color": "#233",
    "bgcolor": "#355",
    "widgets_values": [
-    "1) clips: ใส่ไฟล์ทีละบรรทัดตามลำดับ (ใส่กี่คลิปก็ได้) (path นับจาก ComfyUI/output) เช่น LongMai/final48_00001_.mp4\n   ใช้ไฟล์ที่ทำ 48 fps แล้วทุก part (ทำ 48 fps ก่อนต่อเสมอ — รอยต่อจะไม่มีเฟรมซ้อน)\n2) audio_source:\n   • one song file — ใช้เพลงเต็มไฟล์เดียว (วางใน ComfyUI/input) ระบบตัดให้ตรงความยาวจริงของแต่ละ part ทุกเฟรม เพลงไม่ขาด/ไม่ซ้ำ\n   • each clip's own audio — ใช้เสียงในแต่ละคลิป (เช่นบทพูด / คลิปที่ H3 ร้องเอง)\n3) song_start_seconds: วินาทีที่ part แรกเริ่มในเพลง (ปกติ 0)\n4) crossfade_seconds: 0 = ตัดภาพตรง (แนะนำ) — ถ้าใช้ crossfade กับเพลง เสียงจะซ้อนกันตรงรอยต่อ\n5) match_color: ปรับสี/ความสว่างของแต่ละ part ให้ต่อจาก part ก่อนหน้า (แนะนำเปิด)\n6) color_max_change: ถ้ารอยต่อไหนต้องปรับสีเกินค่านี้ (เช่น 0.15 = 15%) ถือว่าตั้งใจเปลี่ยนแสง (กลางวัน → พระอาทิตย์ตก) จะไม่ปรับรอยต่อนั้น\n7) seam_audio_fade_ms: fade เสียงสั้นๆ ตรงรอยต่อ กันเสียงคลิก (ใช้เฉพาะ each clip's own audio, 0 = ปิด)\nfps ของผลลัพธ์ = fps ของคลิปแรก (ใส่ final48 ทุกไฟล์ = ได้ 48 fps)\nผลลัพธ์: output/LongMai/joined_xxxxx_.mp4\n\nต้องมี: custom node ComfyUI-LongMai-Tools (https://github.com/maimemofoto/LongMai-MiniMax-Studio) + ffmpeg ในเครื่อง (ffmpeg.org หรือ winget install ffmpeg)"
+    "1) clips: บรรทัดละ 1 คลิป ตามลำดับที่จะต่อ (ใส่กี่คลิปก็ได้) — ใส่ได้ 3 วิธี:\n   • 📂 เลือกคลิปจาก output → คลิกไฟล์ตามลำดับ (มีเลขกำกับ) แล้วกด \"เพิ่มคลิปที่เลือก\"\n   • ⬆️ เลือกคลิปจากเครื่อง หรือ ลากไฟล์วิดีโอมาวางบน node นี้ → อัปโหลดไป input/longmai_join/ ให้เอง (เรียงตามชื่อไฟล์)\n   • พิมพ์/วางเอง: path นับจาก ComfyUI/output (เช่น LongMai/final48_00001_.mp4) หรือ path เต็ม (Copy as path ได้)\n   🧹 ล้างรายการคลิป = เริ่มใหม่\n   ใช้ไฟล์ที่ทำ 48 fps แล้วทุก part (ทำ 48 fps ก่อนต่อเสมอ — รอยต่อจะไม่มีเฟรมซ้อน)\n2) audio_source:\n   • one song file — ใช้เพลงเต็มไฟล์เดียว (วางใน ComfyUI/input) ระบบตัดให้ตรงความยาวจริงของแต่ละ part ทุกเฟรม เพลงไม่ขาด/ไม่ซ้ำ\n   • each clip's own audio — ใช้เสียงในแต่ละคลิป (เช่นบทพูด / คลิปที่ H3 ร้องเอง)\n3) song_start_seconds: วินาทีที่ part แรกเริ่มในเพลง (ปกติ 0)\n4) crossfade_seconds: 0 = ตัดภาพตรง (แนะนำ) — ถ้าใช้ crossfade กับเพลง เสียงจะซ้อนกันตรงรอยต่อ\n5) match_color: ปรับสี/ความสว่างของแต่ละ part ให้ต่อจาก part ก่อนหน้า (แนะนำเปิด)\n6) color_max_change: ถ้ารอยต่อไหนต้องปรับสีเกินค่านี้ (เช่น 0.15 = 15%) ถือว่าตั้งใจเปลี่ยนแสง (กลางวัน → พระอาทิตย์ตก) จะไม่ปรับรอยต่อนั้น\n7) seam_audio_fade_ms: fade เสียงสั้นๆ ตรงรอยต่อ กันเสียงคลิก (ใช้เฉพาะ each clip's own audio, 0 = ปิด)\nfps ของผลลัพธ์ = fps ของคลิปแรก (ใส่ final48 ทุกไฟล์ = ได้ 48 fps)\nผลลัพธ์: output/LongMai/joined_xxxxx_.mp4\n\nต้องมี: custom node ComfyUI-LongMai-Tools (https://github.com/maimemofoto/LongMai-MiniMax-Studio) + ffmpeg ในเครื่อง (ffmpeg.org หรือ winget install ffmpeg)"
    ]
   }
  ],
