@@ -119,17 +119,17 @@ def _resolve(path):
         p = os.path.join(base, path)
         if os.path.exists(p):
             return p
-    raise FileNotFoundError(f"LongMai: file not found: {path} (looked in ComfyUI/output and ComfyUI/input)")
+    raise FileNotFoundError(f"LongMai: หาไฟล์ไม่เจอ: {path} (ค้นใน ComfyUI/output และ ComfyUI/input แล้ว) — ตรวจชื่อไฟล์ในช่อง clips / song_file")
 
 
 class LongMaiJoinClips:
     @classmethod
     def INPUT_TYPES(cls):
         return {"required": {
-            "clips": ("STRING", {"multiline": True, "default": "LongMai/part1_final_48fps_00001_.mp4\nLongMai/part2_final_48fps_00001_.mp4",
+            "clips": ("STRING", {"multiline": True, "default": "",
                                  "tooltip": "One clip per line, in order. Paths are relative to ComfyUI/output (or input), or absolute."}),
             "audio_source": (["one song file (exact cut per clip)", "each clip's own audio", "no audio"],),
-            "song_file": ("STRING", {"default": "omoi_full.wav", "tooltip": "Song in ComfyUI/input (or absolute path)."}),
+            "song_file": ("STRING", {"default": "", "tooltip": "Song in ComfyUI/input (or absolute path)."}),
             "song_start_seconds": ("FLOAT", {"default": 0.0, "min": 0.0, "max": 3600.0, "step": 0.001}),
             "crossfade_seconds": ("FLOAT", {"default": 0.0, "min": 0.0, "max": 2.0, "step": 0.01,
                                             "tooltip": "0 = clean hard cut (recommended for live-session cuts)."}),
@@ -156,7 +156,7 @@ class LongMaiJoinClips:
         ff, probe = _ffmpeg()
         paths = [_resolve(p) for p in clips.splitlines() if p.strip()]
         if not paths:
-            raise ValueError("LongMai Join Clips: no clips listed")
+            raise ValueError("LongMai Join Clips: ยังไม่ได้ใส่คลิป — กด 📂 เลือกคลิปจาก output / ⬆️ เลือกคลิปจากเครื่อง หรือพิมพ์ path บรรทัดละ 1 คลิป")
         infos = [_probe(probe, p) for p in paths]
         w, h, fps, _ = infos[0]
         gains, skipped = [[1.0, 1.0, 1.0]], []

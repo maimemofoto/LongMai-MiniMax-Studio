@@ -27,6 +27,7 @@
       git clone https://github.com/NikoDemon80/ComfyUI-H3-Motion-Context      ← บันทึก Stage 1
       git clone https://github.com/LBH-123-AI/Comfyui_Minimax_h3_latent_Upscaler      ← อัปสเกล Stage 2
       git clone https://github.com/Fannovel16/ComfyUI-Frame-Interpolation      ← RIFE 48 fps
+      git clone https://github.com/Zironic/H3-Optimizations      ← ช่องเลือกขนาด Stage 1 (Resolution Selector)
    3. ติดตั้งไลบรารีของ node (ต้องใช้ python ของ ComfyUI เอง ไม่ใช่ python ของเครื่อง):
       ComfyUI portable (รันจากโฟลเดอร์ custom_nodes):
          ..\..\python_embeded\python.exe -m pip install -r <ชื่อโฟลเดอร์>equirements.txt
@@ -64,8 +65,27 @@
 • RIFE (48 fps) → rife49.pth ดาวน์โหลดให้อัตโนมัติตอนใช้ครั้งแรก
 
 ━━ 3) LoRA เสริม (ไม่บังคับ — ปิดไว้ในแถว LoRA) → models/loras/ ━━
-Cinematic Realism / Motion Repair / Combat V2 / GunFu / LMS (Stage 2)
-ไม่มีก็ใช้งานได้ปกติ · ถ้าต้องการให้ค้นชื่อไฟล์บน Hugging Face / Civitai แล้วเลือกไฟล์ใหม่ในแถว LoRA
+ไม่มีก็ใช้งานได้ปกติ (ในแถว LoRA ปล่อยปิดไว้ หรือกดลบแถวนั้นออก)
+• Motion Repair → https://huggingface.co/JOKER141/MiniMax-H3-General-Motion-Continuity-Repair
+   (ชื่อไฟล์ใน repo อาจเป็น Motion_Repair.safetensors — เลือกไฟล์ใหม่ในแถว LoRA)
+• Cinematic Realism / Combat V2 / GunFu / LMS (Stage 2) → ยังไม่พบลิงก์สาธารณะที่ยืนยันได้
+   ค้นชื่อไฟล์บน Hugging Face หรือ Civitai: Minimax_H3_CinematicRealism_V0.1 · H3_Combat_V2 · GunFu · minimax_h3_lms_v1.0_r64
+
+━━ แต่ละ node มาจากไหน (node สีแดง = ยังไม่ได้ติดตั้งตัวนี้) ━━
+• ComfyUI ในตัว (อัปเดต ComfyUI ≥ 0.37): Base Model / Text Encoder / VAE / Sampler / Scheduler / Save Video / Realism LoRA (LoraLoaderModelOnly) /
+   ⚡ Comfy-Kitchen attention / ⚡ Sparse Attention / 🏷️ Trigger words (RegexReplace) / ความยาว (Primitive) / Force Audio (Trim, Solid Mask, VAE Encode Audio, LTXV) /
+   🎬 First/Last Frame (Load Image, AddGuide) / Stage 2 Megapixels-Steps-Denoise
+• ComfyUI-Fantastic-MiniMaxH3-PromptBuilder: ใส่ภาพ/วิดีโอ/เสียงอ้างอิง (Media Loader)
+• ComfyUI-H3-Prompt-IDE: ช่อง Prompt
+• ComfyUI-Pixaroma: 🔀 สวิตช์ทุกตัว / LoRA ทั้ง 2 แถว / ป้ายหัว
+• ComfyUI-Easy-Use: 🎲 Seed Stage 1
+• H3-Optimizations: ขนาด Stage 1 (0.4MP)
+• comfyui-minimax-h3-audio-T8: Action Bridge + ถอดรหัสภาพ/เสียงใน Engine
+• ComfyUI-KJNodes: 🔔 เสียงแจ้งเตือน + Chunk / Low VRAM ใน Engine
+• ComfyUI-H3-Motion-Context: บันทึก Stage 1 ล่าสุด (latent)
+• Comfyui_Minimax_h3_latent_Upscaler: Latent Upscaler 3D ใน Stage 2 Engine
+• rgthree-comfy: Any Switch (ตัวเล็กที่พับไว้)
+• ComfyUI-LongMai-Tools: โหลด Stage 1 ที่บันทึกไว้ / 🎞️ 48 fps Engine (RIFE ตัดช็อต — ใช้ ComfyUI-Frame-Interpolation ด้วย)
 
 ━━ 4) ไฟล์ที่ผู้ใช้ใส่เอง ━━
 • ภาพ / เพลง / วิดีโออ้างอิง → input/ (หรือลากใส่ Media Loader)
