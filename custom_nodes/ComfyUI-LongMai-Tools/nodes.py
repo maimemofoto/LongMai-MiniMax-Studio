@@ -227,25 +227,124 @@ class LongMaiJoinClips:
                 "result": (out_path, json.dumps(report, ensure_ascii=False))}
 
 
-class LongMaiLoadStage1Latent:
-    """Loads the Stage-1 AV latent saved by 'H3 Motion Context Save Latent' (tensors 'video' + 'audio') and returns it
-    as a native H3 nested AV latent, ready for LTXVSeparateAVLatent / Stage 2. Lets Stage 2 run without re-running
-    Stage 1 (after a restart, another workflow, etc.)."""
+STAGE1_LATENT_DIR = "LongMai/stage1_latent"
+LATEST = "(ล่าสุด)"
+
+
+def _stage1_latents():
+    """Saved Stage-1 latents, newest first, as paths relative to ComfyUI/output."""
+    root = os.path.join(folder_paths.get_output_directory(), *STAGE1_LATENT_DIR.split("/"))
+    if not os.path.isdir(root):
+        return []
+    files = [f for f in os.listdir(root) if f.endswith(".safetensors")]
+    files.sort(key=lambda f: os.path.getmtime(os.path.join(root, f)), reverse=True)
+    return [f"{STAGE1_LATENT_DIR}/{f}" for f in files]
+
+
+def _pick_stage1_latent(latent_file):
+    if latent_file.strip() in ("", LATEST):
+        files = _stage1_latents()
+        if not files:
+            raise FileNotFoundError(f"LongMai: ยังไม่มี Stage 1 ที่บันทึกไว้ใน output/{STAGE1_LATENT_DIR} — เจน Stage 1 ก่อน")
+        latent_file = files[0]
+    return _resolve(latent_file)
+
+
+def _safe_label(text):
+    """Keep letters/digits/vowel & tone marks (any script, e.g. Thai) plus - and _; everything else becomes '-'."""
+    import unicodedata
+    out = "".join(c if (c.isalnum() or c in "-_" or unicodedata.category(c).startswith("M")) else "-"
+                  for c in text.strip())
+    while "--" in out:
+        out = out.replace("--", "-")
+    return out.strip("-_")
+
+
+class LongMaiSaveStage1Latent:
+    """Saves the Stage-1 AV latent under a unique name '<label>_<yyMMdd-HHmmss>_s<seed>' and returns that name, so
+    the preview clip, the latent and the final 24/48 fps clips of one generation all share it."""
 
     @classmethod
     def INPUT_TYPES(cls):
-        return {"required": {"latent_file": ("STRING", {"default": "LongMai/stage1_latent/last_00001.safetensors",
-                                                         "tooltip": "Relative to ComfyUI/output (or absolute)."})}}
+        return {"required": {
+            "latent": ("LATENT",),
+            "stage1_seed": ("INT", {"default": 0, "min": 0, "max": 0xffffffffffffffff,
+                                    "tooltip": "Seed of Stage 1 (goes into the file name)."}),
+            "label": ("STRING", {"default": "",
+                                 "tooltip": "ชื่องาน (ไม่ใส่ก็ได้) เช่น beach_p1 — จะขึ้นหน้าชื่อไฟล์ทุกไฟล์ของการเจนนี้"}),
+        }}
 
-    RETURN_TYPES = ("LATENT", "STRING")
-    RETURN_NAMES = ("av_latent", "info")
+    RETURN_TYPES = ("STRING", "STRING")
+    RETURN_NAMES = ("name", "latent_path")
+    FUNCTION = "save"
+    OUTPUT_NODE = True
+    CATEGORY = "LongMai"
+
+    def save(self, latent, stage1_seed, label=""):
+        import time
+        from safetensors.torch import save_file
+        samples = latent["samples"]
+        parts = list(samples.unbind()) if hasattr(samples, "unbind") else list(samples)
+        if len(parts) < 2:
+            raise ValueError("LongMai: latent นี้ไม่มีเสียง — ต่อจาก output ของ Sampler Stage 1 (H3 AV latent)")
+        lab = _safe_label(label)
+        name = (f"{lab}_" if lab else "") + f"{time.strftime('%y%m%d-%H%M%S')}_s{stage1_seed}"
+        folder = os.path.join(folder_paths.get_output_directory(), *STAGE1_LATENT_DIR.split("/"))
+        os.makedirs(folder, exist_ok=True)
+        base, k = name, 2
+        while os.path.exists(os.path.join(folder, name + ".safetensors")):
+            name, k = f"{base}_{k}", k + 1
+        path = os.path.join(folder, name + ".safetensors")
+        save_file({"video": parts[0].cpu().contiguous(), "audio": parts[1].cpu().contiguous()}, path,
+                  metadata={"format": "h3_motion_context_av_v1"})
+        return (name, path)
+
+
+class LongMaiOutputNames:
+    """Turns a generation name into the file-name prefixes of every clip it produces."""
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {"required": {
+            "name": ("STRING", {"forceInput": True}),
+            "folder": ("STRING", {"default": "LongMai", "tooltip": "Folder inside ComfyUI/output"}),
+        }}
+
+    RETURN_TYPES = ("STRING", "STRING", "STRING")
+    RETURN_NAMES = ("preview_prefix", "final24_prefix", "final48_prefix")
+    FUNCTION = "run"
+    CATEGORY = "LongMai"
+
+    def run(self, name, folder="LongMai"):
+        f = folder.strip().strip("/\\") or "LongMai"
+        return (f"{f}/stage1/{name}_preview", f"{f}/final/{name}_24fps", f"{f}/final/{name}_48fps")
+
+
+class LongMaiLoadStage1Latent:
+    """Loads a saved Stage-1 AV latent (tensors 'video' + 'audio') and returns it as a native H3 nested AV latent,
+    ready for LTXVSeparateAVLatent / Stage 2. Lets Stage 2 run without re-running Stage 1 (after a restart, another
+    workflow, etc.). '(ล่าสุด)' = the newest file in output/LongMai/stage1_latent. Also returns the file's name so the
+    upscaled clips keep the same name as their Stage-1 preview."""
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {"required": {"latent_file": ([LATEST] + _stage1_latents(), {
+            "default": LATEST,
+            "tooltip": "เลือกให้ชื่อตรงกับคลิป preview ที่ชอบ · (ล่าสุด) = ไฟล์ใหม่สุด · กด R เพื่ออัปเดตรายการ"})}}
+
+    RETURN_TYPES = ("LATENT", "STRING", "STRING")
+    RETURN_NAMES = ("av_latent", "info", "name")
     FUNCTION = "load"
     CATEGORY = "LongMai"
 
     @classmethod
+    def VALIDATE_INPUTS(cls, latent_file):
+        return True  # any path is allowed (scripts pass their own); a missing file is reported when loading
+
+    @classmethod
     def IS_CHANGED(cls, latent_file):
         try:
-            p = _resolve(latent_file)
+            p = _pick_stage1_latent(latent_file)
             return f"{p}:{os.stat(p).st_mtime_ns}"
         except Exception:
             return float("NaN")
@@ -253,23 +352,28 @@ class LongMaiLoadStage1Latent:
     def load(self, latent_file):
         from safetensors.torch import load_file
         import comfy.nested_tensor
-        path = _resolve(latent_file)
+        path = _pick_stage1_latent(latent_file)
         t = load_file(path)
         if "video" not in t or "audio" not in t:
             raise ValueError(f"{path} is not an H3 AV latent (needs 'video' and 'audio' tensors)")
         video, audio = t["video"].clone(), t["audio"].clone()
         info = {"file": path, "video": list(video.shape), "audio": list(audio.shape),
                 "saved": os.path.getmtime(path)}
-        return ({"samples": comfy.nested_tensor.NestedTensor((video, audio))}, json.dumps(info))
+        name = os.path.splitext(os.path.basename(path))[0]
+        return ({"samples": comfy.nested_tensor.NestedTensor((video, audio))}, json.dumps(info), name)
 
 
 NODE_CLASS_MAPPINGS = {
     "LongMaiSceneAwareRIFE": LongMaiSceneAwareRIFE,
     "LongMaiJoinClips": LongMaiJoinClips,
     "LongMaiLoadStage1Latent": LongMaiLoadStage1Latent,
+    "LongMaiSaveStage1Latent": LongMaiSaveStage1Latent,
+    "LongMaiOutputNames": LongMaiOutputNames,
 }
 NODE_DISPLAY_NAME_MAPPINGS = {
     "LongMaiSceneAwareRIFE": "LongMai Scene-Aware RIFE (48 fps, clean cuts)",
     "LongMaiJoinClips": "LongMai Join Clips (seamless song)",
     "LongMaiLoadStage1Latent": "LongMai Load Stage-1 Latent (upscale without re-generating)",
+    "LongMaiSaveStage1Latent": "LongMai Save Stage-1 Latent (named by time + seed)",
+    "LongMaiOutputNames": "LongMai Output Names (preview / 24fps / 48fps)",
 }

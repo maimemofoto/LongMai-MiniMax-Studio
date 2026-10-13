@@ -24,7 +24,7 @@
       git clone https://github.com/Adudeguyman/ComfyUI-Fantastic-MiniMaxH3-PromptBuilder      ← Media Loader
       git clone https://github.com/ethanfel/ComfyUI-H3-Prompt-IDE      ← ช่องเขียน Prompt
       git clone https://github.com/T8mars/comfyui-minimax-h3-audio-T8      ← Action Bridge, AV Decode
-      git clone https://github.com/NikoDemon80/ComfyUI-H3-Motion-Context      ← บันทึก Stage 1
+      git clone https://github.com/NikoDemon80/ComfyUI-H3-Motion-Context      ← (ไม่บังคับ — workflow ไม่ได้ใช้แล้ว)
       git clone https://github.com/LBH-123-AI/Comfyui_Minimax_h3_latent_Upscaler      ← อัปสเกล Stage 2
       git clone https://github.com/Fannovel16/ComfyUI-Frame-Interpolation      ← RIFE 48 fps
       git clone https://github.com/Zironic/H3-Optimizations      ← ช่องเลือกขนาด Stage 1 (Resolution Selector)
@@ -82,10 +82,9 @@
 • H3-Optimizations: ขนาด Stage 1 (0.4MP)
 • comfyui-minimax-h3-audio-T8: Action Bridge + ถอดรหัสภาพ/เสียงใน Engine
 • ComfyUI-KJNodes: 🔔 เสียงแจ้งเตือน + Chunk / Low VRAM ใน Engine
-• ComfyUI-H3-Motion-Context: บันทึก Stage 1 ล่าสุด (latent)
 • Comfyui_Minimax_h3_latent_Upscaler: Latent Upscaler 3D ใน Stage 2 Engine
 • rgthree-comfy: Any Switch (ตัวเล็กที่พับไว้)
-• ComfyUI-LongMai-Tools: โหลด Stage 1 ที่บันทึกไว้ / 🎞️ 48 fps Engine (RIFE ตัดช็อต — ใช้ ComfyUI-Frame-Interpolation ด้วย)
+• ComfyUI-LongMai-Tools: 💾 บันทึก Stage 1 / 📂 เลือก Stage 1 ที่บันทึกไว้ / 🏷️ ชื่อไฟล์ผลลัพธ์ / 🎞️ 48 fps Engine (RIFE ตัดช็อต — ใช้ ComfyUI-Frame-Interpolation ด้วย)
 
 ━━ 4) ไฟล์ที่ผู้ใช้ใส่เอง ━━
 • ภาพ / เพลง / วิดีโออ้างอิง → input/ (หรือลากใส่ Media Loader)
