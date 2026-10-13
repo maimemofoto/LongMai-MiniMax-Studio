@@ -1057,7 +1057,7 @@
    "type": "SaveVideo",
    "pos": [
     5210,
-    910
+    1470
    ],
    "size": [
     864,
@@ -1802,7 +1802,7 @@
    "type": "SaveVideo",
    "pos": [
     5210,
-    2140
+    2710
    ],
    "size": [
     864,
@@ -2180,7 +2180,7 @@
    "type": "LongMaiLoadStage1Latent",
    "pos": [
     4320,
-    740
+    1290
    ],
    "size": [
     560,
@@ -2749,7 +2749,7 @@
    "type": "ce6015cb-0608-4376-a896-81a3e3370d38",
    "pos": [
     4320,
-    910
+    1470
    ],
    "size": [
     760,
@@ -3049,7 +3049,7 @@
    "type": "b47a352b-ab75-4ff6-810f-52ec650efc31",
    "pos": [
     4320,
-    2140
+    2710
    ],
    "size": [
     760,
@@ -3348,8 +3348,8 @@
    "id": 74,
    "type": "PlaySoundKJ",
    "pos": [
-    5210,
-    1510
+    4320,
+    2292
    ],
    "size": [
     373,
@@ -3915,7 +3915,7 @@
    "type": "ModelAttentionBackend",
    "pos": [
     4320,
-    2830
+    3960
    ],
    "size": [
     560,
@@ -3978,7 +3978,7 @@
    "type": "BlockSparseAttention",
    "pos": [
     4920,
-    2830
+    3960
    ],
    "size": [
     560,
@@ -4130,7 +4130,7 @@
    "type": "BlockSparseAttention",
    "pos": [
     5520,
-    2830
+    3960
    ],
    "size": [
     560,
@@ -4755,7 +4755,7 @@
    "type": "PrimitiveFloat",
    "pos": [
     4320,
-    1655
+    2160
    ],
    "size": [
     310,
@@ -4800,7 +4800,7 @@
    "type": "PrimitiveInt",
    "pos": [
     4640,
-    1655
+    2160
    ],
    "size": [
     250,
@@ -4846,7 +4846,7 @@
    "type": "PrimitiveFloat",
    "pos": [
     4910,
-    1655
+    2160
    ],
    "size": [
     270,
@@ -4890,8 +4890,8 @@
    "id": 89,
    "type": "Any Switch (rgthree)",
    "pos": [
-    4320,
-    1800
+    6160,
+    70
    ],
    "size": [
     300,
@@ -4959,8 +4959,8 @@
    "type": "LongMaiOutputNames",
    "title": "🏷️ ชื่อไฟล์ผลลัพธ์ (preview / 24fps / 48fps)",
    "pos": [
-    4620,
-    1800
+    6460,
+    70
    ],
    "size": [
     460,
@@ -10988,7 +10988,7 @@
     "x": 4300,
     "y": 0,
     "w": 1800,
-    "h": 680,
+    "h": 1220,
     "titleColor": "#2e7d32",
     "bodyColor": "#22332a",
     "titleAlpha": 0.92,
@@ -11004,7 +11004,7 @@
     "id": "pg_lm_saved",
     "title": "④-B ใช้ Stage 1 ล่าสุดที่บันทึกไว้ (ไม่ต้องเจนใหม่)",
     "x": 4300,
-    "y": 690,
+    "y": 1240,
     "w": 1800,
     "h": 150,
     "titleColor": "#f9a825",
@@ -11022,9 +11022,9 @@
     "id": "pg_lm_s2",
     "title": "⑤ Stage 2 — อัปสเกล 1.0MP (24 fps)",
     "x": 4300,
-    "y": 850,
+    "y": 1410,
     "w": 1800,
-    "h": 900,
+    "h": 1210,
     "titleColor": "#c62828",
     "bodyColor": "#3e2b2b",
     "titleAlpha": 0.92,
@@ -11040,9 +11040,9 @@
     "id": "pg_lm_48",
     "title": "⑥ 48 fps — RIFE ตัดช็อตสะอาด (ต้องเปิด Stage 2)",
     "x": 4300,
-    "y": 2070,
+    "y": 2640,
     "w": 1800,
-    "h": 660,
+    "h": 1220,
     "titleColor": "#1565c0",
     "bodyColor": "#22303e",
     "titleAlpha": 0.92,
@@ -11102,7 +11102,7 @@
     "id": "pg_lm_fast",
     "title": "⚡ โหมดเร็ว — Comfy-Kitchen + Sparse Attention (ComfyUI 0.39+)",
     "x": 4300,
-    "y": 2750,
+    "y": 3880,
     "w": 1800,
     "h": 420,
     "titleColor": "#f9a825",
