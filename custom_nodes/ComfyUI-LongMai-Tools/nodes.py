@@ -489,6 +489,60 @@ class LongMaiFaceRefineMulti:
         return (cur, text)
 
 
+class LongMaiHDRExport:
+    """Extra HDR copy of the finished clip: NVIDIA RTX TrueHDR (SDR -> HDR) + 10-bit BT.2020 HLG (or PQ) MP4.
+    Uses the 48 fps frames when they exist, otherwise the 24 fps frames; with neither connected (Stage 2 off) it does
+    nothing, so it can stay switched on without breaking preview runs. The normal SDR files are not touched."""
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {"required": {
+            "luminance": ("INT", {"default": 650, "min": 400, "max": 2000,
+                                  "tooltip": "ความสว่างสูงสุดของจอ HDR (nits) · 650 = ค่าตัวอย่างของ NVIDIA · 1000 = จอ HDR สว่างมาก"}),
+            "contrast": ("INT", {"default": 100, "min": 0, "max": 200}),
+            "saturation": ("INT", {"default": 100, "min": 0, "max": 200}),
+            "middle_gray": ("INT", {"default": 50, "min": 10, "max": 100}),
+            "debanding": ("BOOLEAN", {"default": True}),
+            "hdr_format": (["HDR (HLG)", "HDR PQ (HDR10)"], {"default": "HDR (HLG)",
+                           "tooltip": "HLG = ดูบนจอธรรมดาได้ดีกว่า (แนะนำ) · PQ = HDR10 สำหรับจอ/แพลตฟอร์ม HDR โดยเฉพาะ"}),
+        }, "optional": {
+            "images_48": ("IMAGE", {"tooltip": "48 fps frames (used first)"}),
+            "images_24": ("IMAGE", {"tooltip": "24 fps frames (used when 48 fps is off)"}),
+            "audio": ("AUDIO",),
+            "prefix_48": ("STRING", {"forceInput": True}),
+            "prefix_24": ("STRING", {"forceInput": True}),
+        }}
+
+    RETURN_TYPES = ()
+    FUNCTION = "run"
+    OUTPUT_NODE = True
+    CATEGORY = "LongMai"
+
+    def run(self, luminance, contrast, saturation, middle_gray, debanding, hdr_format,
+            images_48=None, images_24=None, audio=None, prefix_48=None, prefix_24=None):
+        if images_48 is not None:
+            images, fps, prefix = images_48, 48, (prefix_48 or "LongMai/final/clip_48fps")
+        elif images_24 is not None:
+            images, fps, prefix = images_24, 24, (prefix_24 or "LongMai/final/clip_24fps")
+        else:
+            print("[LongMai HDR] ไม่มีภาพเข้า (ปิด Stage 2 อยู่) — ข้าม")
+            return {"ui": {}}
+        space = "HDR PQ" if "PQ" in hdr_format else "HDR"
+        hdr = _call_node("RTXTrueHDR", images=images, contrast=contrast, saturation=saturation,
+                         middle_gray=middle_gray, luminance=luminance, debanding=debanding,
+                         output_colorspace=space)[0]
+        video = _call_node("CreateVideo", images=hdr, fps=float(fps), audio=audio, bit_depth="auto",
+                           color_space=space, codec="none")[0]
+        from comfy_api.latest import Types
+        h, w = int(hdr.shape[1]), int(hdr.shape[2])
+        folder, filename, counter, subfolder, _ = folder_paths.get_save_image_path(
+            prefix + "_HDR", folder_paths.get_output_directory(), w, h)
+        file = f"{filename}_{counter:05}_.mp4"
+        video.save_to(os.path.join(folder, file), format=Types.VideoContainer.MP4, codec=Types.VideoCodec.H264)
+        print(f"[LongMai HDR] saved {subfolder}/{file} ({w}x{h}, {fps} fps, {space}, 10-bit)")
+        return {"ui": {"images": [{"filename": file, "subfolder": subfolder, "type": "output"}], "animated": [True]}}
+
+
 class LongMaiMatchFrameCount:
     """Makes an interpolated clip exactly (source frames x multiplier) long, so it stays in sync with the audio:
     N / 24 s == (N x 2) / 48 s. Frame generators return (N-1) x M + 1 frames; the missing tail is filled with copies
@@ -588,6 +642,7 @@ NODE_CLASS_MAPPINGS = {
     "LongMaiOutputNames": LongMaiOutputNames,
     "LongMaiMatchFrameCount": LongMaiMatchFrameCount,
     "LongMaiFaceRefineMulti": LongMaiFaceRefineMulti,
+    "LongMaiHDRExport": LongMaiHDRExport,
 }
 NODE_DISPLAY_NAME_MAPPINGS = {
     "LongMaiSceneAwareRIFE": "LongMai Scene-Aware RIFE (48 fps, clean cuts)",
@@ -597,4 +652,5 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "LongMaiOutputNames": "LongMai Output Names (preview / 24fps / 48fps)",
     "LongMaiMatchFrameCount": "LongMai Match Frame Count (keep 48 fps in sync with audio)",
     "LongMaiFaceRefineMulti": "LongMai Face Refine (any number of faces)",
+    "LongMaiHDRExport": "LongMai HDR Export (RTX TrueHDR, extra HDR file)",
 }

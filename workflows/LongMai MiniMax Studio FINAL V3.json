@@ -1,8 +1,8 @@
 {
  "id": "129074eb-9e8a-4963-8ccb-57233fdc8d2e",
  "revision": 0,
- "last_node_id": 157,
- "last_link_id": 436,
+ "last_node_id": 160,
+ "last_link_id": 441,
  "nodes": [
   {
    "id": 1,
@@ -281,7 +281,7 @@
    "flags": {
     "pinned": true
    },
-   "order": 33,
+   "order": 35,
    "mode": 0,
    "inputs": [
     {
@@ -751,7 +751,7 @@
    "flags": {
     "pinned": true
    },
-   "order": 36,
+   "order": 38,
    "mode": 0,
    "inputs": [
     {
@@ -964,7 +964,7 @@
    "flags": {
     "pinned": true
    },
-   "order": 37,
+   "order": 39,
    "mode": 0,
    "inputs": [
     {
@@ -1069,7 +1069,7 @@
    "flags": {
     "pinned": true
    },
-   "order": 38,
+   "order": 40,
    "mode": 2,
    "inputs": [
     {
@@ -1187,10 +1187,10 @@
     }
    },
    "widgets_values": [
-    "ติดตั้งครั้งแรก: ดู note 📦 ด้านล่างซ้าย (custom node / โมเดล โหลดที่ไหน วางที่ไหน)\nดาวน์โหลด / อัปเดต: https://github.com/maimemofoto/LongMai-MiniMax-Studio\n\nวิธีใช้ (ทีละขั้น)\n⚡ V2: สวิตช์ \"โหมดเร็ว\" (กลุ่ม ②) เปิด = Comfy-Kitchen INT8 attention + Sparse Attention ทั้ง 2 Stage (ต้อง ComfyUI 0.39+) · ปิด = ทำงานเหมือน FINAL เดิมทุกอย่าง\n1) ① ใส่ภาพหน้าตัวละคร (<Picture 1>) + เพลง/เสียง (<Audio 1>) ใน Media Loader — ไม่ใส่ก็ได้\n2) เลือกสไตล์ด้วยสวิตช์ \"โหมดสมจริง\": เปิด = คนจริง (Realism LoRA + trigger r34l1sm) / ปิด = การ์ตูน, 3D (ปิดทั้งคู่ให้เอง)\n   แล้วเขียน prompt ในช่องใหญ่ — trigger จะต่อหน้า prompt ให้เองเมื่อเปิดโหมดสมจริง\n3) ② กด 🎲 สุ่ม seed → Run = ได้ Preview (④) และระบบบันทึก Stage 1 ไว้ให้อัตโนมัติ\n4) ชอบ Preview แล้ว → สวิตช์ \"อัปสเกล\" เปิด Stage 2 (และ 48 fps ถ้าต้องการ) → Run\n   • ถ้าไม่ได้แก้อะไร Stage 1 จะใช้ cache อยู่แล้ว\n   • ถ้ารีสตาร์ต / รัน workflow อื่นแทรก / ปิดเครื่องไปแล้ว: สวิตช์ \"ภาพที่จะอัปสเกล\" เลือก \"ใช้ Stage 1 ล่าสุดที่บันทึกไว้\" → ไม่เจน Stage 1 ใหม่เลย\n     (ต้องใช้ prompt / ภาพอ้างอิงชุดเดิม และกลับมาเลือก \"เจน Stage 1 ใหม่\" เมื่อจะทำคลิปใหม่)\n   • ชื่อไฟล์: ทุกไฟล์ของการเจนรอบเดียวกันใช้ชื่อเดียวกัน = [ชื่องาน_]วันเวลา_s<seed>\n     preview → output/LongMai/stage1/<ชื่อ>_preview · latent → output/LongMai/stage1_latent/<ชื่อ>.safetensors\n     วิดีโอสุดท้าย → output/LongMai/final/<ชื่อ>_24fps และ <ชื่อ>_48fps\n     ใส่ \"ชื่องาน\" ได้ที่ช่อง label ของ node 💾 บันทึก Stage 1 (เช่น beach_p1)\n     อัปสเกลทีหลัง: ดูชื่อคลิป preview ที่ชอบ → เลือกชื่อเดียวกันในช่อง 📂 เลือก Stage 1 ((ล่าสุด) = ใหม่สุด · กด R เพื่ออัปเดตรายการ)\n     latent ไม่ถูกเขียนทับแล้ว (ไฟล์ละ ~16 MB) — ลบไฟล์เก่าใน stage1_latent เองเป็นระยะ\n5) ร้องเพลง/ลิปซิงค์: เปิด Force Audio — \"เริ่มเพลงที่วินาที\" ใช้เมื่อใส่เพลงเต็มไฟล์ (part 2 = ความยาวจริงของ part 1 เช่น 15.083)\n\nทำหลาย part แล้วต่อ: ทำ 48 fps ทีละ part → workflow \"LongMai Join Clips\" (ใส่ได้หลายคลิป บรรทัดละไฟล์)\npart 2: ใส่ 3-4 วิสุดท้ายของ part 1 (ไฟล์ 24 fps) เป็น <Video 1> และปิดเสียงวิดีโอนั้น\n\n🔔 เสียงแจ้งเตือน: ดังเมื่อ Stage 1 (Preview) เสร็จ และอีกครั้งเมื่ออัปสเกลเสร็จทั้งหมด (รวม 48 fps)\n   ปรับความดัง/ปิดได้ที่ node 🔔 ในกลุ่ม ④ และ ⑤ · เสียงดังในแท็บเบราว์เซอร์ที่กด Run\n\n🎬 First / Last Frame (V2): เปิดสวิตช์ในกลุ่ม ② แล้วใส่ภาพในกลุ่มสีฟ้า (ใต้ Engine)\n   ต่อคลิป: part 2 เป็นต้นไป ใช้เฟรมสุดท้ายของ part ก่อน (ไฟล์ final24) เป็น First Frame\n\nค่าที่ทดสอบแล้ว\n• Stage 1: euler / simple / 6 steps / 0.4MP\n• Stage 2: euler / simple / 4 steps / denoise 0.4 / อัปสเกล 1.0MP (1376x768)\n• Action Bridge 0.10\n• 48 fps (V3) = NVIDIA RTX Frame Generation แยกทีละช็อต (จำนวนเฟรมพอดีกับเสียง)\n• คลิป 15 วิ: Stage 1 ~5 นาที / Stage 2 + 48 fps ~12 นาที\n\n⬆️ Stage 2: ปรับ Megapixels / Steps / Denoise ได้ที่ 3 ช่องใต้ก้อน Stage 2 Engine (Megapixels ช่องเดียวส่งไปทั้งตัวอัปสเกลและขนาด prompt Stage 2 ให้ตรงกันเอง) · ค่าที่ทดสอบแล้ว 1.0MP / 4 steps / 0.4\n\n⚡ Sparse Attention: stage ที่ใช้ LoRA (เช่น Turbo ใน Stage 1) → method = sla (keep 10%) · stage ที่ไม่ใช้ LoRA (Stage 2 ตอน LoRA เฉพาะ Stage 2 ปิดอยู่) → method = sol-attn (tau 1.3)\n\n━━ ใหม่ใน V3 ━━\n🙂 Face Refine (สวิตช์ในกลุ่ม ②, กลุ่มเขียวอมฟ้าขวาสุด): หลัง Stage 2 แก้หน้าเล็ก/หน้าเละ — ใส่กี่คนก็ได้ในช่อง faces\n   ว่าง = หน้าใหญ่สุด 1 คน · ภาพหน้า (⬆️ / ลากวาง) · หรือ ซ้าย / ขวา (แม่นสุดสำหรับฉาก 2 คนที่หน้าเล็ก)\n   คนที่ไม่มีในคลิปหรือซ้ำจะถูกข้ามเอง · 1 คน ≈ +1-2 นาที (คลิป 10 วิ)\n🖥️ RTX Super Resolution: ขยายภาพตอนท้าย (ทั้ง 24 และ 48 fps) · ด้านยาว 1920 = Full HD (แนะนำ) · 2752 = 2x (RAM ~36 GB ตอน 48 fps)\n⑥ 48 fps = NVIDIA RTX Frame Generation (แทน RIFE) ตรวจจุดตัดช็อตเอง + จำนวนเฟรมตรงเสียงพอดี\nลำดับ: Stage 2 → Face Refine → Super Resolution → บันทึก 24 fps / NVIDIA 48 fps → บันทึก 48 fps"
+    "ติดตั้งครั้งแรก: ดู note 📦 ด้านล่างซ้าย (custom node / โมเดล โหลดที่ไหน วางที่ไหน)\nดาวน์โหลด / อัปเดต: https://github.com/maimemofoto/LongMai-MiniMax-Studio\n\nวิธีใช้ (ทีละขั้น)\n⚡ V2: สวิตช์ \"โหมดเร็ว\" (กลุ่ม ②) เปิด = Comfy-Kitchen INT8 attention + Sparse Attention ทั้ง 2 Stage (ต้อง ComfyUI 0.39+) · ปิด = ทำงานเหมือน FINAL เดิมทุกอย่าง\n1) ① ใส่ภาพหน้าตัวละคร (<Picture 1>) + เพลง/เสียง (<Audio 1>) ใน Media Loader — ไม่ใส่ก็ได้\n2) เลือกสไตล์ด้วยสวิตช์ \"โหมดสมจริง\": เปิด = คนจริง (Realism LoRA + trigger r34l1sm) / ปิด = การ์ตูน, 3D (ปิดทั้งคู่ให้เอง)\n   แล้วเขียน prompt ในช่องใหญ่ — trigger จะต่อหน้า prompt ให้เองเมื่อเปิดโหมดสมจริง\n3) ② กด 🎲 สุ่ม seed → Run = ได้ Preview (④) และระบบบันทึก Stage 1 ไว้ให้อัตโนมัติ\n4) ชอบ Preview แล้ว → สวิตช์ \"อัปสเกล\" เปิด Stage 2 (และ 48 fps ถ้าต้องการ) → Run\n   • ถ้าไม่ได้แก้อะไร Stage 1 จะใช้ cache อยู่แล้ว\n   • ถ้ารีสตาร์ต / รัน workflow อื่นแทรก / ปิดเครื่องไปแล้ว: สวิตช์ \"ภาพที่จะอัปสเกล\" เลือก \"ใช้ Stage 1 ล่าสุดที่บันทึกไว้\" → ไม่เจน Stage 1 ใหม่เลย\n     (ต้องใช้ prompt / ภาพอ้างอิงชุดเดิม และกลับมาเลือก \"เจน Stage 1 ใหม่\" เมื่อจะทำคลิปใหม่)\n   • ชื่อไฟล์: ทุกไฟล์ของการเจนรอบเดียวกันใช้ชื่อเดียวกัน = [ชื่องาน_]วันเวลา_s<seed>\n     preview → output/LongMai/stage1/<ชื่อ>_preview · latent → output/LongMai/stage1_latent/<ชื่อ>.safetensors\n     วิดีโอสุดท้าย → output/LongMai/final/<ชื่อ>_24fps และ <ชื่อ>_48fps\n     ใส่ \"ชื่องาน\" ได้ที่ช่อง label ของ node 💾 บันทึก Stage 1 (เช่น beach_p1)\n     อัปสเกลทีหลัง: ดูชื่อคลิป preview ที่ชอบ → เลือกชื่อเดียวกันในช่อง 📂 เลือก Stage 1 ((ล่าสุด) = ใหม่สุด · กด R เพื่ออัปเดตรายการ)\n     latent ไม่ถูกเขียนทับแล้ว (ไฟล์ละ ~16 MB) — ลบไฟล์เก่าใน stage1_latent เองเป็นระยะ\n5) ร้องเพลง/ลิปซิงค์: เปิด Force Audio — \"เริ่มเพลงที่วินาที\" ใช้เมื่อใส่เพลงเต็มไฟล์ (part 2 = ความยาวจริงของ part 1 เช่น 15.083)\n\nทำหลาย part แล้วต่อ: ทำ 48 fps ทีละ part → workflow \"LongMai Join Clips\" (ใส่ได้หลายคลิป บรรทัดละไฟล์)\npart 2: ใส่ 3-4 วิสุดท้ายของ part 1 (ไฟล์ 24 fps) เป็น <Video 1> และปิดเสียงวิดีโอนั้น\n\n🔔 เสียงแจ้งเตือน: ดังเมื่อ Stage 1 (Preview) เสร็จ และอีกครั้งเมื่ออัปสเกลเสร็จทั้งหมด (รวม 48 fps)\n   ปรับความดัง/ปิดได้ที่ node 🔔 ในกลุ่ม ④ และ ⑤ · เสียงดังในแท็บเบราว์เซอร์ที่กด Run\n\n🎬 First / Last Frame (V2): เปิดสวิตช์ในกลุ่ม ② แล้วใส่ภาพในกลุ่มสีฟ้า (ใต้ Engine)\n   ต่อคลิป: part 2 เป็นต้นไป ใช้เฟรมสุดท้ายของ part ก่อน (ไฟล์ final24) เป็น First Frame\n\nค่าที่ทดสอบแล้ว\n• Stage 1: euler / simple / 6 steps / 0.4MP\n• Stage 2: euler / simple / 4 steps / denoise 0.4 / อัปสเกล 1.0MP (1376x768)\n• Action Bridge 0.10\n• 48 fps (V3) = NVIDIA RTX Frame Generation แยกทีละช็อต (จำนวนเฟรมพอดีกับเสียง)\n• คลิป 15 วิ: Stage 1 ~5 นาที / Stage 2 + 48 fps ~12 นาที\n\n⬆️ Stage 2: ปรับ Megapixels / Steps / Denoise ได้ที่ 3 ช่องใต้ก้อน Stage 2 Engine (Megapixels ช่องเดียวส่งไปทั้งตัวอัปสเกลและขนาด prompt Stage 2 ให้ตรงกันเอง) · ค่าที่ทดสอบแล้ว 1.0MP / 4 steps / 0.4\n\n⚡ Sparse Attention: stage ที่ใช้ LoRA (เช่น Turbo ใน Stage 1) → method = sla (keep 10%) · stage ที่ไม่ใช้ LoRA (Stage 2 ตอน LoRA เฉพาะ Stage 2 ปิดอยู่) → method = sol-attn (tau 1.3)\n\n━━ ใหม่ใน V3 ━━\n🙂 Face Refine (สวิตช์ในกลุ่ม ②, กลุ่มเขียวอมฟ้าขวาสุด): หลัง Stage 2 แก้หน้าเล็ก/หน้าเละ — ใส่กี่คนก็ได้ในช่อง faces\n   ว่าง = หน้าใหญ่สุด 1 คน · ภาพหน้า (⬆️ / ลากวาง) · หรือ ซ้าย / ขวา (แม่นสุดสำหรับฉาก 2 คนที่หน้าเล็ก)\n   คนที่ไม่มีในคลิปหรือซ้ำจะถูกข้ามเอง · 1 คน ≈ +1-2 นาที (คลิป 10 วิ)\n🖥️ RTX Super Resolution: ขยายภาพตอนท้าย (ทั้ง 24 และ 48 fps) · ด้านยาว 1920 = Full HD (แนะนำ) · 2752 = 2x (RAM ~36 GB ตอน 48 fps)\n⑥ 48 fps = NVIDIA RTX Frame Generation (แทน RIFE) ตรวจจุดตัดช็อตเอง + จำนวนเฟรมตรงเสียงพอดี\n🌈 HDR (ปิดไว้): บันทึกไฟล์ HDR แยกอีกไฟล์ (RTX TrueHDR, 10-bit HLG) · ไฟล์ปกติยังอยู่\nลำดับ: Stage 2 → Face Refine → Super Resolution → บันทึก 24 fps / NVIDIA 48 fps → บันทึก 48 fps (+ HDR ถ้าเปิด)"
    ],
    "widgets_values_named": {
-    "text": "ติดตั้งครั้งแรก: ดู note 📦 ด้านล่างซ้าย (custom node / โมเดล โหลดที่ไหน วางที่ไหน)\nดาวน์โหลด / อัปเดต: https://github.com/maimemofoto/LongMai-MiniMax-Studio\n\nวิธีใช้ (ทีละขั้น)\n⚡ V2: สวิตช์ \"โหมดเร็ว\" (กลุ่ม ②) เปิด = Comfy-Kitchen INT8 attention + Sparse Attention ทั้ง 2 Stage (ต้อง ComfyUI 0.39+) · ปิด = ทำงานเหมือน FINAL เดิมทุกอย่าง\n1) ① ใส่ภาพหน้าตัวละคร (<Picture 1>) + เพลง/เสียง (<Audio 1>) ใน Media Loader — ไม่ใส่ก็ได้\n2) เลือกสไตล์ด้วยสวิตช์ \"โหมดสมจริง\": เปิด = คนจริง (Realism LoRA + trigger r34l1sm) / ปิด = การ์ตูน, 3D (ปิดทั้งคู่ให้เอง)\n   แล้วเขียน prompt ในช่องใหญ่ — trigger จะต่อหน้า prompt ให้เองเมื่อเปิดโหมดสมจริง\n3) ② กด 🎲 สุ่ม seed → Run = ได้ Preview (④) และระบบบันทึก Stage 1 ไว้ให้อัตโนมัติ\n4) ชอบ Preview แล้ว → สวิตช์ \"อัปสเกล\" เปิด Stage 2 (และ 48 fps ถ้าต้องการ) → Run\n   • ถ้าไม่ได้แก้อะไร Stage 1 จะใช้ cache อยู่แล้ว\n   • ถ้ารีสตาร์ต / รัน workflow อื่นแทรก / ปิดเครื่องไปแล้ว: สวิตช์ \"ภาพที่จะอัปสเกล\" เลือก \"ใช้ Stage 1 ล่าสุดที่บันทึกไว้\" → ไม่เจน Stage 1 ใหม่เลย\n     (ต้องใช้ prompt / ภาพอ้างอิงชุดเดิม และกลับมาเลือก \"เจน Stage 1 ใหม่\" เมื่อจะทำคลิปใหม่)\n   • ชื่อไฟล์: ทุกไฟล์ของการเจนรอบเดียวกันใช้ชื่อเดียวกัน = [ชื่องาน_]วันเวลา_s<seed>\n     preview → output/LongMai/stage1/<ชื่อ>_preview · latent → output/LongMai/stage1_latent/<ชื่อ>.safetensors\n     วิดีโอสุดท้าย → output/LongMai/final/<ชื่อ>_24fps และ <ชื่อ>_48fps\n     ใส่ \"ชื่องาน\" ได้ที่ช่อง label ของ node 💾 บันทึก Stage 1 (เช่น beach_p1)\n     อัปสเกลทีหลัง: ดูชื่อคลิป preview ที่ชอบ → เลือกชื่อเดียวกันในช่อง 📂 เลือก Stage 1 ((ล่าสุด) = ใหม่สุด · กด R เพื่ออัปเดตรายการ)\n     latent ไม่ถูกเขียนทับแล้ว (ไฟล์ละ ~16 MB) — ลบไฟล์เก่าใน stage1_latent เองเป็นระยะ\n5) ร้องเพลง/ลิปซิงค์: เปิด Force Audio — \"เริ่มเพลงที่วินาที\" ใช้เมื่อใส่เพลงเต็มไฟล์ (part 2 = ความยาวจริงของ part 1 เช่น 15.083)\n\nทำหลาย part แล้วต่อ: ทำ 48 fps ทีละ part → workflow \"LongMai Join Clips\" (ใส่ได้หลายคลิป บรรทัดละไฟล์)\npart 2: ใส่ 3-4 วิสุดท้ายของ part 1 (ไฟล์ 24 fps) เป็น <Video 1> และปิดเสียงวิดีโอนั้น\n\n🔔 เสียงแจ้งเตือน: ดังเมื่อ Stage 1 (Preview) เสร็จ และอีกครั้งเมื่ออัปสเกลเสร็จทั้งหมด (รวม 48 fps)\n   ปรับความดัง/ปิดได้ที่ node 🔔 ในกลุ่ม ④ และ ⑤ · เสียงดังในแท็บเบราว์เซอร์ที่กด Run\n\n🎬 First / Last Frame (V2): เปิดสวิตช์ในกลุ่ม ② แล้วใส่ภาพในกลุ่มสีฟ้า (ใต้ Engine)\n   ต่อคลิป: part 2 เป็นต้นไป ใช้เฟรมสุดท้ายของ part ก่อน (ไฟล์ final24) เป็น First Frame\n\nค่าที่ทดสอบแล้ว\n• Stage 1: euler / simple / 6 steps / 0.4MP\n• Stage 2: euler / simple / 4 steps / denoise 0.4 / อัปสเกล 1.0MP (1376x768)\n• Action Bridge 0.10\n• 48 fps (V3) = NVIDIA RTX Frame Generation แยกทีละช็อต (จำนวนเฟรมพอดีกับเสียง)\n• คลิป 15 วิ: Stage 1 ~5 นาที / Stage 2 + 48 fps ~12 นาที\n\n⬆️ Stage 2: ปรับ Megapixels / Steps / Denoise ได้ที่ 3 ช่องใต้ก้อน Stage 2 Engine (Megapixels ช่องเดียวส่งไปทั้งตัวอัปสเกลและขนาด prompt Stage 2 ให้ตรงกันเอง) · ค่าที่ทดสอบแล้ว 1.0MP / 4 steps / 0.4\n\n⚡ Sparse Attention: stage ที่ใช้ LoRA (เช่น Turbo ใน Stage 1) → method = sla (keep 10%) · stage ที่ไม่ใช้ LoRA (Stage 2 ตอน LoRA เฉพาะ Stage 2 ปิดอยู่) → method = sol-attn (tau 1.3)\n\n━━ ใหม่ใน V3 ━━\n🙂 Face Refine (สวิตช์ในกลุ่ม ②, กลุ่มเขียวอมฟ้าขวาสุด): หลัง Stage 2 แก้หน้าเล็ก/หน้าเละ — ใส่กี่คนก็ได้ในช่อง faces\n   ว่าง = หน้าใหญ่สุด 1 คน · ภาพหน้า (⬆️ / ลากวาง) · หรือ ซ้าย / ขวา (แม่นสุดสำหรับฉาก 2 คนที่หน้าเล็ก)\n   คนที่ไม่มีในคลิปหรือซ้ำจะถูกข้ามเอง · 1 คน ≈ +1-2 นาที (คลิป 10 วิ)\n🖥️ RTX Super Resolution: ขยายภาพตอนท้าย (ทั้ง 24 และ 48 fps) · ด้านยาว 1920 = Full HD (แนะนำ) · 2752 = 2x (RAM ~36 GB ตอน 48 fps)\n⑥ 48 fps = NVIDIA RTX Frame Generation (แทน RIFE) ตรวจจุดตัดช็อตเอง + จำนวนเฟรมตรงเสียงพอดี\nลำดับ: Stage 2 → Face Refine → Super Resolution → บันทึก 24 fps / NVIDIA 48 fps → บันทึก 48 fps"
+    "text": "ติดตั้งครั้งแรก: ดู note 📦 ด้านล่างซ้าย (custom node / โมเดล โหลดที่ไหน วางที่ไหน)\nดาวน์โหลด / อัปเดต: https://github.com/maimemofoto/LongMai-MiniMax-Studio\n\nวิธีใช้ (ทีละขั้น)\n⚡ V2: สวิตช์ \"โหมดเร็ว\" (กลุ่ม ②) เปิด = Comfy-Kitchen INT8 attention + Sparse Attention ทั้ง 2 Stage (ต้อง ComfyUI 0.39+) · ปิด = ทำงานเหมือน FINAL เดิมทุกอย่าง\n1) ① ใส่ภาพหน้าตัวละคร (<Picture 1>) + เพลง/เสียง (<Audio 1>) ใน Media Loader — ไม่ใส่ก็ได้\n2) เลือกสไตล์ด้วยสวิตช์ \"โหมดสมจริง\": เปิด = คนจริง (Realism LoRA + trigger r34l1sm) / ปิด = การ์ตูน, 3D (ปิดทั้งคู่ให้เอง)\n   แล้วเขียน prompt ในช่องใหญ่ — trigger จะต่อหน้า prompt ให้เองเมื่อเปิดโหมดสมจริง\n3) ② กด 🎲 สุ่ม seed → Run = ได้ Preview (④) และระบบบันทึก Stage 1 ไว้ให้อัตโนมัติ\n4) ชอบ Preview แล้ว → สวิตช์ \"อัปสเกล\" เปิด Stage 2 (และ 48 fps ถ้าต้องการ) → Run\n   • ถ้าไม่ได้แก้อะไร Stage 1 จะใช้ cache อยู่แล้ว\n   • ถ้ารีสตาร์ต / รัน workflow อื่นแทรก / ปิดเครื่องไปแล้ว: สวิตช์ \"ภาพที่จะอัปสเกล\" เลือก \"ใช้ Stage 1 ล่าสุดที่บันทึกไว้\" → ไม่เจน Stage 1 ใหม่เลย\n     (ต้องใช้ prompt / ภาพอ้างอิงชุดเดิม และกลับมาเลือก \"เจน Stage 1 ใหม่\" เมื่อจะทำคลิปใหม่)\n   • ชื่อไฟล์: ทุกไฟล์ของการเจนรอบเดียวกันใช้ชื่อเดียวกัน = [ชื่องาน_]วันเวลา_s<seed>\n     preview → output/LongMai/stage1/<ชื่อ>_preview · latent → output/LongMai/stage1_latent/<ชื่อ>.safetensors\n     วิดีโอสุดท้าย → output/LongMai/final/<ชื่อ>_24fps และ <ชื่อ>_48fps\n     ใส่ \"ชื่องาน\" ได้ที่ช่อง label ของ node 💾 บันทึก Stage 1 (เช่น beach_p1)\n     อัปสเกลทีหลัง: ดูชื่อคลิป preview ที่ชอบ → เลือกชื่อเดียวกันในช่อง 📂 เลือก Stage 1 ((ล่าสุด) = ใหม่สุด · กด R เพื่ออัปเดตรายการ)\n     latent ไม่ถูกเขียนทับแล้ว (ไฟล์ละ ~16 MB) — ลบไฟล์เก่าใน stage1_latent เองเป็นระยะ\n5) ร้องเพลง/ลิปซิงค์: เปิด Force Audio — \"เริ่มเพลงที่วินาที\" ใช้เมื่อใส่เพลงเต็มไฟล์ (part 2 = ความยาวจริงของ part 1 เช่น 15.083)\n\nทำหลาย part แล้วต่อ: ทำ 48 fps ทีละ part → workflow \"LongMai Join Clips\" (ใส่ได้หลายคลิป บรรทัดละไฟล์)\npart 2: ใส่ 3-4 วิสุดท้ายของ part 1 (ไฟล์ 24 fps) เป็น <Video 1> และปิดเสียงวิดีโอนั้น\n\n🔔 เสียงแจ้งเตือน: ดังเมื่อ Stage 1 (Preview) เสร็จ และอีกครั้งเมื่ออัปสเกลเสร็จทั้งหมด (รวม 48 fps)\n   ปรับความดัง/ปิดได้ที่ node 🔔 ในกลุ่ม ④ และ ⑤ · เสียงดังในแท็บเบราว์เซอร์ที่กด Run\n\n🎬 First / Last Frame (V2): เปิดสวิตช์ในกลุ่ม ② แล้วใส่ภาพในกลุ่มสีฟ้า (ใต้ Engine)\n   ต่อคลิป: part 2 เป็นต้นไป ใช้เฟรมสุดท้ายของ part ก่อน (ไฟล์ final24) เป็น First Frame\n\nค่าที่ทดสอบแล้ว\n• Stage 1: euler / simple / 6 steps / 0.4MP\n• Stage 2: euler / simple / 4 steps / denoise 0.4 / อัปสเกล 1.0MP (1376x768)\n• Action Bridge 0.10\n• 48 fps (V3) = NVIDIA RTX Frame Generation แยกทีละช็อต (จำนวนเฟรมพอดีกับเสียง)\n• คลิป 15 วิ: Stage 1 ~5 นาที / Stage 2 + 48 fps ~12 นาที\n\n⬆️ Stage 2: ปรับ Megapixels / Steps / Denoise ได้ที่ 3 ช่องใต้ก้อน Stage 2 Engine (Megapixels ช่องเดียวส่งไปทั้งตัวอัปสเกลและขนาด prompt Stage 2 ให้ตรงกันเอง) · ค่าที่ทดสอบแล้ว 1.0MP / 4 steps / 0.4\n\n⚡ Sparse Attention: stage ที่ใช้ LoRA (เช่น Turbo ใน Stage 1) → method = sla (keep 10%) · stage ที่ไม่ใช้ LoRA (Stage 2 ตอน LoRA เฉพาะ Stage 2 ปิดอยู่) → method = sol-attn (tau 1.3)\n\n━━ ใหม่ใน V3 ━━\n🙂 Face Refine (สวิตช์ในกลุ่ม ②, กลุ่มเขียวอมฟ้าขวาสุด): หลัง Stage 2 แก้หน้าเล็ก/หน้าเละ — ใส่กี่คนก็ได้ในช่อง faces\n   ว่าง = หน้าใหญ่สุด 1 คน · ภาพหน้า (⬆️ / ลากวาง) · หรือ ซ้าย / ขวา (แม่นสุดสำหรับฉาก 2 คนที่หน้าเล็ก)\n   คนที่ไม่มีในคลิปหรือซ้ำจะถูกข้ามเอง · 1 คน ≈ +1-2 นาที (คลิป 10 วิ)\n🖥️ RTX Super Resolution: ขยายภาพตอนท้าย (ทั้ง 24 และ 48 fps) · ด้านยาว 1920 = Full HD (แนะนำ) · 2752 = 2x (RAM ~36 GB ตอน 48 fps)\n⑥ 48 fps = NVIDIA RTX Frame Generation (แทน RIFE) ตรวจจุดตัดช็อตเอง + จำนวนเฟรมตรงเสียงพอดี\n🌈 HDR (ปิดไว้): บันทึกไฟล์ HDR แยกอีกไฟล์ (RTX TrueHDR, 10-bit HLG) · ไฟล์ปกติยังอยู่\nลำดับ: Stage 2 → Face Refine → Super Resolution → บันทึก 24 fps / NVIDIA 48 fps → บันทึก 48 fps (+ HDR ถ้าเปิด)"
    },
    "color": "#232",
    "bgcolor": "#353"
@@ -1326,7 +1326,7 @@
    "flags": {
     "pinned": true
    },
-   "order": 39,
+   "order": 41,
    "mode": 4,
    "inputs": [
     {
@@ -1406,7 +1406,7 @@
    "flags": {
     "pinned": true
    },
-   "order": 40,
+   "order": 42,
    "mode": 4,
    "inputs": [
     {
@@ -1478,7 +1478,7 @@
    "flags": {
     "pinned": true
    },
-   "order": 41,
+   "order": 43,
    "mode": 4,
    "inputs": [
     {
@@ -1607,7 +1607,7 @@
    "flags": {
     "pinned": true
    },
-   "order": 42,
+   "order": 44,
    "mode": 4,
    "inputs": [
     {
@@ -1659,7 +1659,7 @@
    "flags": {
     "pinned": true
    },
-   "order": 43,
+   "order": 45,
    "mode": 4,
    "inputs": [
     {
@@ -1710,7 +1710,7 @@
    "flags": {
     "pinned": true
    },
-   "order": 44,
+   "order": 46,
    "mode": 4,
    "inputs": [
     {
@@ -1762,7 +1762,7 @@
    "flags": {
     "pinned": true
    },
-   "order": 45,
+   "order": 47,
    "mode": 4,
    "inputs": [
     {
@@ -1814,7 +1814,7 @@
    "flags": {
     "pinned": true
    },
-   "order": 46,
+   "order": 48,
    "mode": 2,
    "inputs": [
     {
@@ -2054,7 +2054,7 @@
    "flags": {
     "pinned": true
    },
-   "order": 48,
+   "order": 50,
    "mode": 0,
    "inputs": [
     {
@@ -2134,7 +2134,7 @@
     "collapsed": true,
     "pinned": true
    },
-   "order": 49,
+   "order": 51,
    "mode": 0,
    "inputs": [
     {
@@ -2270,7 +2270,7 @@
     "collapsed": true,
     "pinned": true
    },
-   "order": 50,
+   "order": 52,
    "mode": 0,
    "inputs": [
     {
@@ -2406,7 +2406,7 @@
    "flags": {
     "pinned": true
    },
-   "order": 51,
+   "order": 53,
    "mode": 0,
    "inputs": [
     {
@@ -2781,7 +2781,7 @@
    "flags": {
     "pinned": true
    },
-   "order": 52,
+   "order": 54,
    "mode": 2,
    "inputs": [
     {
@@ -3042,7 +3042,8 @@
      "links": [
       408,
       414,
-      417
+      417,
+      439
      ]
     },
     {
@@ -3097,7 +3098,7 @@
    "flags": {
     "pinned": true
    },
-   "order": 53,
+   "order": 55,
    "mode": 0,
    "inputs": [
     {
@@ -3239,7 +3240,7 @@
    "flags": {
     "pinned": true
    },
-   "order": 54,
+   "order": 56,
    "mode": 0,
    "inputs": [
     {
@@ -3344,7 +3345,7 @@
    "flags": {
     "pinned": true
    },
-   "order": 55,
+   "order": 57,
    "mode": 2,
    "inputs": [
     {
@@ -3560,7 +3561,7 @@
    "flags": {
     "pinned": true
    },
-   "order": 47,
+   "order": 49,
    "mode": 0,
    "inputs": [
     {
@@ -3687,7 +3688,7 @@
    "flags": {
     "pinned": true
    },
-   "order": 35,
+   "order": 37,
    "mode": 0,
    "inputs": [
     {
@@ -3791,7 +3792,7 @@
    "flags": {
     "pinned": true
    },
-   "order": 34,
+   "order": 36,
    "mode": 0,
    "inputs": [
     {
@@ -3911,7 +3912,7 @@
    "flags": {
     "pinned": true
    },
-   "order": 56,
+   "order": 58,
    "mode": 0,
    "inputs": [
     {
@@ -3974,7 +3975,7 @@
    "flags": {
     "pinned": true
    },
-   "order": 57,
+   "order": 59,
    "mode": 0,
    "inputs": [
     {
@@ -4127,7 +4128,7 @@
    "flags": {
     "pinned": true
    },
-   "order": 58,
+   "order": 60,
    "mode": 0,
    "inputs": [
     {
@@ -4419,7 +4420,7 @@
    "flags": {
     "pinned": true
    },
-   "order": 59,
+   "order": 61,
    "mode": 4,
    "inputs": [
     {
@@ -4591,7 +4592,7 @@
    "flags": {
     "pinned": true
    },
-   "order": 60,
+   "order": 62,
    "mode": 4,
    "inputs": [
     {
@@ -4994,7 +4995,7 @@
     "collapsed": true,
     "pinned": true
    },
-   "order": 61,
+   "order": 63,
    "mode": 0,
    "inputs": [
     {
@@ -5061,7 +5062,7 @@
    "flags": {
     "pinned": true
    },
-   "order": 62,
+   "order": 64,
    "mode": 0,
    "inputs": [
     {
@@ -5094,7 +5095,8 @@
      "name": "final24_prefix",
      "type": "STRING",
      "links": [
-      245
+      245,
+      441
      ]
     },
     {
@@ -5102,7 +5104,8 @@
      "name": "final48_prefix",
      "type": "STRING",
      "links": [
-      246
+      246,
+      440
      ]
     }
    ],
@@ -5196,7 +5199,7 @@
    "flags": {
     "pinned": true
    },
-   "order": 63,
+   "order": 65,
    "mode": 0,
    "inputs": [
     {
@@ -5257,7 +5260,7 @@
    "flags": {
     "pinned": true
    },
-   "order": 64,
+   "order": 66,
    "mode": 0,
    "inputs": [
     {
@@ -5351,7 +5354,7 @@
    "flags": {
     "pinned": true
    },
-   "order": 65,
+   "order": 67,
    "mode": 0,
    "inputs": [
     {
@@ -5445,7 +5448,7 @@
    "flags": {
     "pinned": true
    },
-   "order": 66,
+   "order": 68,
    "mode": 0,
    "inputs": [
     {
@@ -5517,7 +5520,8 @@
      "links": [
       407,
       410,
-      412
+      412,
+      438
      ]
     }
    ],
@@ -5563,7 +5567,7 @@
    "flags": {
     "pinned": true
    },
-   "order": 67,
+   "order": 69,
    "mode": 2,
    "inputs": [
     {
@@ -5667,7 +5671,7 @@
    "flags": {
     "pinned": true
    },
-   "order": 68,
+   "order": 70,
    "mode": 2,
    "inputs": [
     {
@@ -5783,7 +5787,7 @@
    "flags": {
     "pinned": true
    },
-   "order": 69,
+   "order": 71,
    "mode": 2,
    "inputs": [
     {
@@ -5814,7 +5818,8 @@
      "name": "images",
      "type": "IMAGE",
      "links": [
-      413
+      413,
+      437
      ]
     }
    ],
@@ -5848,7 +5853,7 @@
    "flags": {
     "pinned": true
    },
-   "order": 70,
+   "order": 72,
    "mode": 2,
    "inputs": [
     {
@@ -5947,7 +5952,7 @@
    ],
    "size": [
     720,
-    103
+    72
    ],
    "flags": {
     "pinned": true
@@ -6084,7 +6089,7 @@
    "flags": {
     "pinned": true
    },
-   "order": 71,
+   "order": 73,
    "mode": 0,
    "inputs": [
     {
@@ -6287,11 +6292,12 @@
    ],
    "title": "🙂 Face Refine (แก้หน้า) — ใส่กี่คนก็ได้",
    "properties": {
+    "Node name for S&R": "LongMaiFaceRefineMulti",
     "ue_properties": {
      "widget_ue_connectable": {},
-     "input_ue_unconnectable": {}
-    },
-    "Node name for S&R": "LongMaiFaceRefineMulti"
+     "input_ue_unconnectable": {},
+     "version": "7.8"
+    }
    },
    "widgets_values": [
     "",
@@ -6307,11 +6313,7 @@
     "denoise": 0.4,
     "refine_seed": 771,
     "identity_threshold": 0.28,
-    "crop_factor": 2.5,
-    "⬆️ เพิ่มภาพหน้า (เลือกได้หลายภาพ / ลากภาพมาวาง)": null,
-    "➕ คนซ้าย": null,
-    "➕ คนขวา": null,
-    "🧹 ล้างรายการ (ว่าง = หน้าใหญ่สุด 1 คน)": null
+    "crop_factor": 2.5
    }
   },
   {
@@ -6328,8 +6330,10 @@
    "flags": {
     "pinned": true
    },
-   "order": 21,
+   "order": 33,
    "mode": 0,
+   "inputs": [],
+   "outputs": [],
    "title": "วิธีใช้ Face Refine",
    "properties": {
     "ue_properties": {
@@ -6346,6 +6350,238 @@
    },
    "color": "#432",
    "bgcolor": "#653"
+  },
+  {
+   "id": 158,
+   "type": "LongMaiHDRExport",
+   "pos": [
+    7020,
+    1606
+   ],
+   "size": [
+    460,
+    260
+   ],
+   "flags": {
+    "pinned": true
+   },
+   "order": 34,
+   "mode": 4,
+   "inputs": [
+    {
+     "localized_name": "images_48",
+     "name": "images_48",
+     "shape": 7,
+     "type": "IMAGE",
+     "link": 437
+    },
+    {
+     "localized_name": "images_24",
+     "name": "images_24",
+     "shape": 7,
+     "type": "IMAGE",
+     "link": 438
+    },
+    {
+     "localized_name": "audio",
+     "name": "audio",
+     "shape": 7,
+     "type": "AUDIO",
+     "link": 439
+    },
+    {
+     "localized_name": "prefix_48",
+     "name": "prefix_48",
+     "shape": 7,
+     "type": "STRING",
+     "link": 440
+    },
+    {
+     "localized_name": "prefix_24",
+     "name": "prefix_24",
+     "shape": 7,
+     "type": "STRING",
+     "link": 441
+    },
+    {
+     "localized_name": "luminance",
+     "name": "luminance",
+     "type": "INT",
+     "widget": {
+      "name": "luminance"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "contrast",
+     "name": "contrast",
+     "type": "INT",
+     "widget": {
+      "name": "contrast"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "saturation",
+     "name": "saturation",
+     "type": "INT",
+     "widget": {
+      "name": "saturation"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "middle_gray",
+     "name": "middle_gray",
+     "type": "INT",
+     "widget": {
+      "name": "middle_gray"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "debanding",
+     "name": "debanding",
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "debanding"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "hdr_format",
+     "name": "hdr_format",
+     "type": "COMBO",
+     "widget": {
+      "name": "hdr_format"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [],
+   "title": "🌈 HDR Export (ไฟล์ HDR แยก — 10-bit HLG)",
+   "properties": {
+    "ue_properties": {
+     "widget_ue_connectable": {},
+     "input_ue_unconnectable": {}
+    },
+    "Node name for S&R": "LongMaiHDRExport"
+   },
+   "widgets_values": [
+    650,
+    100,
+    100,
+    50,
+    true,
+    "HDR (HLG)"
+   ],
+   "widgets_values_named": {
+    "luminance": 1000,
+    "contrast": 100,
+    "saturation": 100,
+    "middle_gray": 50,
+    "debanding": true,
+    "hdr_format": "HDR (HLG)"
+   }
+  },
+  {
+   "id": 159,
+   "type": "Note",
+   "pos": [
+    7520,
+    1606
+   ],
+   "size": [
+    740,
+    260
+   ],
+   "flags": {
+    "pinned": true
+   },
+   "order": 21,
+   "mode": 4,
+   "title": "HDR ทำอะไร",
+   "properties": {
+    "ue_properties": {
+     "widget_ue_connectable": {},
+     "version": "7.8",
+     "input_ue_unconnectable": {}
+    }
+   },
+   "widgets_values": [
+    "🌈 HDR = แปลงคลิปสุดท้ายจาก SDR → HDR ด้วย NVIDIA RTX TrueHDR แล้วบันทึกเพิ่มอีกไฟล์ (…_48fps_HDR หรือ …_24fps_HDR)\n• ใช้ภาพ 48 fps ถ้าเปิดไว้ ไม่งั้นใช้ 24 fps · ปิด Stage 2 อยู่ = ไม่ทำอะไร (ไม่ error)\n• สวยบนจอ HDR (iPhone / Android HDR / YouTube HDR / ทีวี HDR) · บนจอธรรมดาสีอาจดูจางกว่าไฟล์ปกติ — ใช้ไฟล์ปกติแทน\n• luminance 650 = ค่าเดียวกับตัวอย่างของ NVIDIA (1000 = จอ HDR สว่างมาก) · HLG (แนะนำ) ดูบนจอธรรมดาได้ดีกว่า PQ\n• ใช้ RAM เพิ่มประมาณเท่าคลิป 48 fps อีก 1 ชุด — ถ้าใช้ SR 2x + 48 fps + HDR พร้อมกัน RAM อาจไม่พอ"
+   ],
+   "widgets_values_named": {
+    "text": "🌈 HDR = แปลงคลิปสุดท้ายจาก SDR → HDR ด้วย NVIDIA RTX TrueHDR แล้วบันทึกเพิ่มอีกไฟล์ (…_48fps_HDR หรือ …_24fps_HDR)\n• ใช้ภาพ 48 fps ถ้าเปิดไว้ ไม่งั้นใช้ 24 fps · ปิด Stage 2 อยู่ = ไม่ทำอะไร (ไม่ error)\n• สวยบนจอ HDR (iPhone / Android HDR / YouTube HDR / ทีวี HDR) · บนจอธรรมดาสีอาจดูจางกว่าไฟล์ปกติ — ใช้ไฟล์ปกติแทน\n• luminance 650 = ค่าเดียวกับตัวอย่างของ NVIDIA (1000 = จอ HDR สว่างมาก) · HLG (แนะนำ) ดูบนจอธรรมดาได้ดีกว่า PQ\n• ใช้ RAM เพิ่มประมาณเท่าคลิป 48 fps อีก 1 ชุด — ถ้าใช้ SR 2x + 48 fps + HDR พร้อมกัน RAM อาจไม่พอ"
+   },
+   "color": "#432",
+   "bgcolor": "#653"
+  },
+  {
+   "id": 160,
+   "type": "PixaromaGroupSwitch",
+   "pos": [
+    2400,
+    2111
+   ],
+   "size": [
+    720,
+    72
+   ],
+   "flags": {
+    "pinned": true
+   },
+   "order": 32,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [],
+   "title": "🔀 🌈 HDR (บันทึกไฟล์ HDR แยกเพิ่ม)",
+   "properties": {
+    "cnr_id": "comfyui-pixaroma",
+    "ver": "1.4.162",
+    "Node name for S&R": "PixaromaGroupSwitch",
+    "ue_properties": {
+     "widget_ue_connectable": {},
+     "input_ue_unconnectable": {},
+     "version": "7.8"
+    },
+    "groupSwitchState": {
+     "version": 1,
+     "action": "bypass",
+     "scope": "pick",
+     "picked": [
+      "pg_lm_hdr"
+     ],
+     "sort": "position",
+     "restriction": "any"
+    }
+   },
+   "widgets_values": [
+    {
+     "version": 1,
+     "action": "bypass",
+     "scope": "pick",
+     "picked": [
+      "pg_lm_hdr"
+     ],
+     "sort": "position",
+     "restriction": "any"
+    }
+   ],
+   "widgets_values_named": {
+    "group_switch_ui": {
+     "version": 1,
+     "action": "bypass",
+     "scope": "pick",
+     "picked": [
+      "pg_lm_hdr"
+     ],
+     "sort": "position",
+     "restriction": "any"
+    }
+   },
+   "color": "#d35050",
+   "bgcolor": "#3e2b2b"
   }
  ],
  "links": [
@@ -7038,190 +7274,6 @@
    "AUDIO"
   ],
   [
-   182,
-   68,
-   23,
-   28,
-   0,
-   "VIDEO"
-  ],
-  [
-   244,
-   90,
-   0,
-   28,
-   1,
-   "STRING"
-  ],
-  [
-   409,
-   149,
-   0,
-   43,
-   0,
-   "VIDEO"
-  ],
-  [
-   245,
-   90,
-   1,
-   43,
-   1,
-   "STRING"
-  ],
-  [
-   178,
-   68,
-   20,
-   47,
-   0,
-   "INT"
-  ],
-  [
-   415,
-   152,
-   0,
-   57,
-   0,
-   "VIDEO"
-  ],
-  [
-   246,
-   90,
-   2,
-   57,
-   1,
-   "STRING"
-  ],
-  [
-   225,
-   71,
-   0,
-   77,
-   0,
-   "MODEL"
-  ],
-  [
-   227,
-   8,
-   0,
-   78,
-   0,
-   "MODEL"
-  ],
-  [
-   405,
-   146,
-   1,
-   148,
-   2,
-   "INT"
-  ],
-  [
-   406,
-   147,
-   1,
-   148,
-   3,
-   "INT"
-  ],
-  [
-   410,
-   148,
-   0,
-   150,
-   0,
-   "IMAGE"
-  ],
-  [
-   398,
-   145,
-   0,
-   146,
-   0,
-   "INT"
-  ],
-  [
-   399,
-   145,
-   1,
-   146,
-   1,
-   "INT"
-  ],
-  [
-   400,
-   144,
-   0,
-   146,
-   2,
-   "INT"
-  ],
-  [
-   401,
-   145,
-   0,
-   147,
-   0,
-   "INT"
-  ],
-  [
-   402,
-   145,
-   1,
-   147,
-   1,
-   "INT"
-  ],
-  [
-   403,
-   144,
-   0,
-   147,
-   2,
-   "INT"
-  ],
-  [
-   181,
-   68,
-   22,
-   62,
-   0,
-   "LATENT"
-  ],
-  [
-   138,
-   63,
-   0,
-   64,
-   0,
-   "LATENT"
-  ],
-  [
-   139,
-   62,
-   0,
-   64,
-   1,
-   "*"
-  ],
-  [
-   241,
-   63,
-   2,
-   89,
-   0,
-   "STRING"
-  ],
-  [
-   242,
-   61,
-   0,
-   89,
-   1,
-   "STRING"
-  ],
-  [
    416,
    69,
    1,
@@ -7374,6 +7426,86 @@
    "AUDIO"
   ],
   [
+   436,
+   156,
+   0,
+   145,
+   0,
+   "IMAGE"
+  ],
+  [
+   182,
+   68,
+   23,
+   28,
+   0,
+   "VIDEO"
+  ],
+  [
+   244,
+   90,
+   0,
+   28,
+   1,
+   "STRING"
+  ],
+  [
+   409,
+   149,
+   0,
+   43,
+   0,
+   "VIDEO"
+  ],
+  [
+   245,
+   90,
+   1,
+   43,
+   1,
+   "STRING"
+  ],
+  [
+   178,
+   68,
+   20,
+   47,
+   0,
+   "INT"
+  ],
+  [
+   415,
+   152,
+   0,
+   57,
+   0,
+   "VIDEO"
+  ],
+  [
+   246,
+   90,
+   2,
+   57,
+   1,
+   "STRING"
+  ],
+  [
+   225,
+   71,
+   0,
+   77,
+   0,
+   "MODEL"
+  ],
+  [
+   227,
+   8,
+   0,
+   78,
+   0,
+   "MODEL"
+  ],
+  [
    435,
    156,
    0,
@@ -7382,12 +7514,156 @@
    "IMAGE"
   ],
   [
-   436,
-   156,
+   405,
+   146,
+   1,
+   148,
+   2,
+   "INT"
+  ],
+  [
+   406,
+   147,
+   1,
+   148,
+   3,
+   "INT"
+  ],
+  [
+   410,
+   148,
    0,
-   145,
+   150,
    0,
    "IMAGE"
+  ],
+  [
+   398,
+   145,
+   0,
+   146,
+   0,
+   "INT"
+  ],
+  [
+   399,
+   145,
+   1,
+   146,
+   1,
+   "INT"
+  ],
+  [
+   400,
+   144,
+   0,
+   146,
+   2,
+   "INT"
+  ],
+  [
+   401,
+   145,
+   0,
+   147,
+   0,
+   "INT"
+  ],
+  [
+   402,
+   145,
+   1,
+   147,
+   1,
+   "INT"
+  ],
+  [
+   403,
+   144,
+   0,
+   147,
+   2,
+   "INT"
+  ],
+  [
+   181,
+   68,
+   22,
+   62,
+   0,
+   "LATENT"
+  ],
+  [
+   138,
+   63,
+   0,
+   64,
+   0,
+   "LATENT"
+  ],
+  [
+   139,
+   62,
+   0,
+   64,
+   1,
+   "*"
+  ],
+  [
+   241,
+   63,
+   2,
+   89,
+   0,
+   "STRING"
+  ],
+  [
+   242,
+   61,
+   0,
+   89,
+   1,
+   "STRING"
+  ],
+  [
+   437,
+   151,
+   0,
+   158,
+   0,
+   "IMAGE"
+  ],
+  [
+   438,
+   148,
+   0,
+   158,
+   1,
+   "IMAGE"
+  ],
+  [
+   439,
+   69,
+   2,
+   158,
+   2,
+   "AUDIO"
+  ],
+  [
+   440,
+   90,
+   2,
+   158,
+   3,
+   "STRING"
+  ],
+  [
+   441,
+   90,
+   1,
+   158,
+   4,
+   "STRING"
   ]
  ],
  "groups": [
@@ -7455,8 +7731,8 @@
     "version": 1,
     "state": {
      "lastGroupId": 5,
-     "lastNodeId": 156,
-     "lastLinkId": 436,
+     "lastNodeId": 158,
+     "lastLinkId": 441,
      "lastRerouteId": 0
     },
     "revision": 0,
@@ -9973,8 +10249,8 @@
     "version": 1,
     "state": {
      "lastGroupId": 5,
-     "lastNodeId": 156,
-     "lastLinkId": 436,
+     "lastNodeId": 158,
+     "lastLinkId": 441,
      "lastRerouteId": 0
     },
     "revision": 0,
@@ -12457,6 +12733,24 @@
     "y": 0,
     "w": 1300,
     "h": 920
+   },
+   {
+    "titleAlpha": 0.92,
+    "bodyAlpha": 0.5,
+    "fontSize": 20,
+    "hOpen": 220,
+    "wOpen": 320,
+    "folded": false,
+    "showLinks": true,
+    "pinned": true,
+    "titleColor": "#ff8f00",
+    "bodyColor": "#3a3422",
+    "id": "pg_lm_hdr",
+    "title": "🌈 HDR — ไฟล์ HDR แยก (10-bit HLG) · ไฟล์ปกติยังอยู่เหมือนเดิม",
+    "x": 7000,
+    "y": 1526,
+    "w": 1300,
+    "h": 1300
    }
   ],
   "ue_links": []

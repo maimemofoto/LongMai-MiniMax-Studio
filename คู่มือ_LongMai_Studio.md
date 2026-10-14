@@ -9,7 +9,7 @@
 
 | ไฟล์ | ใช้ทำอะไร |
 |---|---|
-| **LongMai MiniMax Studio FINAL V3** | V2 + 🙂 Face Refine (แก้หน้า ใส่กี่คนก็ได้) + 🖥️ RTX Super Resolution + 48 fps แบบ NVIDIA — ดูข้อ 13 |
+| **LongMai MiniMax Studio FINAL V3** | V2 + 🙂 Face Refine (แก้หน้า ใส่กี่คนก็ได้) + 🖥️ RTX Super Resolution + 48 fps แบบ NVIDIA + 🌈 HDR — ดูข้อ 13 |
 | **LongMai MiniMax Studio FINAL V2** | ตัวหลักเดิม มีทุกอย่างของ FINAL + ⚡ โหมดเร็ว + 🎬 First / Last Frame |
 | LongMai MiniMax Studio FINAL | ตัวเดิมของ Tom (attention แบบ PyTorch เต็ม) — V2 ตอนปิด ⚡ ทำงานเหมือนตัวนี้ทุกอย่าง |
 | LongMai Join Clips | ต่อหลายคลิปเป็นวิดีโอยาว |
@@ -189,11 +189,11 @@
 
 ---
 
-## 13. FINAL V3 — Face Refine / RTX Super Resolution / NVIDIA 48 fps
+## 13. FINAL V3 — Face Refine / RTX Super Resolution / NVIDIA 48 fps / HDR
 
-V3 = V2 ทุกอย่าง + 3 อย่างนี้ (ทุกอย่างมีสวิตช์เปิด/ปิดในกลุ่ม ②)
+V3 = V2 ทุกอย่าง + 4 อย่างนี้ (ทุกอย่างมีสวิตช์เปิด/ปิดในกลุ่ม ②)
 
-ลำดับการทำงาน: **Stage 2 → 🙂 Face Refine → 🖥️ RTX Super Resolution → บันทึก 24 fps / ⑥ NVIDIA 48 fps → บันทึก 48 fps**
+ลำดับการทำงาน: **Stage 2 → 🙂 Face Refine → 🖥️ RTX Super Resolution → บันทึก 24 fps / ⑥ NVIDIA 48 fps → บันทึก 48 fps → 🌈 HDR (ไฟล์แยก)**
 
 ### 🙂 Face Refine (แก้หน้า — ใส่กี่คนก็ได้)
 แก้หน้าเล็ก / หน้าเละหลัง Stage 2: ตามหน้าทุกเฟรม → ครอปให้หน้าใหญ่ → ให้ H3 เจนเฉพาะหน้าใหม่ (ล็อกเสียง ปากยังตรง) → แปะกลับ
@@ -218,6 +218,13 @@ V3 = V2 ทุกอย่าง + 3 อย่างนี้ (ทุกอย�
 
 ### ⑥ 48 fps = NVIDIA RTX Frame Generation
 - แทน RIFE เดิม ตรวจจุดตัดช็อตเอง · จำนวนเฟรมเป็น 2 เท่าพอดี เสียงตรง · ต้องการการ์ด RTX 40 ขึ้นไป
+
+### 🌈 HDR (ไฟล์ HDR แยก — ปิดไว้เป็นค่าเริ่มต้น)
+- ทำเป็น**ขั้นสุดท้าย** หลังทุกอย่างเสร็จ: แปลงคลิปสุดท้าย SDR → HDR ด้วย NVIDIA RTX TrueHDR แล้วบันทึก**เพิ่มอีกไฟล์** `…_48fps_HDR` (หรือ `…_24fps_HDR` ถ้าปิด 48 fps) · ไฟล์ปกติยังอยู่ครบ
+- ไฟล์ที่ได้: MP4 H.264 10-bit, BT.2020, **HLG** — แบบเดียวกับ workflow ตัวอย่างของ NVIDIA (ตรวจด้วย ffprobe แล้ว)
+- `hdr_format`: HLG (แนะนำ ดูบนจอธรรมดาได้ดีกว่า) หรือ PQ (HDR10) · `luminance` 650 = ค่าตัวอย่างของ NVIDIA
+- สวยบนจอ HDR (iPhone / Android HDR / YouTube HDR / ทีวี HDR) · บนจอธรรมดาให้ใช้ไฟล์ปกติ
+- ปิด Stage 2 อยู่ = node นี้ไม่ทำอะไร (เปิดสวิตช์ทิ้งไว้ได้ ไม่ error) · ใช้ RAM เพิ่ม — SR 2x + 48 fps + HDR พร้อมกัน RAM อาจไม่พอ
 
 ### ติดตั้งเพิ่มสำหรับ V3
 - ComfyUI-H3-FaceRefine (+ `pip install insightface "scenedetect>=0.7"`), โมเดล `face_yolov8m.pt` / `person_yolov8m-seg.pt` (Bingsu/adetailer)
