@@ -300,6 +300,223 @@ class LongMaiSaveStage1Latent:
         return (name, path)
 
 
+def _call_node(name, **kw):
+    """Run any registered ComfyUI node (legacy or V3 schema) in-process and return its outputs as a tuple."""
+    cls = comfy_nodes.NODE_CLASS_MAPPINGS.get(name)
+    if cls is None:
+        raise RuntimeError(f"LongMai Face Refine: node '{name}' is not installed")
+    if hasattr(cls, "define_schema"):
+        out = cls.execute(**kw)
+        return tuple(out.args) if hasattr(out, "args") else tuple(out)
+    return tuple(getattr(cls(), cls.FUNCTION)(**kw))
+
+
+POSITION_WORDS = {"ซ้าย": "left_most", "left": "left_most", "ขวา": "right_most", "right": "right_most",
+                  "ใหญ่": "largest_face", "ใหญ่สุด": "largest_face", "largest": "largest_face",
+                  "เล็ก": "smallest_face", "เล็กสุด": "smallest_face", "smallest": "smallest_face",
+                  "บน": "top_most", "top": "top_most", "ล่าง": "bottom_most", "bottom": "bottom_most"}
+
+
+def _load_face(path):
+    """Identity image as IMAGE. A grey border is added so a tightly cropped face is still found by insightface's
+    detector (it misses faces that fill the whole picture)."""
+    from PIL import Image, ImageOps
+    import numpy as np
+    p = path.strip().strip('"')
+    if not os.path.isabs(p):
+        p = os.path.join(folder_paths.get_input_directory(), p)
+    if not os.path.exists(p):
+        raise FileNotFoundError(f"LongMai Face Refine: หาภาพหน้าไม่เจอ: {path} (ค้นใน ComfyUI/input แล้ว)")
+    im = ImageOps.exif_transpose(Image.open(p)).convert("RGB")
+    pad = int(0.4 * max(im.size))
+    im = ImageOps.expand(im, border=pad, fill=(128, 128, 128))
+    return torch.from_numpy(np.asarray(im).astype("float32") / 255.0)[None]
+
+
+def _centres(transform):
+    """{source frame: (cx, cy, w)} of the tracked crop box."""
+    src = transform.get("source") or list(range(len(transform["boxes"])))
+    return {int(f): (b[0] + b[2] / 2.0, b[1] + b[3] / 2.0, b[2]) for f, b in zip(src, transform["boxes"])}
+
+
+def _same_person(t_new, t_old):
+    """True when two tracks follow the same face for most of their shared frames."""
+    a, b = _centres(t_new), _centres(t_old)
+    common = [f for f in a if f in b]
+    if not common:
+        return False
+    close = sum(1 for f in common
+                if ((a[f][0] - b[f][0]) ** 2 + (a[f][1] - b[f][1]) ** 2) ** 0.5 < 0.3 * max(a[f][2], b[f][2]))
+    return close >= 0.6 * len(common)
+
+
+class LongMaiFaceRefineMulti:
+    """H3 Face Refine for any number of people in one node (needs ComfyUI-H3-FaceRefine).
+
+    faces empty -> refine the largest face in frame (1 pass).
+    faces lines -> one pass per line, in order. A line is either a face image (identity match with insightface) or a
+                   position word: ซ้าย/left, ขวา/right, ใหญ่/largest, เล็ก/smallest, บน/top, ล่าง/bottom.
+    Each pass tracks that person, crops the face large, re-generates it with H3 at low denoise with the clip's own
+    audio locked (lip-sync kept), and stitches it back. A person who is not in the clip, a face image without a
+    detectable face, or a pass that would land on someone already refined is skipped (an identity pass that lands on
+    an already-refined face first retries on the other side of the frame), so extra lines never break a run."""
+
+    SKIP_MARKERS = ("No face detected in any frame", "not containing the subject")
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        opt = {f"ref_image_{i}": ("IMAGE",) for i in range(1, 10)}
+        opt.update({f"ref_audio_{i}": ("AUDIO",) for i in range(1, 4)})
+        return {"required": {
+            "images": ("IMAGE", {"tooltip": "Stage 2 frames"}),
+            "audio": ("AUDIO", {"tooltip": "The clip's own audio (locked, keeps lip-sync)"}),
+            "model": ("MODEL",),
+            "clip": ("CLIP",),
+            "vae": ("VAE",),
+            "audio_vae": ("VAE",),
+            "prompt": ("STRING", {"forceInput": True}),
+            "faces": ("STRING", {"multiline": True, "default": "",
+                                 "tooltip": "คนที่จะแก้หน้า บรรทัดละ 1 คน (ใส่กี่คนก็ได้): ภาพหน้าของคนนั้น หรือคำบอกตำแหน่ง "
+                                            "ซ้าย / ขวา / ใหญ่ / เล็ก / บน / ล่าง · ว่าง = แก้หน้าใหญ่สุด 1 คน · "
+                                            "คนที่ไม่มีในคลิปหรือซ้ำกับคนที่แก้แล้วจะถูกข้ามเอง"}),
+            "steps": ("INT", {"default": 6, "min": 1, "max": 50}),
+            "denoise": ("FLOAT", {"default": 0.4, "min": 0.05, "max": 1.0, "step": 0.01,
+                                  "tooltip": "0.3 อ่อน · 0.4 ปกติ · 0.5 แรง (หน้าเล็กแก้เต็มค่านี้ หน้าใหญ่แก้ 35%)"}),
+            "refine_seed": ("INT", {"default": 771, "min": 0, "max": 0xffffffffffffffff}),
+            "identity_threshold": ("FLOAT", {"default": 0.28, "min": 0.0, "max": 1.0, "step": 0.01,
+                                             "tooltip": "ความเหมือนขั้นต่ำที่ถือว่าเป็นคนเดียวกัน (insightface)"}),
+            "crop_factor": ("FLOAT", {"default": 2.5, "min": 1.5, "max": 4.0, "step": 0.1}),
+        }, "optional": opt}
+
+    RETURN_TYPES = ("IMAGE", "STRING")
+    RETURN_NAMES = ("images", "report")
+    FUNCTION = "run"
+    CATEGORY = "LongMai"
+
+    def run(self, images, audio, model, clip, vae, audio_vae, prompt, faces, steps, denoise, refine_seed,
+            identity_threshold, crop_factor, **refs):
+        import comfy.model_management as mm
+        M = comfy_nodes.NODE_CLASS_MAPPINGS
+        for need in ("H3FaceTrackCrop", "H3InjectVideoLatent", "H3PerFrameDenoise", "H3FaceStitch"):
+            if need not in M:
+                raise RuntimeError("LongMai Face Refine: ต้องติดตั้ง ComfyUI-H3-FaceRefine ก่อน "
+                                   "(https://github.com/Carasibana/ComfyUI-H3-FaceRefine)")
+        track = M["H3FaceTrackCrop"]()
+        spec = track.INPUT_TYPES()
+        req = {**spec.get("required", {}), **spec.get("optional", {})}
+        det = next((d for d in req["detector"][0] if os.path.basename(d) == "face_yolov8m.pt"), req["detector"][0][0])
+        fb = next((d for d in (req.get("fallback_detector") or [["none"]])[0] if "person_yolov8m-seg" in d), "none")
+        ref_images = {f"ref_image_{i}": refs[f"ref_image_{i + 1}"] for i in range(9) if refs.get(f"ref_image_{i + 1}") is not None}
+        ref_audios = {f"ref_audio_{i}": refs[f"ref_audio_{i + 1}"] for i in range(3) if refs.get(f"ref_audio_{i + 1}") is not None}
+        W = int(images.shape[2])
+
+        def do_track(cur, face, select):
+            return track.run(
+                images=cur, detector=det, confidence=0.35, crop_factor=crop_factor, canvas_width=768,
+                canvas_height=768, canvas_mode="auto_capped_768", smooth_window=21, size_smooth_window=51,
+                smooth_method="gaussian", size_mode="per_frame", select=select, fallback_detector=fb,
+                fallback_head_frac=0.5, identity_reference=face, identity_threshold=identity_threshold,
+                identity_track=True, identity_model="insightface", cut_detection="auto (pyscenedetect)",
+                cut_threshold=3.0, absent_shots="by_identity" if face is not None else "off")
+
+        lines_in = [ln.strip() for ln in (faces or "").splitlines() if ln.strip() and not ln.strip().startswith("#")]
+        passes = []
+        for ln in lines_in:
+            key = ln.lower()
+            if key in POSITION_WORDS:
+                passes.append((ln, None, POSITION_WORDS[key]))
+            else:
+                passes.append((ln, _load_face(ln), "largest_face"))
+        passes = passes or [("หน้าใหญ่สุด", None, "largest_face")]
+
+        cur, done, report = images, [], []
+        for k, (label, face, select) in enumerate(passes, start=1):
+            mm.throw_exception_if_processing_interrupted()
+            tag = f"คนที่ {k} ({os.path.basename(label)})"
+            try:
+                crops, transform, _p, trep, cw, ch, fc = do_track(cur, face, select)
+            except ValueError as e:
+                if any(s in str(e) for s in self.SKIP_MARKERS):
+                    report.append(f"{tag}: ข้าม — ไม่พบคนนี้ในคลิป")
+                    continue
+                raise
+            if face is not None and "found no face in identity_reference" in str(trep):
+                report.append(f"{tag}: ข้าม — ภาพหน้านี้ตรวจหาหน้าไม่เจอ (ใช้ภาพหน้าตรงที่ชัดกว่านี้)")
+                continue
+            if any(_same_person(transform, t) for t in done):
+                retried = False
+                if face is not None:   # identity is unreliable on small faces: try the other side of the frame
+                    pts = [c[0] for t in done for c in _centres(t).values()]
+                    alt = "right_most" if sum(pts) / len(pts) < W / 2 else "left_most"
+                    try:
+                        crops, transform, _p, trep, cw, ch, fc = do_track(cur, None, alt)
+                        retried = not any(_same_person(transform, t) for t in done)
+                    except ValueError:
+                        retried = False
+                    if retried:
+                        tag += f" → เทียบหน้าไม่ชัด ใช้คน{'ขวา' if alt == 'right_most' else 'ซ้าย'}แทน"
+                if not retried:
+                    report.append(f"{tag}: ข้าม — เป็นคนเดียวกับที่แก้ไปแล้ว")
+                    continue
+            positive, latent = _call_node("MiniMaxH3ReferenceToVideo", clip=clip, prompt=prompt, width=int(cw),
+                                          height=int(ch), length=int(fc), ref_image_size="match", vae=vae,
+                                          audio_vae=audio_vae, ref_images=ref_images or None,
+                                          ref_audios=ref_audios or None)[:2]
+            av = M["H3InjectVideoLatent"]().run(av_latent=latent, images=crops, vae=vae)[0]
+            enc = dict(_call_node("VAEEncodeAudio", vae=audio_vae, audio=audio)[0])
+            enc["noise_mask"] = torch.zeros((1, 1, 512, 512))      # audio stays exactly as recorded
+            av = _call_node("LTXVConcatAVLatent", video_latent=av, audio_latent=enc)[0]
+            av, _prep, pmodel = M["H3PerFrameDenoise"]().run(
+                model=model, av_latent=av, transform=transform, denoise_multiplier_small_face=1.0,
+                denoise_multiplier_large_face=0.35, face_px_small=30, face_px_large=120, gamma=1.0,
+                smooth_frames=9, scale_mode="absolute_px")
+            sigmas = _call_node("BasicScheduler", model=pmodel, scheduler="simple", steps=steps, denoise=denoise)[0]
+            sampler = _call_node("KSamplerSelect", sampler_name="euler")[0]
+            noise = _call_node("RandomNoise", noise_seed=refine_seed + k - 1)[0]
+            guider = _call_node("BasicGuider", model=pmodel, conditioning=positive)[0]
+            out = _call_node("SamplerCustomAdvanced", noise=noise, guider=guider, sampler=sampler, sigmas=sigmas,
+                             latent_image=av)[0]
+            dec = _call_node("VAEDecode", vae=vae, samples=out)[0]
+            cur = M["H3FaceStitch"]().run(base_images=cur, refined_crops=dec, transform=transform,
+                                          paste_region="face_only", mask_dilation=24, feather=24, colour_match=1.0,
+                                          blend=1.0, undetected_frames="fade_out")[0]
+            done.append(transform)
+            xs = [c[0] for c in _centres(transform).values()]
+            side = "ซ้าย" if sum(xs) / len(xs) < W / 2 else "ขวา"
+            report.append(f"{tag}: แก้แล้ว — คนฝั่ง{side}, canvas {cw}x{ch}, {fc} เฟรม")
+        text = "\n".join(report) or "ไม่ได้แก้หน้า"
+        print("[LongMai Face Refine]\n" + text)
+        return (cur, text)
+
+
+class LongMaiMatchFrameCount:
+    """Makes an interpolated clip exactly (source frames x multiplier) long, so it stays in sync with the audio:
+    N / 24 s == (N x 2) / 48 s. Frame generators return (N-1) x M + 1 frames; the missing tail is filled with copies
+    of the last frame (extra frames are trimmed)."""
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {"required": {
+            "images": ("IMAGE",),
+            "source_images": ("IMAGE", {"tooltip": "The clip before interpolation (its frame count is the reference)."}),
+            "multiplier": ("INT", {"default": 2, "min": 1, "max": 16}),
+        }}
+
+    RETURN_TYPES = ("IMAGE",)
+    RETURN_NAMES = ("images",)
+    FUNCTION = "run"
+    CATEGORY = "LongMai"
+
+    def run(self, images, source_images, multiplier):
+        target = int(source_images.shape[0]) * int(multiplier)
+        n = int(images.shape[0])
+        if n > target:
+            images = images[:target]
+        elif n < target:
+            images = torch.cat([images, images[-1:].repeat(target - n, 1, 1, 1)], dim=0)
+        return (images,)
+
+
 class LongMaiOutputNames:
     """Turns a generation name into the file-name prefixes of every clip it produces."""
 
@@ -369,6 +586,8 @@ NODE_CLASS_MAPPINGS = {
     "LongMaiLoadStage1Latent": LongMaiLoadStage1Latent,
     "LongMaiSaveStage1Latent": LongMaiSaveStage1Latent,
     "LongMaiOutputNames": LongMaiOutputNames,
+    "LongMaiMatchFrameCount": LongMaiMatchFrameCount,
+    "LongMaiFaceRefineMulti": LongMaiFaceRefineMulti,
 }
 NODE_DISPLAY_NAME_MAPPINGS = {
     "LongMaiSceneAwareRIFE": "LongMai Scene-Aware RIFE (48 fps, clean cuts)",
@@ -376,4 +595,6 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "LongMaiLoadStage1Latent": "LongMai Load Stage-1 Latent (upscale without re-generating)",
     "LongMaiSaveStage1Latent": "LongMai Save Stage-1 Latent (named by time + seed)",
     "LongMaiOutputNames": "LongMai Output Names (preview / 24fps / 48fps)",
+    "LongMaiMatchFrameCount": "LongMai Match Frame Count (keep 48 fps in sync with audio)",
+    "LongMaiFaceRefineMulti": "LongMai Face Refine (any number of faces)",
 }

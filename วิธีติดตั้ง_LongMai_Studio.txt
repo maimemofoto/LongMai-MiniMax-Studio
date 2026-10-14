@@ -91,3 +91,13 @@
 • ผลลัพธ์อยู่ที่ output/LongMai/ (Stage 1 ที่บันทึกไว้: output/LongMai/stage1_latent/)
 
 เปิด workflow แล้วถ้ามี node สีแดง = ยังขาด custom node · ถ้าเลือกไฟล์โมเดลไม่ได้ = วางผิดโฟลเดอร์ / ยังไม่รีสตาร์ต
+
+
+━━ เพิ่มสำหรับ V3 ━━
+• ComfyUI-H3-FaceRefine: git clone https://github.com/Carasibana/ComfyUI-H3-FaceRefine ← 🙂 Face Refine (ใช้ร่วมกับ node LongMai Face Refine)
+   pip install: ultralytics scipy insightface "scenedetect>=0.7" (insightface 2.1 มี wheel ไม่ต้องคอมไพล์)
+   ⚠️ ถ้ามีทั้ง onnxruntime และ onnxruntime-gpu ให้เช็กว่า CUDAExecutionProvider ยังอยู่ (ไม่งั้นเทียบหน้าจะช้า)
+   โมเดล: face_yolov8m.pt → models/ultralytics/bbox/ · person_yolov8m-seg.pt → models/ultralytics/segm/
+   จาก https://huggingface.co/Bingsu/adetailer · insightface buffalo_l โหลดเองครั้งแรก (models/insightface)
+• ComfyUI Nvidia VFX Nodes: git clone https://github.com/Comfy-Org/ComfyUI_Nvidia_VFX_Nodes + pip install -r requirements.txt (nvidia-vfx)
+   ← 🖥️ Super Resolution + 48 fps Frame Generation · ต้องการการ์ด RTX (Frame Generation ต้อง RTX 40 ขึ้นไป) + PyTorch cu130

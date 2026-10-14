@@ -18,6 +18,7 @@ Workflow ComfyUI สำหรับสร้างวิดีโอพร้อ
 | ไฟล์ | ใช้ทำอะไร |
 |---|---|
 | `workflows/LongMai MiniMax Studio FINAL.json` | workflow หลัก |
+| `workflows/LongMai MiniMax Studio FINAL V3.json` | V2 + 🙂 Face Refine (แก้หน้าเล็ก/หน้าเละ ใส่กี่คนก็ได้) + 🖥️ RTX Super Resolution + 48 fps แบบ NVIDIA RTX Frame Generation (ต้องติดตั้ง H3-FaceRefine และ Nvidia VFX Nodes เพิ่ม) |
 | `workflows/LongMai MiniMax Studio FINAL V2.json` | เวอร์ชันเร็ว: ⚡ โหมดเร็ว (Comfy-Kitchen INT8 + Sparse Attention), 🎬 First / Last Frame, ปรับ Megapixels / Steps / Denoise ของ Stage 2 ได้ |
 | `workflows/LongMai Join Clips.json` | ต่อหลายคลิปเป็นวิดีโอยาว |
 | `custom_nodes/ComfyUI-LongMai-Tools/` | custom node ของ workflow นี้ (48 fps ตัดช็อตสะอาด, บันทึก/เลือก Stage 1 ที่บันทึกไว้, ตั้งชื่อไฟล์อัตโนมัติ, Join Clips) |
