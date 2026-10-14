@@ -521,7 +521,7 @@ class LongMaiHDRExport:
     def run(self, luminance, contrast, saturation, middle_gray, debanding, hdr_format,
             images_48=None, images_24=None, audio=None, prefix_48=None, prefix_24=None):
         if images_48 is not None:
-            images, fps, prefix = images_48, 48, (prefix_48 or "LongMai/final/clip_48fps")
+            images, fps, prefix = images_48, 48, (prefix_48 or "LongMai/final/clip_48fps_final")
         elif images_24 is not None:
             images, fps, prefix = images_24, 24, (prefix_24 or "LongMai/final/clip_24fps")
         else:
@@ -535,8 +535,10 @@ class LongMaiHDRExport:
                            color_space=space, codec="none")[0]
         from comfy_api.latest import Types
         h, w = int(hdr.shape[1]), int(hdr.shape[2])
+        # "…_48fps_final" -> "…_48fps_HDR_final" (the HDR copy of the final clip); other prefixes just get "_HDR"
+        hdr_prefix = prefix[:-len("_final")] + "_HDR_final" if prefix.endswith("_final") else prefix + "_HDR"
         folder, filename, counter, subfolder, _ = folder_paths.get_save_image_path(
-            prefix + "_HDR", folder_paths.get_output_directory(), w, h)
+            hdr_prefix, folder_paths.get_output_directory(), w, h)
         file = f"{filename}_{counter:05}_.mp4"
         video.save_to(os.path.join(folder, file), format=Types.VideoContainer.MP4, codec=Types.VideoCodec.H264)
         print(f"[LongMai HDR] saved {subfolder}/{file} ({w}x{h}, {fps} fps, {space}, 10-bit)")
@@ -588,7 +590,7 @@ class LongMaiOutputNames:
 
     def run(self, name, folder="LongMai"):
         f = folder.strip().strip("/\\") or "LongMai"
-        return (f"{f}/stage1/{name}_preview", f"{f}/final/{name}_24fps", f"{f}/final/{name}_48fps")
+        return (f"{f}/stage1/{name}_preview", f"{f}/final/{name}_24fps", f"{f}/final/{name}_48fps_final")
 
 
 class LongMaiLoadStage1Latent:
