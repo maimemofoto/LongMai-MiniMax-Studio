@@ -1,8 +1,8 @@
 {
  "id": "longmai-studio-prefinal-v2",
  "revision": 0,
- "last_node_id": 90,
- "last_link_id": 246,
+ "last_node_id": 95,
+ "last_link_id": 252,
  "nodes": [
   {
    "id": 1,
@@ -1184,10 +1184,10 @@
     }
    },
    "widgets_values": [
-    "ติดตั้งครั้งแรก: ดู note 📦 ด้านล่างซ้าย (custom node / โมเดล โหลดที่ไหน วางที่ไหน)\nดาวน์โหลด / อัปเดต: https://github.com/maimemofoto/LongMai-MiniMax-Studio\n\nวิธีใช้ (ทีละขั้น)\n⚡ V2: สวิตช์ \"โหมดเร็ว\" (กลุ่ม ②) เปิด = Comfy-Kitchen INT8 attention + Sparse Attention ทั้ง 2 Stage (ต้อง ComfyUI 0.39+) · ปิด = ทำงานเหมือน FINAL เดิมทุกอย่าง\n1) ① ใส่ภาพหน้าตัวละคร (<Picture 1>) + เพลง/เสียง (<Audio 1>) ใน Media Loader — ไม่ใส่ก็ได้\n2) เลือกสไตล์ด้วยสวิตช์ \"โหมดสมจริง\": เปิด = คนจริง (Realism LoRA + trigger r34l1sm) / ปิด = การ์ตูน, 3D (ปิดทั้งคู่ให้เอง)\n   แล้วเขียน prompt ในช่องใหญ่ — trigger จะต่อหน้า prompt ให้เองเมื่อเปิดโหมดสมจริง\n3) ② กด 🎲 สุ่ม seed → Run = ได้ Preview (④) และระบบบันทึก Stage 1 ไว้ให้อัตโนมัติ\n4) ชอบ Preview แล้ว → สวิตช์ \"อัปสเกล\" เปิด Stage 2 (และ 48 fps ถ้าต้องการ) → Run\n   • ถ้าไม่ได้แก้อะไร Stage 1 จะใช้ cache อยู่แล้ว\n   • ถ้ารีสตาร์ต / รัน workflow อื่นแทรก / ปิดเครื่องไปแล้ว: สวิตช์ \"ภาพที่จะอัปสเกล\" เลือก \"ใช้ Stage 1 ล่าสุดที่บันทึกไว้\" → ไม่เจน Stage 1 ใหม่เลย\n     (ต้องใช้ prompt / ภาพอ้างอิงชุดเดิม และกลับมาเลือก \"เจน Stage 1 ใหม่\" เมื่อจะทำคลิปใหม่)\n   • ชื่อไฟล์: ทุกไฟล์ของการเจนรอบเดียวกันใช้ชื่อเดียวกัน = [ชื่องาน_]วันเวลา_s<seed>\n     preview → output/LongMai/stage1/<ชื่อ>_preview · latent → output/LongMai/stage1_latent/<ชื่อ>.safetensors\n     วิดีโอสุดท้าย → output/LongMai/final/<ชื่อ>_24fps และ <ชื่อ>_48fps\n     ใส่ \"ชื่องาน\" ได้ที่ช่อง label ของ node 💾 บันทึก Stage 1 (เช่น beach_p1)\n     อัปสเกลทีหลัง: ดูชื่อคลิป preview ที่ชอบ → เลือกชื่อเดียวกันในช่อง 📂 เลือก Stage 1 ((ล่าสุด) = ใหม่สุด · กด R เพื่ออัปเดตรายการ)\n     latent ไม่ถูกเขียนทับแล้ว (ไฟล์ละ ~16 MB) — ลบไฟล์เก่าใน stage1_latent เองเป็นระยะ\n5) ร้องเพลง/ลิปซิงค์: เปิด Force Audio — \"เริ่มเพลงที่วินาที\" ใช้เมื่อใส่เพลงเต็มไฟล์ (part 2 = ความยาวจริงของ part 1 เช่น 15.083)\n\nทำหลาย part แล้วต่อ: ทำ 48 fps ทีละ part → workflow \"LongMai Join Clips\" (ใส่ได้หลายคลิป บรรทัดละไฟล์)\npart 2: ใส่ 3-4 วิสุดท้ายของ part 1 (ไฟล์ 24 fps) เป็น <Video 1> และปิดเสียงวิดีโอนั้น\n\n🔔 เสียงแจ้งเตือน: ดังเมื่อ Stage 1 (Preview) เสร็จ และอีกครั้งเมื่ออัปสเกลเสร็จทั้งหมด (รวม 48 fps)\n   ปรับความดัง/ปิดได้ที่ node 🔔 ในกลุ่ม ④ และ ⑤ · เสียงดังในแท็บเบราว์เซอร์ที่กด Run\n\n🎬 First / Last Frame (V2): เปิดสวิตช์ในกลุ่ม ② แล้วใส่ภาพในกลุ่มสีฟ้า (ใต้ Engine)\n   ต่อคลิป: part 2 เป็นต้นไป ใช้เฟรมสุดท้ายของ part ก่อน (ไฟล์ final24) เป็น First Frame\n\nค่าที่ทดสอบแล้ว\n• Stage 1: euler / simple / 6 steps / 0.4MP\n• Stage 2: euler / simple / 4 steps / denoise 0.4 / อัปสเกล 1.0MP (1376x768)\n• Action Bridge 0.10\n• 48 fps = RIFE แยกทีละช็อต (ไม่มีเฟรมซ้อนตรงจุดตัด, จำนวนเฟรมพอดีกับเสียง)\n• คลิป 15 วิ: Stage 1 ~5 นาที / Stage 2 + 48 fps ~12 นาที\n\n⬆️ Stage 2: ปรับ Megapixels / Steps / Denoise ได้ที่ 3 ช่องใต้ก้อน Stage 2 Engine (Megapixels ช่องเดียวส่งไปทั้งตัวอัปสเกลและขนาด prompt Stage 2 ให้ตรงกันเอง) · ค่าที่ทดสอบแล้ว 1.0MP / 4 steps / 0.4\n\n⚡ Sparse Attention: stage ที่ใช้ LoRA (เช่น Turbo ใน Stage 1) → method = sla (keep 10%) · stage ที่ไม่ใช้ LoRA (Stage 2 ตอน LoRA เฉพาะ Stage 2 ปิดอยู่) → method = sol-attn (tau 1.3)"
+    "ติดตั้งครั้งแรก: ดู note 📦 ด้านล่างซ้าย (custom node / โมเดล โหลดที่ไหน วางที่ไหน)\nดาวน์โหลด / อัปเดต: https://github.com/maimemofoto/LongMai-MiniMax-Studio\n\nวิธีใช้ (ทีละขั้น)\n⚡ V2: สวิตช์ \"โหมดเร็ว\" (กลุ่ม ②) เปิด = Comfy-Kitchen INT8 attention + Sparse Attention ทั้ง 2 Stage (ต้อง ComfyUI 0.39+) · ปิด = ทำงานเหมือน FINAL เดิมทุกอย่าง\n1) ① ใส่ภาพหน้าตัวละคร (<Picture 1>) + เพลง/เสียง (<Audio 1>) ใน Media Loader — ไม่ใส่ก็ได้\n2) เลือกสไตล์ด้วยสวิตช์ \"โหมดสมจริง\": เปิด = คนจริง (Realism LoRA + trigger r34l1sm) / ปิด = การ์ตูน, 3D (ปิดทั้งคู่ให้เอง)\n   แล้วเขียน prompt ในช่องใหญ่ — trigger จะต่อหน้า prompt ให้เองเมื่อเปิดโหมดสมจริง\n3) ② กด 🎲 สุ่ม seed → Run = ได้ Preview (④) และระบบบันทึก Stage 1 ไว้ให้อัตโนมัติ\n4) ชอบ Preview แล้ว → สวิตช์ \"อัปสเกล\" เปิด Stage 2 (และ 48 fps ถ้าต้องการ) → Run\n   • ถ้าไม่ได้แก้อะไร Stage 1 จะใช้ cache อยู่แล้ว\n   • ถ้ารีสตาร์ต / รัน workflow อื่นแทรก / ปิดเครื่องไปแล้ว: สวิตช์ \"ภาพที่จะอัปสเกล\" เลือก \"ใช้ Stage 1 ล่าสุดที่บันทึกไว้\" → ไม่เจน Stage 1 ใหม่เลย\n     (ต้องใช้ prompt / ภาพอ้างอิงชุดเดิม และกลับมาเลือก \"เจน Stage 1 ใหม่\" เมื่อจะทำคลิปใหม่)\n   • ชื่อไฟล์: ทุกไฟล์ของการเจนรอบเดียวกันใช้ชื่อเดียวกัน = [ชื่องาน_]วันเวลา_s<seed>\n     preview → output/LongMai/stage1/<ชื่อ>_preview · latent → output/LongMai/stage1_latent/<ชื่อ>.safetensors\n     วิดีโอสุดท้าย → output/LongMai/final/<ชื่อ>_24fps และ <ชื่อ>_48fps\n     ใส่ \"ชื่องาน\" ได้ที่ช่อง label ของ node 💾 บันทึก Stage 1 (เช่น beach_p1)\n     อัปสเกลทีหลัง: ดูชื่อคลิป preview ที่ชอบ → เลือกชื่อเดียวกันในช่อง 📂 เลือก Stage 1 ((ล่าสุด) = ใหม่สุด · กด R เพื่ออัปเดตรายการ)\n     latent ไม่ถูกเขียนทับแล้ว (ไฟล์ละ ~16 MB) — ลบไฟล์เก่าใน stage1_latent เองเป็นระยะ\n5) ร้องเพลง/ลิปซิงค์: เปิด Force Audio — \"เริ่มเพลงที่วินาที\" ใช้เมื่อใส่เพลงเต็มไฟล์ (part 2 = ความยาวจริงของ part 1 เช่น 15.083)\n\nทำหลาย part แล้วต่อ: ทำ 48 fps ทีละ part → workflow \"LongMai Join Clips\" (ใส่ได้หลายคลิป บรรทัดละไฟล์)\npart 2: ใส่ 3-4 วิสุดท้ายของ part 1 (ไฟล์ 24 fps) เป็น <Video 1> และปิดเสียงวิดีโอนั้น\n\n🔔 เสียงแจ้งเตือน: ดังเมื่อ Stage 1 (Preview) เสร็จ และอีกครั้งเมื่ออัปสเกลเสร็จทั้งหมด (รวม 48 fps)\n   ปรับความดัง/ปิดได้ที่ node 🔔 ในกลุ่ม ④ และ ⑤ · เสียงดังในแท็บเบราว์เซอร์ที่กด Run\n\n🎬 First / Last Frame (V2): เปิดสวิตช์ในกลุ่ม ② แล้วใส่ภาพในกลุ่มสีฟ้า (ใต้ Engine)\n   ต่อคลิป: part 2 เป็นต้นไป ใช้เฟรมสุดท้ายของ part ก่อน (ไฟล์ final24) เป็น First Frame\n\nค่าที่ทดสอบแล้ว\n• Stage 1: euler / simple / 6 steps / 0.4MP\n• Stage 2: euler / simple / 4 steps / denoise 0.4 / อัปสเกล 1.0MP (1376x768)\n• Action Bridge 0.10\n• 48 fps = RIFE แยกทีละช็อต (ไม่มีเฟรมซ้อนตรงจุดตัด, จำนวนเฟรมพอดีกับเสียง)\n• คลิป 15 วิ: Stage 1 ~5 นาที / Stage 2 + 48 fps ~12 นาที\n\n⬆️ Stage 2: ปรับ Megapixels / Steps / Denoise ได้ที่ 3 ช่องใต้ก้อน Stage 2 Engine (Megapixels ช่องเดียวส่งไปทั้งตัวอัปสเกลและขนาด prompt Stage 2 ให้ตรงกันเอง) · ค่าที่ทดสอบแล้ว 1.0MP / 4 steps / 0.4\n\n⚡ Sparse Attention: stage ที่ใช้ LoRA (เช่น Turbo ใน Stage 1) → method = sla (keep 10%) · stage ที่ไม่ใช้ LoRA (Stage 2 ตอน LoRA เฉพาะ Stage 2 ปิดอยู่) → method = sol-attn (tau 1.3)\n\n⬆️ Stage 2 LoRA (สวิตช์ในกลุ่ม ②) — ค่าเริ่มต้น = ไม่ใช้ LoRA (sol-attn)\n   ใช้ LoRA = Stage 2 ใช้ LoRA ชุดเดียวกับ Stage 1 (Turbo / Realism / ตัวที่เปิดในแถว) + แถว LoRA เฉพาะ Stage 2 · Sparse = sla\n   ไม่ใช้ LoRA = Stage 2 ใช้ model เปล่า · Sparse = sol-attn · ลองเทียบได้ว่าแบบไหนหน้า/ผิวดีกว่าสำหรับงานนั้น"
    ],
    "widgets_values_named": {
-    "text": "ติดตั้งครั้งแรก: ดู note 📦 ด้านล่างซ้าย (custom node / โมเดล โหลดที่ไหน วางที่ไหน)\nดาวน์โหลด / อัปเดต: https://github.com/maimemofoto/LongMai-MiniMax-Studio\n\nวิธีใช้ (ทีละขั้น)\n⚡ V2: สวิตช์ \"โหมดเร็ว\" (กลุ่ม ②) เปิด = Comfy-Kitchen INT8 attention + Sparse Attention ทั้ง 2 Stage (ต้อง ComfyUI 0.39+) · ปิด = ทำงานเหมือน FINAL เดิมทุกอย่าง\n1) ① ใส่ภาพหน้าตัวละคร (<Picture 1>) + เพลง/เสียง (<Audio 1>) ใน Media Loader — ไม่ใส่ก็ได้\n2) เลือกสไตล์ด้วยสวิตช์ \"โหมดสมจริง\": เปิด = คนจริง (Realism LoRA + trigger r34l1sm) / ปิด = การ์ตูน, 3D (ปิดทั้งคู่ให้เอง)\n   แล้วเขียน prompt ในช่องใหญ่ — trigger จะต่อหน้า prompt ให้เองเมื่อเปิดโหมดสมจริง\n3) ② กด 🎲 สุ่ม seed → Run = ได้ Preview (④) และระบบบันทึก Stage 1 ไว้ให้อัตโนมัติ\n4) ชอบ Preview แล้ว → สวิตช์ \"อัปสเกล\" เปิด Stage 2 (และ 48 fps ถ้าต้องการ) → Run\n   • ถ้าไม่ได้แก้อะไร Stage 1 จะใช้ cache อยู่แล้ว\n   • ถ้ารีสตาร์ต / รัน workflow อื่นแทรก / ปิดเครื่องไปแล้ว: สวิตช์ \"ภาพที่จะอัปสเกล\" เลือก \"ใช้ Stage 1 ล่าสุดที่บันทึกไว้\" → ไม่เจน Stage 1 ใหม่เลย\n     (ต้องใช้ prompt / ภาพอ้างอิงชุดเดิม และกลับมาเลือก \"เจน Stage 1 ใหม่\" เมื่อจะทำคลิปใหม่)\n   • ชื่อไฟล์: ทุกไฟล์ของการเจนรอบเดียวกันใช้ชื่อเดียวกัน = [ชื่องาน_]วันเวลา_s<seed>\n     preview → output/LongMai/stage1/<ชื่อ>_preview · latent → output/LongMai/stage1_latent/<ชื่อ>.safetensors\n     วิดีโอสุดท้าย → output/LongMai/final/<ชื่อ>_24fps และ <ชื่อ>_48fps\n     ใส่ \"ชื่องาน\" ได้ที่ช่อง label ของ node 💾 บันทึก Stage 1 (เช่น beach_p1)\n     อัปสเกลทีหลัง: ดูชื่อคลิป preview ที่ชอบ → เลือกชื่อเดียวกันในช่อง 📂 เลือก Stage 1 ((ล่าสุด) = ใหม่สุด · กด R เพื่ออัปเดตรายการ)\n     latent ไม่ถูกเขียนทับแล้ว (ไฟล์ละ ~16 MB) — ลบไฟล์เก่าใน stage1_latent เองเป็นระยะ\n5) ร้องเพลง/ลิปซิงค์: เปิด Force Audio — \"เริ่มเพลงที่วินาที\" ใช้เมื่อใส่เพลงเต็มไฟล์ (part 2 = ความยาวจริงของ part 1 เช่น 15.083)\n\nทำหลาย part แล้วต่อ: ทำ 48 fps ทีละ part → workflow \"LongMai Join Clips\" (ใส่ได้หลายคลิป บรรทัดละไฟล์)\npart 2: ใส่ 3-4 วิสุดท้ายของ part 1 (ไฟล์ 24 fps) เป็น <Video 1> และปิดเสียงวิดีโอนั้น\n\n🔔 เสียงแจ้งเตือน: ดังเมื่อ Stage 1 (Preview) เสร็จ และอีกครั้งเมื่ออัปสเกลเสร็จทั้งหมด (รวม 48 fps)\n   ปรับความดัง/ปิดได้ที่ node 🔔 ในกลุ่ม ④ และ ⑤ · เสียงดังในแท็บเบราว์เซอร์ที่กด Run\n\n🎬 First / Last Frame (V2): เปิดสวิตช์ในกลุ่ม ② แล้วใส่ภาพในกลุ่มสีฟ้า (ใต้ Engine)\n   ต่อคลิป: part 2 เป็นต้นไป ใช้เฟรมสุดท้ายของ part ก่อน (ไฟล์ final24) เป็น First Frame\n\nค่าที่ทดสอบแล้ว\n• Stage 1: euler / simple / 6 steps / 0.4MP\n• Stage 2: euler / simple / 4 steps / denoise 0.4 / อัปสเกล 1.0MP (1376x768)\n• Action Bridge 0.10\n• 48 fps = RIFE แยกทีละช็อต (ไม่มีเฟรมซ้อนตรงจุดตัด, จำนวนเฟรมพอดีกับเสียง)\n• คลิป 15 วิ: Stage 1 ~5 นาที / Stage 2 + 48 fps ~12 นาที\n\n⬆️ Stage 2: ปรับ Megapixels / Steps / Denoise ได้ที่ 3 ช่องใต้ก้อน Stage 2 Engine (Megapixels ช่องเดียวส่งไปทั้งตัวอัปสเกลและขนาด prompt Stage 2 ให้ตรงกันเอง) · ค่าที่ทดสอบแล้ว 1.0MP / 4 steps / 0.4\n\n⚡ Sparse Attention: stage ที่ใช้ LoRA (เช่น Turbo ใน Stage 1) → method = sla (keep 10%) · stage ที่ไม่ใช้ LoRA (Stage 2 ตอน LoRA เฉพาะ Stage 2 ปิดอยู่) → method = sol-attn (tau 1.3)"
+    "text": "ติดตั้งครั้งแรก: ดู note 📦 ด้านล่างซ้าย (custom node / โมเดล โหลดที่ไหน วางที่ไหน)\nดาวน์โหลด / อัปเดต: https://github.com/maimemofoto/LongMai-MiniMax-Studio\n\nวิธีใช้ (ทีละขั้น)\n⚡ V2: สวิตช์ \"โหมดเร็ว\" (กลุ่ม ②) เปิด = Comfy-Kitchen INT8 attention + Sparse Attention ทั้ง 2 Stage (ต้อง ComfyUI 0.39+) · ปิด = ทำงานเหมือน FINAL เดิมทุกอย่าง\n1) ① ใส่ภาพหน้าตัวละคร (<Picture 1>) + เพลง/เสียง (<Audio 1>) ใน Media Loader — ไม่ใส่ก็ได้\n2) เลือกสไตล์ด้วยสวิตช์ \"โหมดสมจริง\": เปิด = คนจริง (Realism LoRA + trigger r34l1sm) / ปิด = การ์ตูน, 3D (ปิดทั้งคู่ให้เอง)\n   แล้วเขียน prompt ในช่องใหญ่ — trigger จะต่อหน้า prompt ให้เองเมื่อเปิดโหมดสมจริง\n3) ② กด 🎲 สุ่ม seed → Run = ได้ Preview (④) และระบบบันทึก Stage 1 ไว้ให้อัตโนมัติ\n4) ชอบ Preview แล้ว → สวิตช์ \"อัปสเกล\" เปิด Stage 2 (และ 48 fps ถ้าต้องการ) → Run\n   • ถ้าไม่ได้แก้อะไร Stage 1 จะใช้ cache อยู่แล้ว\n   • ถ้ารีสตาร์ต / รัน workflow อื่นแทรก / ปิดเครื่องไปแล้ว: สวิตช์ \"ภาพที่จะอัปสเกล\" เลือก \"ใช้ Stage 1 ล่าสุดที่บันทึกไว้\" → ไม่เจน Stage 1 ใหม่เลย\n     (ต้องใช้ prompt / ภาพอ้างอิงชุดเดิม และกลับมาเลือก \"เจน Stage 1 ใหม่\" เมื่อจะทำคลิปใหม่)\n   • ชื่อไฟล์: ทุกไฟล์ของการเจนรอบเดียวกันใช้ชื่อเดียวกัน = [ชื่องาน_]วันเวลา_s<seed>\n     preview → output/LongMai/stage1/<ชื่อ>_preview · latent → output/LongMai/stage1_latent/<ชื่อ>.safetensors\n     วิดีโอสุดท้าย → output/LongMai/final/<ชื่อ>_24fps และ <ชื่อ>_48fps\n     ใส่ \"ชื่องาน\" ได้ที่ช่อง label ของ node 💾 บันทึก Stage 1 (เช่น beach_p1)\n     อัปสเกลทีหลัง: ดูชื่อคลิป preview ที่ชอบ → เลือกชื่อเดียวกันในช่อง 📂 เลือก Stage 1 ((ล่าสุด) = ใหม่สุด · กด R เพื่ออัปเดตรายการ)\n     latent ไม่ถูกเขียนทับแล้ว (ไฟล์ละ ~16 MB) — ลบไฟล์เก่าใน stage1_latent เองเป็นระยะ\n5) ร้องเพลง/ลิปซิงค์: เปิด Force Audio — \"เริ่มเพลงที่วินาที\" ใช้เมื่อใส่เพลงเต็มไฟล์ (part 2 = ความยาวจริงของ part 1 เช่น 15.083)\n\nทำหลาย part แล้วต่อ: ทำ 48 fps ทีละ part → workflow \"LongMai Join Clips\" (ใส่ได้หลายคลิป บรรทัดละไฟล์)\npart 2: ใส่ 3-4 วิสุดท้ายของ part 1 (ไฟล์ 24 fps) เป็น <Video 1> และปิดเสียงวิดีโอนั้น\n\n🔔 เสียงแจ้งเตือน: ดังเมื่อ Stage 1 (Preview) เสร็จ และอีกครั้งเมื่ออัปสเกลเสร็จทั้งหมด (รวม 48 fps)\n   ปรับความดัง/ปิดได้ที่ node 🔔 ในกลุ่ม ④ และ ⑤ · เสียงดังในแท็บเบราว์เซอร์ที่กด Run\n\n🎬 First / Last Frame (V2): เปิดสวิตช์ในกลุ่ม ② แล้วใส่ภาพในกลุ่มสีฟ้า (ใต้ Engine)\n   ต่อคลิป: part 2 เป็นต้นไป ใช้เฟรมสุดท้ายของ part ก่อน (ไฟล์ final24) เป็น First Frame\n\nค่าที่ทดสอบแล้ว\n• Stage 1: euler / simple / 6 steps / 0.4MP\n• Stage 2: euler / simple / 4 steps / denoise 0.4 / อัปสเกล 1.0MP (1376x768)\n• Action Bridge 0.10\n• 48 fps = RIFE แยกทีละช็อต (ไม่มีเฟรมซ้อนตรงจุดตัด, จำนวนเฟรมพอดีกับเสียง)\n• คลิป 15 วิ: Stage 1 ~5 นาที / Stage 2 + 48 fps ~12 นาที\n\n⬆️ Stage 2: ปรับ Megapixels / Steps / Denoise ได้ที่ 3 ช่องใต้ก้อน Stage 2 Engine (Megapixels ช่องเดียวส่งไปทั้งตัวอัปสเกลและขนาด prompt Stage 2 ให้ตรงกันเอง) · ค่าที่ทดสอบแล้ว 1.0MP / 4 steps / 0.4\n\n⚡ Sparse Attention: stage ที่ใช้ LoRA (เช่น Turbo ใน Stage 1) → method = sla (keep 10%) · stage ที่ไม่ใช้ LoRA (Stage 2 ตอน LoRA เฉพาะ Stage 2 ปิดอยู่) → method = sol-attn (tau 1.3)\n\n⬆️ Stage 2 LoRA (สวิตช์ในกลุ่ม ②) — ค่าเริ่มต้น = ไม่ใช้ LoRA (sol-attn)\n   ใช้ LoRA = Stage 2 ใช้ LoRA ชุดเดียวกับ Stage 1 (Turbo / Realism / ตัวที่เปิดในแถว) + แถว LoRA เฉพาะ Stage 2 · Sparse = sla\n   ไม่ใช้ LoRA = Stage 2 ใช้ model เปล่า · Sparse = sol-attn · ลองเทียบได้ว่าแบบไหนหน้า/ผิวดีกว่าสำหรับงานนั้น"
    },
    "color": "#232",
    "bgcolor": "#353"
@@ -2964,7 +2964,7 @@
      "localized_name": "model",
      "name": "model",
      "type": "MODEL",
-     "link": 226
+     "link": 252
     },
     {
      "localized_name": "s2_megapixels",
@@ -3843,7 +3843,7 @@
      "links": []
     }
    ],
-   "title": "LoRA เฉพาะ Stage 2 (ปิดไว้)",
+   "title": "LoRA เฉพาะ Stage 2 (ใช้เมื่อเลือก Stage 2 ใช้ LoRA)",
    "properties": {
     "cnr_id": "comfyui-pixaroma",
     "ver": "1.4.162",
@@ -3949,7 +3949,8 @@
      "name": "model",
      "type": "MODEL",
      "links": [
-      222
+      222,
+      247
      ]
     }
    ],
@@ -4236,7 +4237,7 @@
      "name": "model",
      "type": "MODEL",
      "links": [
-      226
+      248
      ]
     }
    ],
@@ -4251,8 +4252,8 @@
     }
    },
    "widgets_values": [
-    "sol-attn",
-    1.3,
+    "sla",
+    10,
     0.2,
     1,
     "",
@@ -4263,7 +4264,7 @@
    ],
    "color": "#322",
    "bgcolor": "#533",
-   "title": "⚡ Sparse Attention — Stage 2 (ไม่มี LoRA → sol-attn)"
+   "title": "⚡ Sparse Attention — Stage 2 ใช้ LoRA → sla"
   },
   {
    "id": 79,
@@ -5020,6 +5021,417 @@
    "widgets_values": [
     "LongMai"
    ]
+  },
+  {
+   "id": 91,
+   "type": "BlockSparseAttention",
+   "pos": [
+    5520,
+    4330
+   ],
+   "size": [
+    560,
+    300
+   ],
+   "flags": {
+    "pinned": true
+   },
+   "order": 50,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "model",
+     "name": "model",
+     "type": "MODEL",
+     "link": 247
+    },
+    {
+     "localized_name": "method",
+     "name": "selection",
+     "type": "COMFY_DYNAMICCOMBO_V3",
+     "widget": {
+      "name": "selection"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "keep_percent",
+     "name": "selection.keep_percent",
+     "type": "FLOAT",
+     "widget": {
+      "name": "selection.keep_percent"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "start_percent",
+     "name": "start_percent",
+     "type": "FLOAT",
+     "widget": {
+      "name": "start_percent"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "end_percent",
+     "name": "end_percent",
+     "type": "FLOAT",
+     "widget": {
+      "name": "end_percent"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "dense_blocks",
+     "name": "dense_blocks",
+     "type": "STRING",
+     "widget": {
+      "name": "dense_blocks"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "min_tokens",
+     "name": "min_tokens",
+     "type": "INT",
+     "widget": {
+      "name": "min_tokens"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "extra_tokens",
+     "name": "extra_tokens",
+     "type": "INT",
+     "widget": {
+      "name": "extra_tokens"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "sink_conditioning",
+     "name": "sink_conditioning",
+     "type": "COMBO",
+     "widget": {
+      "name": "sink_conditioning"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "verbose",
+     "name": "verbose",
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "verbose"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "model",
+     "name": "model",
+     "type": "MODEL",
+     "links": [
+      249
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.34.0",
+    "Node name for S&R": "BlockSparseAttention",
+    "ue_properties": {
+     "widget_ue_connectable": {},
+     "input_ue_unconnectable": {},
+     "version": "7.8"
+    }
+   },
+   "widgets_values": [
+    "sol-attn",
+    1.3,
+    0.2,
+    1,
+    "",
+    12288,
+    256,
+    "exact_kv_and_rows",
+    false
+   ],
+   "color": "#322",
+   "bgcolor": "#533",
+   "title": "⚡ Sparse Attention — Stage 2 ไม่ใช้ LoRA → sol-attn"
+  },
+  {
+   "id": 92,
+   "type": "Any Switch (rgthree)",
+   "pos": [
+    3330,
+    1790
+   ],
+   "size": [
+    300,
+    106
+   ],
+   "flags": {
+    "collapsed": true,
+    "pinned": true
+   },
+   "order": 39,
+   "mode": 2,
+   "inputs": [
+    {
+     "dir": 3,
+     "name": "any_01",
+     "type": "MODEL",
+     "link": 248
+    },
+    {
+     "name": "any_02",
+     "type": "MODEL",
+     "link": null
+    },
+    {
+     "name": "any_03",
+     "type": "MODEL",
+     "link": null
+    },
+    {
+     "name": "any_04",
+     "type": "MODEL",
+     "link": null
+    },
+    {
+     "name": "any_05",
+     "type": "MODEL",
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "dir": 4,
+     "label": "MODEL",
+     "name": "*",
+     "type": "MODEL",
+     "links": [
+      250
+     ]
+    }
+   ],
+   "title": "ประตู: Stage 2 ใช้ LoRA",
+   "properties": {
+    "cnr_id": "rgthree-comfy",
+    "ver": "6b76ee6f2c5a007710b5a16f97c94330d6ecc871",
+    "ue_properties": {
+     "widget_ue_connectable": {},
+     "input_ue_unconnectable": {},
+     "version": "7.8"
+    }
+   }
+  },
+  {
+   "id": 93,
+   "type": "Any Switch (rgthree)",
+   "pos": [
+    3330,
+    1930
+   ],
+   "size": [
+    300,
+    106
+   ],
+   "flags": {
+    "collapsed": true,
+    "pinned": true
+   },
+   "order": 39,
+   "mode": 0,
+   "inputs": [
+    {
+     "dir": 3,
+     "name": "any_01",
+     "type": "MODEL",
+     "link": 249
+    },
+    {
+     "name": "any_02",
+     "type": "MODEL",
+     "link": null
+    },
+    {
+     "name": "any_03",
+     "type": "MODEL",
+     "link": null
+    },
+    {
+     "name": "any_04",
+     "type": "MODEL",
+     "link": null
+    },
+    {
+     "name": "any_05",
+     "type": "MODEL",
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "dir": 4,
+     "label": "MODEL",
+     "name": "*",
+     "type": "MODEL",
+     "links": [
+      251
+     ]
+    }
+   ],
+   "title": "ประตู: Stage 2 ไม่ใช้ LoRA",
+   "properties": {
+    "cnr_id": "rgthree-comfy",
+    "ver": "6b76ee6f2c5a007710b5a16f97c94330d6ecc871",
+    "ue_properties": {
+     "widget_ue_connectable": {},
+     "input_ue_unconnectable": {},
+     "version": "7.8"
+    }
+   }
+  },
+  {
+   "id": 94,
+   "type": "Any Switch (rgthree)",
+   "pos": [
+    3330,
+    2020
+   ],
+   "size": [
+    300,
+    106
+   ],
+   "flags": {
+    "collapsed": true,
+    "pinned": true
+   },
+   "order": 40,
+   "mode": 0,
+   "inputs": [
+    {
+     "dir": 3,
+     "name": "any_01",
+     "type": "MODEL",
+     "link": 250
+    },
+    {
+     "dir": 3,
+     "name": "any_02",
+     "type": "MODEL",
+     "link": 251
+    },
+    {
+     "name": "any_03",
+     "type": "MODEL",
+     "link": null
+    },
+    {
+     "name": "any_04",
+     "type": "MODEL",
+     "link": null
+    },
+    {
+     "name": "any_05",
+     "type": "MODEL",
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "dir": 4,
+     "label": "MODEL",
+     "name": "*",
+     "type": "MODEL",
+     "links": [
+      252
+     ]
+    }
+   ],
+   "title": "model สำหรับ Stage 2 (อัตโนมัติตามสวิตช์)",
+   "properties": {
+    "cnr_id": "rgthree-comfy",
+    "ver": "6b76ee6f2c5a007710b5a16f97c94330d6ecc871",
+    "ue_properties": {
+     "widget_ue_connectable": {},
+     "input_ue_unconnectable": {},
+     "version": "7.8"
+    }
+   }
+  },
+  {
+   "id": 95,
+   "type": "PixaromaGroupSwitch",
+   "pos": [
+    2400,
+    1837
+   ],
+   "size": [
+    720,
+    103
+   ],
+   "flags": {
+    "pinned": true
+   },
+   "order": 19,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [],
+   "title": "🔀 ⬆️ Stage 2 LoRA: ไม่ใช้ LoRA (ค่าเริ่มต้น) / ใช้ LoRA ชุดเดียวกับ Stage 1",
+   "properties": {
+    "cnr_id": "comfyui-pixaroma",
+    "ver": "1.4.162",
+    "Node name for S&R": "PixaromaGroupSwitch",
+    "ue_properties": {
+     "widget_ue_connectable": {},
+     "input_ue_unconnectable": {},
+     "version": "7.8"
+    },
+    "groupSwitchState": {
+     "version": 1,
+     "action": "mute",
+     "scope": "pick",
+     "picked": [
+      "pg_lm_s2lora",
+      "pg_lm_s2nolora"
+     ],
+     "sort": "position",
+     "restriction": "always"
+    }
+   },
+   "widgets_values": [
+    {
+     "version": 1,
+     "action": "mute",
+     "scope": "pick",
+     "picked": [
+      "pg_lm_s2lora",
+      "pg_lm_s2nolora"
+     ],
+     "sort": "position",
+     "restriction": "always"
+    }
+   ],
+   "widgets_values_named": {
+    "group_switch_ui": {
+     "version": 1,
+     "action": "mute",
+     "scope": "pick",
+     "picked": [
+      "pg_lm_s2lora",
+      "pg_lm_s2nolora"
+     ],
+     "sort": "position",
+     "restriction": "always"
+    }
+   },
+   "color": "#d35050",
+   "bgcolor": "#3e2b2b"
   }
  ],
  "links": [
@@ -5624,14 +6036,6 @@
    "MODEL"
   ],
   [
-   226,
-   78,
-   0,
-   69,
-   28,
-   "MODEL"
-  ],
-  [
    227,
    8,
    0,
@@ -5790,6 +6194,54 @@
    57,
    1,
    "STRING"
+  ],
+  [
+   247,
+   76,
+   0,
+   91,
+   0,
+   "MODEL"
+  ],
+  [
+   248,
+   78,
+   0,
+   92,
+   0,
+   "MODEL"
+  ],
+  [
+   249,
+   91,
+   0,
+   93,
+   0,
+   "MODEL"
+  ],
+  [
+   250,
+   92,
+   0,
+   94,
+   0,
+   "MODEL"
+  ],
+  [
+   251,
+   93,
+   0,
+   94,
+   1,
+   "MODEL"
+  ],
+  [
+   252,
+   94,
+   0,
+   69,
+   28,
+   "MODEL"
   ]
  ],
  "groups": [
@@ -11104,7 +11556,7 @@
     "x": 4300,
     "y": 3880,
     "w": 1800,
-    "h": 420,
+    "h": 790,
     "titleColor": "#f9a825",
     "bodyColor": "#3a3422"
    },
@@ -11143,6 +11595,42 @@
     "h": 325,
     "titleColor": "#00838f",
     "bodyColor": "#1f3436"
+   },
+   {
+    "titleAlpha": 0.92,
+    "bodyAlpha": 0.5,
+    "fontSize": 20,
+    "hOpen": 220,
+    "wOpen": 320,
+    "folded": false,
+    "showLinks": true,
+    "titleColor": "#6a1b9a",
+    "bodyColor": "#203430",
+    "pinned": true,
+    "id": "pg_lm_s2lora",
+    "title": "⬆️ Stage 2 ใช้ LoRA ชุดเดียวกับ Stage 1 (sla)",
+    "x": 3310,
+    "y": 1720,
+    "w": 840,
+    "h": 120
+   },
+   {
+    "titleAlpha": 0.92,
+    "bodyAlpha": 0.5,
+    "fontSize": 20,
+    "hOpen": 220,
+    "wOpen": 320,
+    "folded": false,
+    "showLinks": true,
+    "titleColor": "#6a1b9a",
+    "bodyColor": "#203430",
+    "pinned": true,
+    "id": "pg_lm_s2nolora",
+    "title": "⬆️ Stage 2 ไม่ใช้ LoRA — model เปล่า (sol-attn)",
+    "x": 3310,
+    "y": 1860,
+    "w": 840,
+    "h": 120
    }
   ],
   "ue_links": []
