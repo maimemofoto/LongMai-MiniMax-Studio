@@ -1,0 +1,1664 @@
+{
+ "id": "ca361851-ea6d-4d85-a792-825bbb61bdd3",
+ "revision": 0,
+ "last_node_id": 20,
+ "last_link_id": 18,
+ "nodes": [
+  {
+   "id": 1,
+   "type": "UNETLoader",
+   "pos": [
+    0,
+    0
+   ],
+   "size": [
+    270,
+    82
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "unet_name",
+     "name": "unet_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "unet_name"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "weight_dtype",
+     "name": "weight_dtype",
+     "type": "COMBO",
+     "widget": {
+      "name": "weight_dtype"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "MODEL",
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      1
+     ]
+    }
+   ],
+   "title": "Base Model",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.41.0",
+    "Node name for S&R": "UNETLoader",
+    "ue_properties": {
+     "widget_ue_connectable": {},
+     "input_ue_unconnectable": {},
+     "version": "7.8"
+    }
+   },
+   "widgets_values": [
+    "MinimaxH3\\Minimax-h3_Singularity_ref2va_v2_pruned_int8.safetensors",
+    "default"
+   ],
+   "widgets_values_named": {
+    "unet_name": "MinimaxH3\\Minimax-h3_Singularity_ref2va_v2_pruned_int8.safetensors",
+    "weight_dtype": "default"
+   }
+  },
+  {
+   "id": 2,
+   "type": "MiniMaxChunkFeedForward",
+   "pos": [
+    0,
+    220
+   ],
+   "size": [
+    316.38046875,
+    82
+   ],
+   "flags": {},
+   "order": 5,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "model",
+     "name": "model",
+     "type": "MODEL",
+     "link": 1
+    },
+    {
+     "localized_name": "chunks",
+     "name": "chunks",
+     "type": "INT",
+     "widget": {
+      "name": "chunks"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "seq_threshold",
+     "name": "seq_threshold",
+     "type": "INT",
+     "widget": {
+      "name": "seq_threshold"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "model",
+     "name": "model",
+     "type": "MODEL",
+     "links": [
+      2
+     ]
+    }
+   ],
+   "title": "🧩 Chunk Feed-Forward",
+   "properties": {
+    "cnr_id": "comfyui-kjnodes",
+    "ver": "17195fcfa8a05f601b766a0f09c9733284f47416",
+    "Node name for S&R": "MiniMaxChunkFeedForward",
+    "ue_properties": {
+     "widget_ue_connectable": {},
+     "input_ue_unconnectable": {},
+     "version": "7.8"
+    }
+   },
+   "widgets_values": [
+    2,
+    4096
+   ],
+   "widgets_values_named": {
+    "chunks": 2,
+    "seq_threshold": 4096
+   }
+  },
+  {
+   "id": 3,
+   "type": "MiniMaxLowVRAMAttention",
+   "pos": [
+    0,
+    330
+   ],
+   "size": [
+    318.5201171875,
+    58
+   ],
+   "flags": {},
+   "order": 6,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "model",
+     "name": "model",
+     "type": "MODEL",
+     "link": 2
+    },
+    {
+     "localized_name": "head_chunks",
+     "name": "head_chunks",
+     "type": "INT",
+     "widget": {
+      "name": "head_chunks"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "model",
+     "name": "model",
+     "type": "MODEL",
+     "links": [
+      3
+     ]
+    }
+   ],
+   "title": "🧩 Low VRAM Attention",
+   "properties": {
+    "cnr_id": "comfyui-kjnodes",
+    "ver": "17195fcfa8a05f601b766a0f09c9733284f47416",
+    "Node name for S&R": "MiniMaxLowVRAMAttention",
+    "ue_properties": {
+     "widget_ue_connectable": {},
+     "input_ue_unconnectable": {},
+     "version": "7.8"
+    }
+   },
+   "widgets_values": [
+    4
+   ],
+   "widgets_values_named": {
+    "head_chunks": 4
+   }
+  },
+  {
+   "id": 4,
+   "type": "ModelAttentionBackend",
+   "pos": [
+    0,
+    630
+   ],
+   "size": [
+    270,
+    58
+   ],
+   "flags": {},
+   "order": 7,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "model",
+     "name": "model",
+     "type": "MODEL",
+     "link": 3
+    },
+    {
+     "localized_name": "backend",
+     "name": "attention",
+     "type": "COMBO",
+     "widget": {
+      "name": "attention"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "model",
+     "name": "model",
+     "type": "MODEL",
+     "links": [
+      4
+     ]
+    }
+   ],
+   "title": "⚡ Comfy-Kitchen attention (INT8)",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.41.0",
+    "Node name for S&R": "ModelAttentionBackend",
+    "ue_properties": {
+     "widget_ue_connectable": {},
+     "input_ue_unconnectable": {},
+     "version": "7.8"
+    }
+   },
+   "widgets_values": [
+    "comfy kitchen attention"
+   ],
+   "widgets_values_named": {
+    "attention": "comfy kitchen attention"
+   }
+  },
+  {
+   "id": 5,
+   "type": "LoraLoaderModelOnly",
+   "pos": [
+    0,
+    450
+   ],
+   "size": [
+    270,
+    82
+   ],
+   "flags": {},
+   "order": 8,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "model",
+     "name": "model",
+     "type": "MODEL",
+     "link": 4
+    },
+    {
+     "localized_name": "lora_name",
+     "name": "lora_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "lora_name"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "strength_model",
+     "name": "strength_model",
+     "type": "FLOAT",
+     "widget": {
+      "name": "strength_model"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "MODEL",
+     "name": "MODEL",
+     "type": "MODEL",
+     "links": [
+      5
+     ]
+    }
+   ],
+   "title": "DMAD 4-step LoRA (สูตร V3.1)",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.41.0",
+    "Node name for S&R": "LoraLoaderModelOnly",
+    "ue_properties": {
+     "widget_ue_connectable": {},
+     "input_ue_unconnectable": {},
+     "version": "7.8"
+    }
+   },
+   "widgets_values": [
+    "MINIMAX\\Turbo\\minimax_h3_DMAD_4step_full_lora_avg_rank_39_bf16.safetensors",
+    1
+   ],
+   "widgets_values_named": {
+    "lora_name": "MINIMAX\\Turbo\\minimax_h3_DMAD_4step_full_lora_avg_rank_39_bf16.safetensors",
+    "strength_model": 1
+   }
+  },
+  {
+   "id": 6,
+   "type": "BlockSparseAttention",
+   "pos": [
+    0,
+    740
+   ],
+   "size": [
+    270,
+    250
+   ],
+   "flags": {},
+   "order": 9,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "model",
+     "name": "model",
+     "type": "MODEL",
+     "link": 5
+    },
+    {
+     "localized_name": "method",
+     "name": "selection",
+     "type": "COMFY_DYNAMICCOMBO_V3",
+     "widget": {
+      "name": "selection"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "keep_percent",
+     "name": "selection.keep_percent",
+     "type": "FLOAT",
+     "widget": {
+      "name": "selection.keep_percent"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "start_percent",
+     "name": "start_percent",
+     "type": "FLOAT",
+     "widget": {
+      "name": "start_percent"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "end_percent",
+     "name": "end_percent",
+     "type": "FLOAT",
+     "widget": {
+      "name": "end_percent"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "dense_blocks",
+     "name": "dense_blocks",
+     "type": "STRING",
+     "widget": {
+      "name": "dense_blocks"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "min_tokens",
+     "name": "min_tokens",
+     "type": "INT",
+     "widget": {
+      "name": "min_tokens"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "extra_tokens",
+     "name": "extra_tokens",
+     "type": "INT",
+     "widget": {
+      "name": "extra_tokens"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "sink_conditioning",
+     "name": "sink_conditioning",
+     "type": "COMBO",
+     "widget": {
+      "name": "sink_conditioning"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "verbose",
+     "name": "verbose",
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "verbose"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "model",
+     "name": "model",
+     "type": "MODEL",
+     "links": [
+      6
+     ]
+    }
+   ],
+   "title": "⚡ Sparse Attention (sla 10%)",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.41.0",
+    "Node name for S&R": "BlockSparseAttention",
+    "ue_properties": {
+     "widget_ue_connectable": {},
+     "input_ue_unconnectable": {},
+     "version": "7.8"
+    }
+   },
+   "widgets_values": [
+    "sla",
+    10,
+    0.2,
+    1,
+    "",
+    12288,
+    256,
+    "exact_kv_and_rows",
+    false
+   ],
+   "widgets_values_named": {
+    "selection": "sla",
+    "selection.keep_percent": 10,
+    "start_percent": 0.2,
+    "end_percent": 1,
+    "dense_blocks": "",
+    "min_tokens": 12288,
+    "extra_tokens": 256,
+    "sink_conditioning": "exact_kv_and_rows",
+    "verbose": false
+   }
+  },
+  {
+   "id": 7,
+   "type": "CLIPLoader",
+   "pos": [
+    0,
+    1060
+   ],
+   "size": [
+    270,
+    106
+   ],
+   "flags": {},
+   "order": 1,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "clip_name",
+     "name": "clip_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "clip_name"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "type",
+     "name": "type",
+     "type": "COMBO",
+     "widget": {
+      "name": "type"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "device",
+     "name": "device",
+     "shape": 7,
+     "type": "COMBO",
+     "widget": {
+      "name": "device"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "CLIP",
+     "name": "CLIP",
+     "type": "CLIP",
+     "links": [
+      7
+     ]
+    }
+   ],
+   "title": "Text Encoder",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.41.0",
+    "Node name for S&R": "CLIPLoader",
+    "ue_properties": {
+     "widget_ue_connectable": {},
+     "input_ue_unconnectable": {},
+     "version": "7.8"
+    }
+   },
+   "widgets_values": [
+    "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+    "minimax",
+    "default"
+   ],
+   "widgets_values_named": {
+    "clip_name": "qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors",
+    "type": "minimax",
+    "device": "default"
+   }
+  },
+  {
+   "id": 8,
+   "type": "VAELoader",
+   "pos": [
+    0,
+    1210
+   ],
+   "size": [
+    270,
+    58
+   ],
+   "flags": {},
+   "order": 2,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "vae_name",
+     "name": "vae_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "vae_name"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "VAE",
+     "name": "VAE",
+     "type": "VAE",
+     "links": [
+      8
+     ]
+    }
+   ],
+   "title": "Video VAE (int8)",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.41.0",
+    "Node name for S&R": "VAELoader",
+    "ue_properties": {
+     "widget_ue_connectable": {},
+     "input_ue_unconnectable": {},
+     "version": "7.8"
+    }
+   },
+   "widgets_values": [
+    "minimax_h3_video_vae_int8_convrot.safetensors"
+   ],
+   "widgets_values_named": {
+    "vae_name": "minimax_h3_video_vae_int8_convrot.safetensors"
+   }
+  },
+  {
+   "id": 9,
+   "type": "VAELoader",
+   "pos": [
+    0,
+    1320
+   ],
+   "size": [
+    270,
+    58
+   ],
+   "flags": {},
+   "order": 3,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "vae_name",
+     "name": "vae_name",
+     "type": "COMBO",
+     "widget": {
+      "name": "vae_name"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "VAE",
+     "name": "VAE",
+     "type": "VAE",
+     "links": [
+      9
+     ]
+    }
+   ],
+   "title": "Audio VAE",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.41.0",
+    "Node name for S&R": "VAELoader",
+    "ue_properties": {
+     "widget_ue_connectable": {},
+     "input_ue_unconnectable": {},
+     "version": "7.8"
+    }
+   },
+   "widgets_values": [
+    "minimax_h3_audio_vae_fp32.safetensors"
+   ],
+   "widgets_values_named": {
+    "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+   }
+  },
+  {
+   "id": 10,
+   "type": "ZL_H3ZeroStudio",
+   "pos": [
+    520,
+    0
+   ],
+   "size": [
+    382.65390625,
+    354
+   ],
+   "flags": {},
+   "order": 10,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "model",
+     "name": "model",
+     "shape": 7,
+     "type": "MODEL",
+     "link": 6
+    },
+    {
+     "localized_name": "clip",
+     "name": "clip",
+     "shape": 7,
+     "type": "CLIP",
+     "link": 7
+    },
+    {
+     "localized_name": "vae",
+     "name": "vae",
+     "shape": 7,
+     "type": "VAE",
+     "link": 8
+    },
+    {
+     "localized_name": "audio_vae",
+     "name": "audio_vae",
+     "shape": 7,
+     "type": "VAE",
+     "link": 9
+    },
+    {
+     "localized_name": "audio",
+     "name": "audio",
+     "shape": 7,
+     "type": "AUDIO",
+     "link": null
+    },
+    {
+     "label": " ",
+     "localized_name": "project",
+     "name": "project",
+     "type": "STRING",
+     "widget": {
+      "name": "project"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "links": [
+      10,
+      12,
+      16
+     ]
+    },
+    {
+     "localized_name": "audio",
+     "name": "audio",
+     "type": "AUDIO",
+     "links": [
+      14,
+      17
+     ]
+    },
+    {
+     "localized_name": "latent",
+     "name": "latent",
+     "type": "LATENT",
+     "links": null
+    }
+   ],
+   "title": "H3ZeroStudio · Timeline (กด “เปิดหน้าตัดต่อ”)",
+   "properties": {
+    "aux_id": "zeroleloushe/H3ZeroStudio",
+    "ver": "c471f745cb852d7bafe08fde03908b3885e46453",
+    "Node name for S&R": "ZL_H3ZeroStudio",
+    "ue_properties": {
+     "widget_ue_connectable": {},
+     "input_ue_unconnectable": {},
+     "version": "7.8"
+    }
+   },
+   "widgets_values": [
+    "{\"version\": 1, \"id\": \"p5fuynfbxaz\", \"name\": \"H3 project\", \"settings\": {\"model_preset\": \"\", \"prompt\": \"\", \"negative\": \"\", \"aspect\": \"16:9\", \"res_mode\": \"mp\", \"megapixels\": 1.0, \"width\": 960, \"height\": 544, \"steps\": 6, \"cfg\": 1.0, \"sampler\": \"er_sde\", \"scheduler\": \"beta\", \"shift_video\": 12, \"shift_audio\": 3, \"seed\": 0, \"fps\": 24, \"denoise\": 1, \"overlap_blocks\": 1, \"audio_context_sec\": 1, \"lock_overlap\": true, \"continuity_ref\": true, \"continuity_phrase\": \"Continuity: <Picture {n}> is the last frame of the previous shot of this video; continue seamlessly from it and keep characters, faces, clothing, lighting and details consistent with <Picture {n}>.\", \"ref_size\": \"max\", \"cache\": true, \"audio_seam_lock\": true, \"audio_xfade\": true, \"audio_xfade_sec\": 0.4, \"audio_match\": true, \"audio_declick\": true, \"level_lock\": true, \"level_lock_frames\": 12, \"magnet\": false, \"vram_headroom_gb\": 1, \"preview_tiny_vae\": \"auto\", \"preview_max_res\": 512, \"preview_quality\": 80, \"preview_frames\": 48, \"preview_fps\": 0, \"preview_suppress\": true, \"preview_audio\": true, \"verbose_log\": true, \"quality\": \"final\", \"final_mode\": \"refine\", \"draft_scale\": 0.67, \"draft_steps\": 6, \"refine_sigma\": 0.86, \"refine_steps\": 2, \"upscale_method\": \"learned\", \"upscale_rev\": 4, \"seg_upscale\": {\"method\": \"latent\", \"mp\": 2.09, \"sigma\": 0.4}, \"upscale_chunk_sec\": 5, \"upscale_chunk_overlap\": 1, \"upscale_profiles\": {\"latent\": {\"sigma\": 0.4, \"steps\": 0, \"sampler\": \"\", \"scheduler\": \"\", \"chunk\": true, \"chunk_sec\": 5, \"chunk_overlap\": 1, \"mp\": 2.09}, \"rtx\": {\"sigma\": 0.25, \"quality\": \"ULTRA\", \"steps\": 0, \"sampler\": \"\", \"scheduler\": \"\", \"chunk\": true, \"chunk_sec\": 5, \"chunk_overlap\": 1, \"mp\": 2.09}, \"tiles\": {\"sigma\": 0.6, \"steps\": 0, \"sampler\": \"\", \"scheduler\": \"\", \"chunk\": false, \"chunk_sec\": 5, \"chunk_overlap\": 1, \"mp\": 2.09}}, \"draft_sampler\": \"er_sde\", \"draft_scheduler\": \"beta\", \"draft_cfg\": 1.0, \"refine_sampler\": \"er_sde\", \"refine_scheduler\": \"linear_quadratic\", \"refine_cfg\": 1.0, \"settings_scope\": \"global\"}, \"assets\": [], \"segments\": [{\"id\": \"s5fuyn5vd39\", \"name\": \"\", \"color\": 0, \"frames\": 124, \"prompt\": \"\", \"refs\": [], \"cards\": [], \"link\": \"extend\", \"gap\": 0, \"overlap_blocks\": -1, \"overrides\": {}, \"upscale\": null, \"approved\": false, \"takes\": [], \"active_take\": null, \"locked\": false, \"freeze\": null, \"model_preset\": \"\", \"source\": null}], \"audio\": {\"clips\": [], \"video_volume\": 1, \"input_ref\": null}, \"markers\": [], \"end\": 0, \"end_mode\": \"fixed\", \"run\": {\"upto\": -1, \"only\": -1, \"kind\": \"\", \"region\": \"\"}, \"regions\": [], \"stats\": null, \"result\": null, \"cards\": {}, \"model_presets\": {}}"
+   ],
+   "widgets_values_named": {
+    "project": "{\"version\":1,\"id\":\"p5fuynfbxaz\",\"name\":\"H3 project\",\"settings\":{\"model_preset\":\"\",\"prompt\":\"\",\"negative\":\"\",\"aspect\":\"16:9\",\"res_mode\":\"mp\",\"megapixels\":0.5,\"width\":960,\"height\":544,\"steps\":20,\"cfg\":1,\"sampler\":\"res_multistep\",\"scheduler\":\"simple\",\"shift_video\":12,\"shift_audio\":3,\"seed\":0,\"fps\":24,\"denoise\":1,\"overlap_blocks\":1,\"audio_context_sec\":1,\"lock_overlap\":true,\"continuity_ref\":true,\"continuity_phrase\":\"Continuity: <Picture {n}> is the last frame of the previous shot of this video; continue seamlessly from it and keep characters, faces, clothing, lighting and details consistent with <Picture {n}>.\",\"ref_size\":\"match\",\"cache\":true,\"audio_seam_lock\":true,\"audio_xfade\":true,\"audio_xfade_sec\":0.4,\"audio_match\":true,\"audio_declick\":true,\"level_lock\":true,\"level_lock_frames\":12,\"magnet\":false,\"vram_headroom_gb\":1,\"preview_tiny_vae\":\"auto\",\"preview_max_res\":512,\"preview_quality\":80,\"preview_frames\":48,\"preview_fps\":0,\"preview_suppress\":true,\"preview_audio\":true,\"verbose_log\":true,\"quality\":\"final\",\"final_mode\":\"full\",\"draft_scale\":0.5,\"draft_steps\":0,\"refine_sigma\":0.4,\"refine_steps\":0,\"upscale_method\":\"learned\",\"upscale_rev\":4,\"seg_upscale\":{\"method\":\"latent\",\"mp\":2.09,\"sigma\":0.4},\"upscale_chunk_sec\":5,\"upscale_chunk_overlap\":1,\"upscale_profiles\":{\"latent\":{\"sigma\":0.4,\"steps\":0,\"sampler\":\"\",\"scheduler\":\"\",\"chunk\":true,\"chunk_sec\":5,\"chunk_overlap\":1,\"mp\":2.09},\"rtx\":{\"sigma\":0.25,\"quality\":\"ULTRA\",\"steps\":0,\"sampler\":\"\",\"scheduler\":\"\",\"chunk\":true,\"chunk_sec\":5,\"chunk_overlap\":1,\"mp\":2.09},\"tiles\":{\"sigma\":0.6,\"steps\":0,\"sampler\":\"\",\"scheduler\":\"\",\"chunk\":false,\"chunk_sec\":5,\"chunk_overlap\":1,\"mp\":2.09}},\"draft_sampler\":\"\",\"draft_scheduler\":\"\",\"draft_cfg\":0,\"refine_sampler\":\"\",\"refine_scheduler\":\"\",\"refine_cfg\":0,\"settings_scope\":\"global\"},\"assets\":[],\"segments\":[{\"id\":\"s5fuyn5vd39\",\"name\":\"\",\"color\":0,\"frames\":124,\"prompt\":\"\",\"refs\":[],\"cards\":[],\"link\":\"extend\",\"gap\":0,\"overlap_blocks\":-1,\"overrides\":{},\"upscale\":null,\"approved\":false,\"takes\":[],\"active_take\":null,\"locked\":false,\"freeze\":null,\"model_preset\":\"\",\"source\":null}],\"audio\":{\"clips\":[],\"video_volume\":1,\"input_ref\":null},\"markers\":[],\"end\":0,\"end_mode\":\"fixed\",\"run\":{\"upto\":-1,\"only\":-1,\"kind\":\"\",\"region\":\"\"},\"regions\":[],\"stats\":null,\"result\":null,\"cards\":{},\"model_presets\":{}}"
+   },
+   "color": "#2a1f4d",
+   "bgcolor": "#0d1020"
+  },
+  {
+   "id": 11,
+   "type": "RTXVideoFrameGeneration",
+   "pos": [
+    1300,
+    0
+   ],
+   "size": [
+    356,
+    178
+   ],
+   "flags": {},
+   "order": 11,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "link": 10
+    },
+    {
+     "localized_name": "generation_type",
+     "name": "generation_type",
+     "type": "COMFY_DYNAMICCOMBO_V3",
+     "widget": {
+      "name": "generation_type"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "multiplier",
+     "name": "generation_type.multiplier",
+     "type": "INT",
+     "widget": {
+      "name": "generation_type.multiplier"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "mode",
+     "name": "mode",
+     "type": "COMBO",
+     "widget": {
+      "name": "mode"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "automatic_shot_change_detection",
+     "name": "automatic_shot_change_detection",
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "automatic_shot_change_detection"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "shot_change",
+     "name": "shot_change",
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "shot_change"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "image_encoding",
+     "name": "image_encoding",
+     "type": "COMBO",
+     "widget": {
+      "name": "image_encoding"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "interpolated_images",
+     "name": "interpolated_images",
+     "type": "IMAGE",
+     "links": [
+      11
+     ]
+    }
+   ],
+   "title": "NVIDIA Frame Generation → 48 fps",
+   "properties": {
+    "cnr_id": "comfyui_nvidia_rtx_nodes",
+    "ver": "38d790ded00650681fa3645362efe28c8560cf40",
+    "Node name for S&R": "RTXVideoFrameGeneration",
+    "ue_properties": {
+     "widget_ue_connectable": {},
+     "input_ue_unconnectable": {},
+     "version": "7.8"
+    }
+   },
+   "widgets_values": [
+    "frame rate multiplier",
+    2,
+    "HIGH",
+    true,
+    false,
+    "8-bit RGB"
+   ],
+   "widgets_values_named": {
+    "generation_type": "frame rate multiplier",
+    "generation_type.multiplier": 2,
+    "mode": "HIGH",
+    "automatic_shot_change_detection": true,
+    "shot_change": false,
+    "image_encoding": "8-bit RGB"
+   }
+  },
+  {
+   "id": 12,
+   "type": "LongMaiMatchFrameCount",
+   "pos": [
+    1300,
+    230
+   ],
+   "size": [
+    507.29453125,
+    78
+   ],
+   "flags": {},
+   "order": 13,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "link": 11
+    },
+    {
+     "localized_name": "source_images",
+     "name": "source_images",
+     "type": "IMAGE",
+     "link": 12
+    },
+    {
+     "localized_name": "multiplier",
+     "name": "multiplier",
+     "type": "INT",
+     "widget": {
+      "name": "multiplier"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "links": [
+      13
+     ]
+    }
+   ],
+   "title": "จำนวนเฟรม = 2 เท่าพอดี (ตรงเสียง)",
+   "properties": {
+    "Node name for S&R": "LongMaiMatchFrameCount",
+    "ue_properties": {
+     "widget_ue_connectable": {},
+     "input_ue_unconnectable": {},
+     "version": "7.8"
+    }
+   },
+   "widgets_values": [
+    2
+   ],
+   "widgets_values_named": {
+    "multiplier": 2
+   }
+  },
+  {
+   "id": 13,
+   "type": "CreateVideo",
+   "pos": [
+    1300,
+    360
+   ],
+   "size": [
+    270,
+    150
+   ],
+   "flags": {},
+   "order": 15,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "link": 13
+    },
+    {
+     "localized_name": "audio",
+     "name": "audio",
+     "shape": 7,
+     "type": "AUDIO",
+     "link": 14
+    },
+    {
+     "localized_name": "fps",
+     "name": "fps",
+     "type": "FLOAT",
+     "widget": {
+      "name": "fps"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "bit_depth",
+     "name": "bit_depth",
+     "shape": 7,
+     "type": "COMBO",
+     "widget": {
+      "name": "bit_depth"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "color_space",
+     "name": "color_space",
+     "shape": 7,
+     "type": "COMBO",
+     "widget": {
+      "name": "color_space"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "codec",
+     "name": "codec",
+     "shape": 7,
+     "type": "COMBO",
+     "widget": {
+      "name": "codec"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "VIDEO",
+     "name": "VIDEO",
+     "type": "VIDEO",
+     "links": [
+      15
+     ]
+    }
+   ],
+   "title": "รวมภาพ 48 fps + เสียง",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.41.0",
+    "Node name for S&R": "CreateVideo",
+    "ue_properties": {
+     "widget_ue_connectable": {},
+     "input_ue_unconnectable": {},
+     "version": "7.8"
+    }
+   },
+   "widgets_values": [
+    48,
+    "auto",
+    "sRGB",
+    "none"
+   ],
+   "widgets_values_named": {
+    "fps": 48,
+    "bit_depth": "auto",
+    "color_space": "sRGB",
+    "codec": "none"
+   }
+  },
+  {
+   "id": 14,
+   "type": "SaveVideo",
+   "pos": [
+    1700,
+    360
+   ],
+   "size": [
+    270,
+    106
+   ],
+   "flags": {},
+   "order": 16,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "video",
+     "name": "video",
+     "type": "VIDEO",
+     "link": 15
+    },
+    {
+     "localized_name": "filename_prefix",
+     "name": "filename_prefix",
+     "type": "STRING",
+     "widget": {
+      "name": "filename_prefix"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "format",
+     "name": "format",
+     "type": "COMFY_DYNAMICCOMBO_V3",
+     "widget": {
+      "name": "format"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "codec",
+     "name": "format.codec",
+     "type": "COMFY_DYNAMICCOMBO_V3",
+     "widget": {
+      "name": "format.codec"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "codec",
+     "name": "codec",
+     "shape": 7,
+     "type": "COMFY_DYNAMICCOMBO_V3",
+     "widget": {
+      "name": "codec"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "video",
+     "name": "video",
+     "type": "VIDEO",
+     "links": null
+    }
+   ],
+   "title": "บันทึก 48 fps",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.41.0",
+    "Node name for S&R": "SaveVideo",
+    "ue_properties": {
+     "widget_ue_connectable": {},
+     "input_ue_unconnectable": {},
+     "version": "7.8"
+    }
+   },
+   "widgets_values": [
+    "LongMai/h3zero/final48",
+    "auto",
+    "auto",
+    "auto"
+   ],
+   "widgets_values_named": {
+    "filename_prefix": "LongMai/h3zero/final48",
+    "format": "auto",
+    "format.codec": "auto",
+    "codec": "auto"
+   }
+  },
+  {
+   "id": 15,
+   "type": "CreateVideo",
+   "pos": [
+    1300,
+    700
+   ],
+   "size": [
+    270,
+    150
+   ],
+   "flags": {},
+   "order": 12,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "link": 16
+    },
+    {
+     "localized_name": "audio",
+     "name": "audio",
+     "shape": 7,
+     "type": "AUDIO",
+     "link": 17
+    },
+    {
+     "localized_name": "fps",
+     "name": "fps",
+     "type": "FLOAT",
+     "widget": {
+      "name": "fps"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "bit_depth",
+     "name": "bit_depth",
+     "shape": 7,
+     "type": "COMBO",
+     "widget": {
+      "name": "bit_depth"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "color_space",
+     "name": "color_space",
+     "shape": 7,
+     "type": "COMBO",
+     "widget": {
+      "name": "color_space"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "codec",
+     "name": "codec",
+     "shape": 7,
+     "type": "COMBO",
+     "widget": {
+      "name": "codec"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "VIDEO",
+     "name": "VIDEO",
+     "type": "VIDEO",
+     "links": [
+      18
+     ]
+    }
+   ],
+   "title": "รวมภาพ 24 fps + เสียง",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.41.0",
+    "Node name for S&R": "CreateVideo",
+    "ue_properties": {
+     "widget_ue_connectable": {},
+     "input_ue_unconnectable": {},
+     "version": "7.8"
+    }
+   },
+   "widgets_values": [
+    24,
+    "auto",
+    "sRGB",
+    "none"
+   ],
+   "widgets_values_named": {
+    "fps": 24,
+    "bit_depth": "auto",
+    "color_space": "sRGB",
+    "codec": "none"
+   }
+  },
+  {
+   "id": 16,
+   "type": "SaveVideo",
+   "pos": [
+    1700,
+    700
+   ],
+   "size": [
+    270,
+    106
+   ],
+   "flags": {},
+   "order": 14,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "video",
+     "name": "video",
+     "type": "VIDEO",
+     "link": 18
+    },
+    {
+     "localized_name": "filename_prefix",
+     "name": "filename_prefix",
+     "type": "STRING",
+     "widget": {
+      "name": "filename_prefix"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "format",
+     "name": "format",
+     "type": "COMFY_DYNAMICCOMBO_V3",
+     "widget": {
+      "name": "format"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "codec",
+     "name": "format.codec",
+     "type": "COMFY_DYNAMICCOMBO_V3",
+     "widget": {
+      "name": "format.codec"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "codec",
+     "name": "codec",
+     "shape": 7,
+     "type": "COMFY_DYNAMICCOMBO_V3",
+     "widget": {
+      "name": "codec"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "video",
+     "name": "video",
+     "type": "VIDEO",
+     "links": null
+    }
+   ],
+   "title": "บันทึก 24 fps",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.41.0",
+    "Node name for S&R": "SaveVideo",
+    "ue_properties": {
+     "widget_ue_connectable": {},
+     "input_ue_unconnectable": {},
+     "version": "7.8"
+    }
+   },
+   "widgets_values": [
+    "LongMai/h3zero/final24",
+    "auto",
+    "auto",
+    "auto"
+   ],
+   "widgets_values_named": {
+    "filename_prefix": "LongMai/h3zero/final24",
+    "format": "auto",
+    "format.codec": "auto",
+    "codec": "auto"
+   }
+  },
+  {
+   "id": 17,
+   "type": "Note",
+   "pos": [
+    520,
+    640
+   ],
+   "size": [
+    740,
+    470
+   ],
+   "flags": {},
+   "order": 4,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [],
+   "title": "📖 วิธีใช้",
+   "properties": {
+    "ue_properties": {
+     "widget_ue_connectable": {},
+     "version": "7.8",
+     "input_ue_unconnectable": {}
+    }
+   },
+   "widgets_values": [
+    "H3ZeroStudio — สูตรเท่า FINAL V3.1 (Singularity v2 pruned int8 + DMAD 4-step + VAE int8)\nคู่มือ PDF + แพตช์ภาษาไทย: https://github.com/maimemofoto/LongMai-MiniMax-Studio\n\n1) กด “เปิดหน้าตัดต่อ” บน node H3ZeroStudio (หรือดับเบิลคลิก) → หน้าตัดต่อเต็มจอ · Esc = ยุบ\n2) แท็บ “ไฟล์ในโปรเจกต์”: ลากภาพตัวละคร/ฉาก แล้วลากลงคลิป · เพลงที่ต้องการให้ปากตรง → 🔒 แทร็ก 1 (ไม่ใช่ ♫ Music)\n3) ทีละคลิป: เขียน prompt ในการ์ดคลิป · คลิปถัดไปกด E = “⟶ ต่อเนื่อง” · “✂ ฉากใหม่” = ตัดฉาก\n4) กด “เจน” (Ctrl+Enter) → ได้ไฟล์ 24 fps + 48 fps ที่ output/LongMai/h3zero/\n   ค่ากลางตั้งไว้แล้ว: 2 ขั้น · ร่าง 67% er_sde/beta 6 steps · เกลา σ0.86 / 2 steps / linear_quadratic · 1.0 MP\n\n🔘 สวิตช์ (node สีน้ำตาล 2 ตัวด้านบน)\n• ⚡ ตัวเร่งความเร็ว = Comfy-Kitchen INT8 attention + Sparse attention → ปิดถ้า error / การ์ดเก่า (ช้าลง ภาพแทบเท่าเดิม)\n• 🧩 ประหยัด VRAM = Chunk + Low VRAM attention → ปิดได้ถ้า VRAM เหลือ (เร็วขึ้นนิดหน่อย ภาพเท่าเดิม)\n• 🎞 48 fps = NVIDIA Frame Generation → ใช้ได้กับ RTX 40 / 50 เท่านั้น · RTX 30 หรือต่ำกว่า: ปิด (ได้ไฟล์ 24 fps อย่างเดียว)\n⚠ สลับสวิตช์ตัวเร่งแล้วคลิปเดิมจะขึ้น “ไม่ตรงค่าปัจจุบัน” และเจนใหม่ (โมเดลเปลี่ยน)\n⚠ DMAD LoRA ห้ามปิด (ต้องใช้ ~20 steps แทน 6) และห้ามใส่ DMAD ซ้ำในแท็บ “โมเดล” ของหน้าตัดต่อ"
+   ],
+   "widgets_values_named": {
+    "text": "H3ZeroStudio test — สูตรโมเดลเดียวกับ FINAL V3.1 (Singularity Pruned + DMAD LoRA + Comfy-Kitchen + Sparse sla + VAE int8)\n1) ดับเบิลคลิก node H3ZeroStudio (หรือกด \"Развернуть\" / Expand) → หน้าตัดต่อเต็มจอ\n2) ลากภาพตัวละคร / ฉาก / เพลง เข้า Assets แล้วลากลงคลิปบน timeline\n3) แต่ละท่อน: เขียน prompt · เลือก \"Продление\" (ต่อเนื่องไม่มีรอยต่อ) หรือ \"Новая сцена\" (ตัดฉาก)\n4) ตั้งค่า sampler ในหน้า Settings: er_sde / beta / 6 steps · ขั้น 2 = 2 steps σ 0.40 (ตามสูตร V3.1)\n5) Generate (Ctrl+Enter) → ปิดหน้าตัดต่อแล้ว Run workflow → ได้ไฟล์ 24 fps และ 48 fps (NVIDIA) ที่ output/LongMai/h3zero/\nหมายเหตุ: ใหม่มาก (ต.ค. 2026) ยังไม่ได้ทดสอบเต็มรูปแบบ"
+   },
+   "color": "#432",
+   "bgcolor": "#653"
+  },
+  {
+   "flags": {},
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "OPT_CONNECTION",
+     "type": "*",
+     "links": null
+    }
+   ],
+   "properties": {
+    "matchColors": "",
+    "showNav": true,
+    "showAllGraphs": true,
+    "sort": "position",
+    "customSortAlphabet": "",
+    "toggleRestriction": "default",
+    "matchTitle": "ประหยัด VRAM|ตัวเร่งความเร็ว"
+   },
+   "id": 18,
+   "type": "Fast Groups Bypasser (rgthree)",
+   "title": "🔘 เปิด/ปิด ตัวเร่ง (ปิด = bypass)",
+   "pos": [
+    520,
+    400
+   ],
+   "size": [
+    400,
+    110
+   ],
+   "order": 17,
+   "color": "#432",
+   "bgcolor": "#653"
+  },
+  {
+   "flags": {},
+   "mode": 0,
+   "inputs": [],
+   "outputs": [
+    {
+     "name": "OPT_CONNECTION",
+     "type": "*",
+     "links": null
+    }
+   ],
+   "properties": {
+    "matchColors": "",
+    "showNav": true,
+    "showAllGraphs": true,
+    "sort": "position",
+    "customSortAlphabet": "",
+    "toggleRestriction": "default",
+    "matchTitle": "48 fps"
+   },
+   "id": 19,
+   "type": "Fast Groups Muter (rgthree)",
+   "title": "🔘 เปิด/ปิด 48 fps",
+   "pos": [
+    520,
+    530
+   ],
+   "size": [
+    400,
+    82
+   ],
+   "order": 18,
+   "color": "#432",
+   "bgcolor": "#653"
+  },
+  {
+   "id": 20,
+   "type": "Note",
+   "pos": [
+    1300,
+    900
+   ],
+   "size": [
+    900,
+    860
+   ],
+   "flags": {},
+   "order": 19,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [],
+   "title": "📦 ติดตั้ง: node / โมเดล โหลดที่ไหน",
+   "properties": {},
+   "widgets_values": [
+    "📦 ติดตั้งครั้งแรก — node / โมเดล โหลดที่ไหน วางที่ไหน\n(ทุกโฟลเดอร์นับจาก ComfyUI/ · วางไฟล์แล้วรีสตาร์ต ComfyUI · ต้องใช้ ComfyUI 0.42 ขึ้นไป)\n\n━━ Custom nodes → ComfyUI/custom_nodes/ ━━\nง่ายสุด: Manager → Install Missing Custom Nodes → ติดตั้งทุกตัว → รีสตาร์ต\nหรือ git clone เอง (เปิด Terminal ที่ custom_nodes):\n  git clone https://github.com/zeroleloushe/H3ZeroStudio ComfyUI-H3ZeroStudio   ← หน้าตัดต่อ H3ZeroStudio\n  git clone https://github.com/kijai/ComfyUI-KJNodes                          ← 🧩 Chunk / Low VRAM\n  git clone https://github.com/LBH-123-AI/Comfyui_Minimax_h3_latent_Upscaler     ← ตัวอัปสเกล latent (ขั้น 2)\n  git clone https://github.com/rgthree/rgthree-comfy                          ← 🔘 สวิตช์เปิด/ปิดกลุ่ม\n  git clone https://github.com/Comfy-Org/Nvidia_RTX_Nodes_ComfyUI             ← 🎞 48 fps (RTX 40 ขึ้นไป)\nแล้วติดตั้งไลบรารีด้วย python ของ ComfyUI:  python -m pip install -r <โฟลเดอร์>/requirements.txt\n• ComfyUI-LongMai-Tools (ตัวปรับจำนวนเฟรม 48 fps ให้ตรงเสียง) — คัดลอกโฟลเดอร์จาก\n  https://github.com/maimemofoto/LongMai-MiniMax-Studio (custom_nodes/ComfyUI-LongMai-Tools) ไปวางใน custom_nodes/ (ห้าม git clone ตรง)\n• ในตัว ComfyUI แล้ว (ไม่ต้องติดตั้ง): UNET / CLIP / VAE Loader, LoRA, ⚡ Comfy-Kitchen attention, ⚡ Sparse Attention, Create/Save Video\n\n━━ แพตช์ LongMai (UI ภาษาไทย + σ 0.86 + ค่ากลางสูตร V3.1) ━━\n  ดาวน์โหลด https://github.com/maimemofoto/LongMai-MiniMax-Studio → โฟลเดอร์ patches/H3ZeroStudio-LongMai\n  ใช้กับ H3ZeroStudio commit c471f74:  cd custom_nodes/ComfyUI-H3ZeroStudio  แล้ว  git checkout c471f74\n  คัดลอกโฟลเดอร์ ComfyUI ในแพตช์ทับโฟลเดอร์ ComfyUI ของคุณ → รีสตาร์ต → ตั้งค่า → ภาษาหน้าตัดต่อ → ไทย\n\n━━ โมเดล ━━\n• Base model → models/diffusion_models/\n  Minimax-h3_Singularity_ref2va_v2_pruned_int8.safetensors  จาก https://huggingface.co/WarmBloodAban/Minimax-h3_Singularity\n• Text encoder → models/text_encoders/\n  qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors  จาก https://huggingface.co/Comfy-Org/MiniMax-H3\n• Video VAE (int8) → models/vae/\n  minimax_h3_video_vae_int8_convrot.safetensors  จาก https://huggingface.co/Kijai/MiniMax-H3-experimental\n• Audio VAE → models/vae/\n  minimax_h3_audio_vae_fp32.safetensors  จาก https://huggingface.co/Comfy-Org/MiniMax-H3\n• DMAD 4-step LoRA → models/loras/\n  minimax_h3_DMAD_4step_full_lora_avg_rank_39_bf16.safetensors  จาก https://huggingface.co/Kijai/MiniMax-H3-experimental (โฟลเดอร์ loras)\n• ตัวอัปสเกล latent (ใช้ในหน้าตัดต่อ) → models/latent_upscale_models/\n  minimax_h3_latent_upscaler_3d_bf16.safetensors  จาก https://huggingface.co/LBH-123-AI/Minimax_h3_latent_Upscaler\n• (เสริม) taeh3.safetensors — ตัวอย่างสดระหว่างเจน → models/vae_approx/  จาก https://github.com/madebyollin/taehv (โฟลเดอร์ safetensors) ไม่มีก็ใช้ได้\n\n━━ การ์ดจอ ━━\n• Comfy-Kitchen INT8 attention: การ์ด NVIDIA / AMD · ถ้าไม่มีตัวเลือกหรือ error → ปิดสวิตช์ ⚡\n• 48 fps NVIDIA Frame Generation: RTX 40 / 50 เท่านั้น · การ์ดต่ำกว่านั้น → ปิดสวิตช์ 🎞\nnode สีแดง = ยังไม่ได้ติดตั้ง custom node · เลือกไฟล์โมเดลไม่ได้ = วางผิดโฟลเดอร์ / ยังไม่รีสตาร์ต"
+   ],
+   "color": "#432",
+   "bgcolor": "#653"
+  }
+ ],
+ "links": [
+  [
+   1,
+   1,
+   0,
+   2,
+   0,
+   "MODEL"
+  ],
+  [
+   2,
+   2,
+   0,
+   3,
+   0,
+   "MODEL"
+  ],
+  [
+   3,
+   3,
+   0,
+   4,
+   0,
+   "MODEL"
+  ],
+  [
+   4,
+   4,
+   0,
+   5,
+   0,
+   "MODEL"
+  ],
+  [
+   6,
+   6,
+   0,
+   10,
+   0,
+   "MODEL"
+  ],
+  [
+   7,
+   7,
+   0,
+   10,
+   1,
+   "CLIP"
+  ],
+  [
+   8,
+   8,
+   0,
+   10,
+   2,
+   "VAE"
+  ],
+  [
+   9,
+   9,
+   0,
+   10,
+   3,
+   "VAE"
+  ],
+  [
+   11,
+   11,
+   0,
+   12,
+   0,
+   "IMAGE"
+  ],
+  [
+   12,
+   10,
+   0,
+   12,
+   1,
+   "IMAGE"
+  ],
+  [
+   13,
+   12,
+   0,
+   13,
+   0,
+   "IMAGE"
+  ],
+  [
+   14,
+   10,
+   1,
+   13,
+   1,
+   "AUDIO"
+  ],
+  [
+   16,
+   10,
+   0,
+   15,
+   0,
+   "IMAGE"
+  ],
+  [
+   17,
+   10,
+   1,
+   15,
+   1,
+   "AUDIO"
+  ],
+  [
+   5,
+   5,
+   0,
+   6,
+   0,
+   "MODEL"
+  ],
+  [
+   10,
+   10,
+   0,
+   11,
+   0,
+   "IMAGE"
+  ],
+  [
+   15,
+   13,
+   0,
+   14,
+   0,
+   "VIDEO"
+  ],
+  [
+   18,
+   15,
+   0,
+   16,
+   0,
+   "VIDEO"
+  ]
+ ],
+ "groups": [
+  {
+   "id": 1,
+   "title": "🧩 ประหยัด VRAM (Chunk + Low VRAM)",
+   "bounding": [
+    -15,
+    165,
+    350,
+    240
+   ],
+   "color": "#3f789e",
+   "font_size": 22,
+   "flags": {}
+  },
+  {
+   "id": 2,
+   "title": "⚡ ตัวเร่งความเร็ว (Comfy-Kitchen + Sparse)",
+   "bounding": [
+    -15,
+    555,
+    350,
+    455
+   ],
+   "color": "#b58b2a",
+   "font_size": 22,
+   "flags": {}
+  },
+  {
+   "id": 3,
+   "title": "🎞 48 fps — NVIDIA Frame Generation (RTX 40 ขึ้นไป)",
+   "bounding": [
+    1285,
+    -90,
+    700,
+    615
+   ],
+   "color": "#8A8",
+   "font_size": 22,
+   "flags": {}
+  }
+ ],
+ "config": {},
+ "extra": {
+  "ue_links": [],
+  "ds": {
+   "scale": 2.143588810000002,
+   "offset": [
+    330.75460298050405,
+    176.01439228821366
+   ]
+  },
+  "frontendVersion": "1.55.18",
+  "VHS_latentpreview": false,
+  "VHS_latentpreviewrate": 0,
+  "VHS_MetadataImage": true,
+  "VHS_KeepIntermediate": true
+ },
+ "extensions": {
+  "seed_widgets": {}
+ },
+ "version": 0.4
+}
