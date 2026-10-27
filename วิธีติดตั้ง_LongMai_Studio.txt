@@ -12,9 +12,9 @@
 
 วิธี A (แนะนำ) — ComfyUI Manager:
    เปิด workflow → Manager → Install Missing Custom Nodes → กดติดตั้งทุกตัว → รีสตาร์ต ComfyUI
-   (Manager จะ git clone ลง custom_nodes/ และติดตั้งไลบรารีที่ต้องใช้ให้เอง)
+   (Manager ติดตั้งจาก Comfy Registry ลง custom_nodes/ พร้อมไลบรารีให้เอง — เสถียรและอัปเดตง่ายกว่า git clone)
 
-วิธี B — git clone เอง:
+วิธี B — git clone เอง (ใช้เมื่อ Manager หาไม่เจอ · อย่าลงซ้ำกับตัวที่ Manager ลงแล้ว จะได้ node ซ้ำ 2 ชุด):
    1. เปิด Terminal / Command Prompt ที่โฟลเดอร์ ComfyUI/custom_nodes
    2. รันคำสั่งทีละบรรทัด (โฟลเดอร์ที่ clone มาจะอยู่ใน custom_nodes/ เอง):
       git clone https://github.com/kijai/ComfyUI-KJNodes      ← เสียงแจ้งเตือน, Chunk / Low VRAM
@@ -29,7 +29,8 @@
       git clone https://github.com/Comfy-Org/Nvidia_RTX_Nodes_ComfyUI      ← 48 fps NVIDIA Frame Generation (pip install -r requirements.txt · การ์ด RTX 40 ขึ้นไป)
    3. ติดตั้งไลบรารีของ node (ต้องใช้ python ของ ComfyUI เอง ไม่ใช่ python ของเครื่อง):
       ComfyUI portable (รันจากโฟลเดอร์ custom_nodes):
-         ..\..\python_embeded\python.exe -m pip install -r <ชื่อโฟลเดอร์>equirements.txt
+         ..\..\python_embeded\python.exe -m pip install -r <ชื่อโฟลเดอร์>
+equirements.txt
       ComfyUI แบบ venv: เปิด venv ก่อน แล้ว  pip install -r <ชื่อโฟลเดอร์>/requirements.txt
       ตัวที่มี requirements.txt: ComfyUI-KJNodes, ComfyUI-Pixaroma, ComfyUI-Easy-Use, rgthree-comfy, ComfyUI-Fantastic-MiniMaxH3-PromptBuilder, comfyui-minimax-h3-audio-T8
    4. รีสตาร์ต ComfyUI
