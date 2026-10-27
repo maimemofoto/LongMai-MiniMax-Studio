@@ -1289,7 +1289,7 @@
     "pinned": true
    },
    "order": 11,
-   "mode": 0,
+   "mode": 4,
    "inputs": [
     {
      "localized_name": "value",
@@ -1344,7 +1344,7 @@
     "pinned": true
    },
    "order": 46,
-   "mode": 0,
+   "mode": 4,
    "inputs": [
     {
      "localized_name": "a",
@@ -1424,7 +1424,7 @@
     "pinned": true
    },
    "order": 47,
-   "mode": 0,
+   "mode": 4,
    "inputs": [
     {
      "localized_name": "audio",
@@ -1496,7 +1496,7 @@
     "pinned": true
    },
    "order": 48,
-   "mode": 0,
+   "mode": 4,
    "inputs": [
     {
      "localized_name": "audio",
@@ -1547,7 +1547,7 @@
     "pinned": true
    },
    "order": 12,
-   "mode": 0,
+   "mode": 4,
    "inputs": [
     {
      "localized_name": "value",
@@ -1625,7 +1625,7 @@
     "pinned": true
    },
    "order": 49,
-   "mode": 0,
+   "mode": 4,
    "inputs": [
     {
      "localized_name": "samples",
@@ -1677,7 +1677,7 @@
     "pinned": true
    },
    "order": 50,
-   "mode": 0,
+   "mode": 4,
    "inputs": [
     {
      "localized_name": "av_latent",
@@ -1728,7 +1728,7 @@
     "pinned": true
    },
    "order": 51,
-   "mode": 0,
+   "mode": 4,
    "inputs": [
     {
      "localized_name": "video_latent",
@@ -1780,7 +1780,7 @@
     "pinned": true
    },
    "order": 52,
-   "mode": 0,
+   "mode": 4,
    "inputs": [
     {
      "localized_name": "samples",
@@ -3786,10 +3786,10 @@
     }
    },
    "widgets_values": [
-    "ชุดเริ่มต้น V3.1 (ทดสอบแล้วคมที่สุด): Base Singularity v2 pruned int8\nLoRA หลัก: DMAD 4-step 1.0 (ในแถว — ใช้ทั้ง Stage 1 และ Stage 2)\nRealism People 0.75 + trigger r34l1sm: ปิดไว้ (node แยก 🧑 — เปิดด้วยสวิตช์ \"โหมดสมจริง\" ถ้าอยากได้ผิวนุ่มแบบหนัง)\nเสริม (ปิดไว้ — กดสวิตช์ในแถว): Turbo MiniMax 4-step (สูตร V3 เดิม) / Cinematic Realism / Motion Repair (ฉากแอ็กชัน 0.5-0.7) / Combat V2 / GunFu (trigger BUNNY)\nถ้าเปลี่ยน base model ให้เลือก Turbo LoRA ที่เข้าคู่กัน\n\nบล็อก \"หน้าเท่านั้น\" (ใส่ใน subject_definitions):\n<Picture 1> controls the singer's FACIAL IDENTITY ONLY.\nPreserve from <Picture 1>: face shape, facial structure, eyes, eyebrows, nose, lips, cheeks, jawline and facial proportions.\nIgnore all non-facial information from <Picture 1>: clothing, body, pose, background, lighting and camera framing.\n+ ระบุอายุเป็นตัวเลขเดียว + youthful / cute / fresh-faced\nหลายตัวละคร: กำหนดทีละคน (ตำแหน่ง ชุด และ \"ถือแค่ของของตัวเอง\") / ใส่ <Picture 2>, <Picture 3> ... ได้"
+    "ชุดเริ่มต้น V3.1 (ทดสอบแล้วคมที่สุด): Base Singularity v2 pruned int8\nLoRA หลัก: DMAD 4-step 1.0 (ในแถว — ใช้ทั้ง Stage 1 และ Stage 2)\nRealism People 0.75 + trigger r34l1sm: เปิดไว้เป็นค่าเริ่มต้น (node แยก 🧑 — ผิวนุ่มแบบหนัง · ปิดด้วยสวิตช์ \"โหมดสมจริง\" ถ้าอยากได้ภาพคมแบบ DMAD ล้วน)\nเสริม (ปิดไว้ — กดสวิตช์ในแถว): Turbo MiniMax 4-step (สูตร V3 เดิม) / Cinematic Realism / Motion Repair (ฉากแอ็กชัน 0.5-0.7) / Combat V2 / GunFu (trigger BUNNY)\nถ้าเปลี่ยน base model ให้เลือก Turbo LoRA ที่เข้าคู่กัน\n\nบล็อก \"หน้าเท่านั้น\" (ใส่ใน subject_definitions):\n<Picture 1> controls the singer's FACIAL IDENTITY ONLY.\nPreserve from <Picture 1>: face shape, facial structure, eyes, eyebrows, nose, lips, cheeks, jawline and facial proportions.\nIgnore all non-facial information from <Picture 1>: clothing, body, pose, background, lighting and camera framing.\n+ ระบุอายุเป็นตัวเลขเดียว + youthful / cute / fresh-faced\nหลายตัวละคร: กำหนดทีละคน (ตำแหน่ง ชุด และ \"ถือแค่ของของตัวเอง\") / ใส่ <Picture 2>, <Picture 3> ... ได้"
    ],
    "widgets_values_named": {
-    "text": "ชุดเริ่มต้น V3.1 (ทดสอบแล้วคมที่สุด): Base Singularity Pruned v1.3\nLoRA หลัก: DMAD 4-step 1.0 (ในแถว — ใช้ทั้ง Stage 1 และ Stage 2)\nRealism People 0.75 + trigger r34l1sm: ปิดไว้ (node แยก 🧑 — เปิดด้วยสวิตช์ \"โหมดสมจริง\" ถ้าอยากได้ผิวนุ่มแบบหนัง)\nเสริม (ปิดไว้ — กดสวิตช์ในแถว): Turbo MiniMax 4-step (สูตร V3 เดิม) / Cinematic Realism / Motion Repair (ฉากแอ็กชัน 0.5-0.7) / Combat V2 / GunFu (trigger BUNNY)\nถ้าเปลี่ยน base model ให้เลือก Turbo LoRA ที่เข้าคู่กัน\n\nบล็อก \"หน้าเท่านั้น\" (ใส่ใน subject_definitions):\n<Picture 1> controls the singer's FACIAL IDENTITY ONLY.\nPreserve from <Picture 1>: face shape, facial structure, eyes, eyebrows, nose, lips, cheeks, jawline and facial proportions.\nIgnore all non-facial information from <Picture 1>: clothing, body, pose, background, lighting and camera framing.\n+ ระบุอายุเป็นตัวเลขเดียว + youthful / cute / fresh-faced\nหลายตัวละคร: กำหนดทีละคน (ตำแหน่ง ชุด และ \"ถือแค่ของของตัวเอง\") / ใส่ <Picture 2>, <Picture 3> ... ได้"
+    "text": "ชุดเริ่มต้น V3.1 (ทดสอบแล้วคมที่สุด): Base Singularity v2 pruned int8\nLoRA หลัก: DMAD 4-step 1.0 (ในแถว — ใช้ทั้ง Stage 1 และ Stage 2)\nRealism People 0.75 + trigger r34l1sm: เปิดไว้เป็นค่าเริ่มต้น (node แยก 🧑 — ผิวนุ่มแบบหนัง · ปิดด้วยสวิตช์ \"โหมดสมจริง\" ถ้าอยากได้ภาพคมแบบ DMAD ล้วน)\nเสริม (ปิดไว้ — กดสวิตช์ในแถว): Turbo MiniMax 4-step (สูตร V3 เดิม) / Cinematic Realism / Motion Repair (ฉากแอ็กชัน 0.5-0.7) / Combat V2 / GunFu (trigger BUNNY)\nถ้าเปลี่ยน base model ให้เลือก Turbo LoRA ที่เข้าคู่กัน\n\nบล็อก \"หน้าเท่านั้น\" (ใส่ใน subject_definitions):\n<Picture 1> controls the singer's FACIAL IDENTITY ONLY.\nPreserve from <Picture 1>: face shape, facial structure, eyes, eyebrows, nose, lips, cheeks, jawline and facial proportions.\nIgnore all non-facial information from <Picture 1>: clothing, body, pose, background, lighting and camera framing.\n+ ระบุอายุเป็นตัวเลขเดียว + youthful / cute / fresh-faced\nหลายตัวละคร: กำหนดทีละคน (ตำแหน่ง ชุด และ \"ถือแค่ของของตัวเอง\") / ใส่ <Picture 2>, <Picture 3> ... ได้"
    },
    "color": "#432",
    "bgcolor": "#653"
