@@ -13,7 +13,7 @@ Workflow ComfyUI สำหรับสร้างวิดีโอพร้อ
 
 ## เริ่มใช้งาน
 
-1. ใช้ ComfyUI 0.42 ขึ้นไป
+1. ใช้ ComfyUI 0.42 ขึ้นไป (V3.1 แนะนำรุ่นล่าสุด ทดสอบบน 0.43.0-36)
 2. กด **Code → Download ZIP** แล้วแตกไฟล์
 3. ติดตั้ง node ของเรา `ComfyUI-LongMai-Tools` เลือกวิธีเดียว อย่าลงซ้ำ: เปิด Terminal ที่ `ComfyUI/custom_nodes` แล้วรัน `git clone https://github.com/maimemofoto/LongMai-MiniMax-Studio` หรือคัดลอกโฟลเดอร์ `custom_nodes/ComfyUI-LongMai-Tools` จาก ZIP ไปไว้ใน `ComfyUI/custom_nodes/`
 4. เปิด workflow แล้วทำตามโน้ต 📦 ในนั้น หรือคู่มือ PDF ซึ่งบอกครบว่าต้องโหลด node และโมเดลอะไร วางไว้ที่ไหน
