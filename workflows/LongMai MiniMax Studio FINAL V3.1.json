@@ -1,8 +1,8 @@
 {
  "id": "9ed03852-f210-4d9e-8351-c8952a1f6fd5",
  "revision": 0,
- "last_node_id": 170,
- "last_link_id": 456,
+ "last_node_id": 171,
+ "last_link_id": 461,
  "nodes": [
   {
    "id": 1,
@@ -273,7 +273,7 @@
    ],
    "size": [
     820,
-    318
+    370
    ],
    "flags": {
     "pinned": true
@@ -301,7 +301,7 @@
      "name": "MODEL",
      "type": "MODEL",
      "links": [
-      219
+      457
      ]
     },
     {
@@ -317,7 +317,7 @@
      "links": []
     }
    ],
-   "title": "LoRA (ใช้ทั้ง 2 Stage) — เปิด/ปิดแต่ละตัวในแถว",
+   "title": "LoRA Stage 1 — ใช้เจนภาพและการเคลื่อนไหว",
    "properties": {
     "cnr_id": "comfyui-pixaroma",
     "ver": "1.4.162",
@@ -327,7 +327,7 @@
      "input_ue_unconnectable": {},
      "version": "7.8"
     },
-    "loraLoaderState": "{\"version\": 1, \"loras\": [{\"id\": \"t00000d1\", \"name\": \"MINIMAX\\\\Turbo\\\\minimax_h3_DMAD_4step_full_lora_avg_rank_39_bf16.safetensors\", \"on\": true, \"sm\": 1.0, \"sc\": 1.0, \"triggers\": [], \"custom\": [], \"at\": true}, {\"id\": \"t0000001\", \"name\": \"MINIMAX\\\\Turbo\\\\minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors\", \"on\": false, \"sm\": 1.0, \"sc\": 1.0, \"triggers\": [], \"custom\": [], \"at\": true}, {\"id\": \"t0000004\", \"name\": \"MINIMAX\\\\Motion\\\\Motion_Repair_V2.safetensors\", \"on\": false, \"sm\": 0.6, \"sc\": 0.6, \"triggers\": [], \"custom\": [], \"at\": true}, {\"id\": \"t0000005\", \"name\": \"MINIMAX\\\\Action\\\\H3_Combat_V2.safetensors\", \"on\": false, \"sm\": 0.8, \"sc\": 0.8, \"triggers\": [], \"custom\": [], \"at\": true}, {\"id\": \"t0000006\", \"name\": \"MINIMAX\\\\Action\\\\GunFu.safetensors\", \"on\": false, \"sm\": 0.9, \"sc\": 0.9, \"triggers\": [], \"custom\": [], \"at\": true}], \"sep\": \", \", \"step\": 0.05, \"defStrength\": 1, \"linkStrength\": true, \"civitai\": true, \"thumbs\": true, \"hideExt\": true, \"accent\": null, \"cacheMode\": \"last\"}"
+    "loraLoaderState": "{\"version\":1,\"loras\":[{\"id\":\"t00000d1\",\"name\":\"MINIMAX\\\\Turbo\\\\minimax_h3_DMAD_4step_full_lora_avg_rank_39_bf16.safetensors\",\"on\":true,\"sm\":1,\"sc\":1,\"triggers\":[],\"custom\":[],\"at\":true},{\"id\":\"t0000071\",\"name\":\"MINIMAX\\\\Skin\\\\h3-realism-people-t2v-i2v-r2v.safetensors\",\"on\":true,\"sm\":0.75,\"sc\":0.75,\"triggers\":[],\"custom\":[],\"at\":true},{\"id\":\"t0000001\",\"name\":\"MINIMAX\\\\Turbo\\\\minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors\",\"on\":false,\"sm\":1,\"sc\":1,\"triggers\":[],\"custom\":[],\"at\":true},{\"id\":\"t0000004\",\"name\":\"MINIMAX\\\\Motion\\\\Motion_Repair_V2.safetensors\",\"on\":false,\"sm\":0.6,\"sc\":0.6,\"triggers\":[],\"custom\":[],\"at\":true},{\"id\":\"t0000005\",\"name\":\"MINIMAX\\\\Action\\\\H3_Combat_V2.safetensors\",\"on\":false,\"sm\":0.8,\"sc\":0.8,\"triggers\":[],\"custom\":[],\"at\":true},{\"id\":\"t0000006\",\"name\":\"MINIMAX\\\\Action\\\\GunFu.safetensors\",\"on\":false,\"sm\":0.9,\"sc\":0.9,\"triggers\":[],\"custom\":[],\"at\":true}],\"sep\":\", \",\"step\":0.05,\"defStrength\":1,\"linkStrength\":true,\"civitai\":true,\"thumbs\":true,\"hideExt\":true,\"accent\":null,\"cacheMode\":\"last\"}"
    },
    "widgets_values": [
     {
@@ -339,6 +339,16 @@
        "on": true,
        "sm": 1,
        "sc": 1,
+       "triggers": [],
+       "custom": [],
+       "at": true
+      },
+      {
+       "id": "t0000071",
+       "name": "MINIMAX\\Skin\\h3-realism-people-t2v-i2v-r2v.safetensors",
+       "on": true,
+       "sm": 0.75,
+       "sc": 0.75,
        "triggers": [],
        "custom": [],
        "at": true
@@ -405,6 +415,16 @@
        "on": true,
        "sm": 1,
        "sc": 1,
+       "triggers": [],
+       "custom": [],
+       "at": true
+      },
+      {
+       "id": "t0000071",
+       "name": "MINIMAX\\Skin\\h3-realism-people-t2v-i2v-r2v.safetensors",
+       "on": true,
+       "sm": 0.75,
+       "sc": 0.75,
        "triggers": [],
        "custom": [],
        "at": true
@@ -673,10 +693,10 @@
     }
    },
    "widgets_values": [
-    12
+    8
    ],
    "widgets_values_named": {
-    "value": 12
+    "value": 8
    }
   },
   {
@@ -3050,7 +3070,7 @@
      ]
     }
    ],
-   "title": "⬆️ Stage 2 Engine — อัปสเกล 1.0MP + เก็บรายละเอียด",
+   "title": "⬆️ Stage 2 Engine — อัปสเกล 2.0MP + เก็บรายละเอียด",
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.37.0",
@@ -3082,79 +3102,6 @@
    }
   },
   {
-   "id": 71,
-   "type": "LoraLoaderModelOnly",
-   "pos": [
-    3320,
-    1100
-   ],
-   "size": [
-    820,
-    82
-   ],
-   "flags": {
-    "pinned": true
-   },
-   "order": 36,
-   "mode": 0,
-   "inputs": [
-    {
-     "localized_name": "model",
-     "name": "model",
-     "type": "MODEL",
-     "link": 219
-    },
-    {
-     "localized_name": "lora_name",
-     "name": "lora_name",
-     "type": "COMBO",
-     "widget": {
-      "name": "lora_name"
-     },
-     "link": null
-    },
-    {
-     "localized_name": "strength_model",
-     "name": "strength_model",
-     "type": "FLOAT",
-     "widget": {
-      "name": "strength_model"
-     },
-     "link": null
-    }
-   ],
-   "outputs": [
-    {
-     "localized_name": "MODEL",
-     "name": "MODEL",
-     "type": "MODEL",
-     "links": [
-      4,
-      225
-     ]
-    }
-   ],
-   "title": "🧑 Realism LoRA (โหมดสมจริง — คุมด้วยสวิตช์ใน ②)",
-   "properties": {
-    "cnr_id": "comfy-core",
-    "ver": "0.37.0",
-    "Node name for S&R": "LoraLoaderModelOnly",
-    "ue_properties": {
-     "widget_ue_connectable": {},
-     "version": "7.8",
-     "input_ue_unconnectable": {}
-    }
-   },
-   "widgets_values": [
-    "MINIMAX\\Skin\\h3-realism-people-t2v-i2v-r2v.safetensors",
-    0.75
-   ],
-   "widgets_values_named": {
-    "lora_name": "MINIMAX\\Skin\\h3-realism-people-t2v-i2v-r2v.safetensors",
-    "strength_model": 0.75
-   }
-  },
-  {
    "id": 72,
    "type": "PixaromaGroupSwitch",
    "pos": [
@@ -3172,7 +3119,7 @@
    "mode": 0,
    "inputs": [],
    "outputs": [],
-   "title": "🔀 โหมดสมจริง (Realism LoRA + trigger) · ปิด = การ์ตูน / 3D",
+   "title": "🔀 Trigger โหมดสมจริง (r34l1sm) · ตัว LoRA เปิด/ปิดในแถว Stage 1 และ 2",
    "properties": {
     "cnr_id": "comfyui-pixaroma",
     "ver": "1.4.162",
@@ -3187,8 +3134,7 @@
      "action": "bypass",
      "scope": "pick",
      "picked": [
-      "pg_lm_real_trig",
-      "pg_lm_real_lora"
+      "pg_lm_real_trig"
      ],
      "sort": "position",
      "restriction": "any"
@@ -3200,8 +3146,7 @@
      "action": "bypass",
      "scope": "pick",
      "picked": [
-      "pg_lm_real_trig",
-      "pg_lm_real_lora"
+      "pg_lm_real_trig"
      ],
      "sort": "position",
      "restriction": "any"
@@ -3213,8 +3158,7 @@
      "action": "bypass",
      "scope": "pick",
      "picked": [
-      "pg_lm_real_trig",
-      "pg_lm_real_lora"
+      "pg_lm_real_trig"
      ],
      "sort": "position",
      "restriction": "any"
@@ -3766,10 +3710,10 @@
     }
    },
    "widgets_values": [
-    "ชุดเริ่มต้น V3.1 (ทดสอบแล้วคมที่สุด): Base Singularity v2 pruned int8\nLoRA หลัก: DMAD 4-step 1.0 (ในแถว — ใช้ทั้ง Stage 1 และ Stage 2)\nRealism People 0.75 + trigger r34l1sm: เปิดไว้เป็นค่าเริ่มต้น (node แยก 🧑 — ผิวนุ่มแบบหนัง · ปิดด้วยสวิตช์ \"โหมดสมจริง\" ถ้าอยากได้ภาพคมแบบ DMAD ล้วน)\nเสริม (ปิดไว้ — กดสวิตช์ในแถว): Turbo MiniMax 4-step / Motion Repair (ฉากแอ็กชัน 0.5-0.7) / Combat V2 / GunFu (trigger BUNNY)\nถ้าเปลี่ยน base model ให้เลือก Turbo LoRA ที่เข้าคู่กัน\n\nบล็อก \"หน้าเท่านั้น\" (ใส่ใน subject_definitions):\n<Picture 1> controls the singer's FACIAL IDENTITY ONLY.\nPreserve from <Picture 1>: face shape, facial structure, eyes, eyebrows, nose, lips, cheeks, jawline and facial proportions.\nIgnore all non-facial information from <Picture 1>: clothing, body, pose, background, lighting and camera framing.\n+ ระบุอายุเป็นตัวเลขเดียว + youthful / cute / fresh-faced\nหลายตัวละคร: กำหนดทีละคน (ตำแหน่ง ชุด และ \"ถือแค่ของของตัวเอง\") / ใส่ <Picture 2>, <Picture 3> ... ได้"
+    "ชุดเริ่มต้น V3.1 (ทดสอบแล้วคมที่สุด): Base Singularity v2 pruned int8\nLoRA หลัก: DMAD 4-step 1.0 (เปิดไว้ทั้งแถว Stage 1 และแถว Stage 2)\nRealism People 0.75 + trigger r34l1sm: เปิดไว้เป็นค่าเริ่มต้น (ผิวนุ่มแบบหนัง) · ถ้าอยากได้ภาพคมแบบ DMAD ล้วน ให้ปิด Realism ในแถว Stage 1 และ 2 แล้วปิดสวิตช์ Trigger โหมดสมจริง\nเสริม (ปิดไว้ — กดสวิตช์ในแถว): Turbo MiniMax 4-step / Motion Repair (ฉากแอ็กชัน 0.5-0.7) / Combat V2 / GunFu (trigger BUNNY)\nถ้าเปลี่ยน base model ให้เลือก Turbo LoRA ที่เข้าคู่กัน\n\nบล็อก \"หน้าเท่านั้น\" (ใส่ใน subject_definitions):\n<Picture 1> controls the singer's FACIAL IDENTITY ONLY.\nPreserve from <Picture 1>: face shape, facial structure, eyes, eyebrows, nose, lips, cheeks, jawline and facial proportions.\nIgnore all non-facial information from <Picture 1>: clothing, body, pose, background, lighting and camera framing.\n+ ระบุอายุเป็นตัวเลขเดียว + youthful / cute / fresh-faced\nหลายตัวละคร: กำหนดทีละคน (ตำแหน่ง ชุด และ \"ถือแค่ของของตัวเอง\") / ใส่ <Picture 2>, <Picture 3> ... ได้\n\nLoRA แยกแถว: แถว Stage 1 ใช้ตอนเจน · แถว Stage 2 ใช้ตอนอัปสเกล · ปรับแยกกันได้\nStage 2 มีสวิตช์ในแถวกลาง: ใช้ LoRA = แถว Stage 2 + sla (ต้องเปิด DMAD ในแถว) · ไม่ใช้ LoRA = ไม่ผ่านแถว Stage 2 + sol-attn อัตโนมัติ (ควรเพิ่ม Stage 2 Steps)\nStage 1: เปิด DMAD/Turbo ให้ใช้ sla · ถ้าปิดตัวเร่ง ให้เปลี่ยน node Stage 1 เป็น sol-attn เอง"
    ],
    "widgets_values_named": {
-    "text": "ชุดเริ่มต้น V3.1 (ทดสอบแล้วคมที่สุด): Base Singularity v2 pruned int8\nLoRA หลัก: DMAD 4-step 1.0 (ในแถว — ใช้ทั้ง Stage 1 และ Stage 2)\nRealism People 0.75 + trigger r34l1sm: เปิดไว้เป็นค่าเริ่มต้น (node แยก 🧑 — ผิวนุ่มแบบหนัง · ปิดด้วยสวิตช์ \"โหมดสมจริง\" ถ้าอยากได้ภาพคมแบบ DMAD ล้วน)\nเสริม (ปิดไว้ — กดสวิตช์ในแถว): Turbo MiniMax 4-step / Motion Repair (ฉากแอ็กชัน 0.5-0.7) / Combat V2 / GunFu (trigger BUNNY)\nถ้าเปลี่ยน base model ให้เลือก Turbo LoRA ที่เข้าคู่กัน\n\nบล็อก \"หน้าเท่านั้น\" (ใส่ใน subject_definitions):\n<Picture 1> controls the singer's FACIAL IDENTITY ONLY.\nPreserve from <Picture 1>: face shape, facial structure, eyes, eyebrows, nose, lips, cheeks, jawline and facial proportions.\nIgnore all non-facial information from <Picture 1>: clothing, body, pose, background, lighting and camera framing.\n+ ระบุอายุเป็นตัวเลขเดียว + youthful / cute / fresh-faced\nหลายตัวละคร: กำหนดทีละคน (ตำแหน่ง ชุด และ \"ถือแค่ของของตัวเอง\") / ใส่ <Picture 2>, <Picture 3> ... ได้"
+    "text": "ชุดเริ่มต้น V3.1 (ทดสอบแล้วคมที่สุด): Base Singularity v2 pruned int8\nLoRA หลัก: DMAD 4-step 1.0 (เปิดไว้ทั้งแถว Stage 1 และแถว Stage 2)\nRealism People 0.75 + trigger r34l1sm: เปิดไว้เป็นค่าเริ่มต้น (ผิวนุ่มแบบหนัง) · ถ้าอยากได้ภาพคมแบบ DMAD ล้วน ให้ปิด Realism ในแถว Stage 1 และ 2 แล้วปิดสวิตช์ Trigger โหมดสมจริง\nเสริม (ปิดไว้ — กดสวิตช์ในแถว): Turbo MiniMax 4-step / Motion Repair (ฉากแอ็กชัน 0.5-0.7) / Combat V2 / GunFu (trigger BUNNY)\nถ้าเปลี่ยน base model ให้เลือก Turbo LoRA ที่เข้าคู่กัน\n\nบล็อก \"หน้าเท่านั้น\" (ใส่ใน subject_definitions):\n<Picture 1> controls the singer's FACIAL IDENTITY ONLY.\nPreserve from <Picture 1>: face shape, facial structure, eyes, eyebrows, nose, lips, cheeks, jawline and facial proportions.\nIgnore all non-facial information from <Picture 1>: clothing, body, pose, background, lighting and camera framing.\n+ ระบุอายุเป็นตัวเลขเดียว + youthful / cute / fresh-faced\nหลายตัวละคร: กำหนดทีละคน (ตำแหน่ง ชุด และ \"ถือแค่ของของตัวเอง\") / ใส่ <Picture 2>, <Picture 3> ... ได้\n\nLoRA แยกแถว: แถว Stage 1 ใช้ตอนเจน · แถว Stage 2 ใช้ตอนอัปสเกล · ปรับแยกกันได้\nStage 2 มีสวิตช์ในแถวกลาง: ใช้ LoRA = แถว Stage 2 + sla (ต้องเปิด DMAD ในแถว) · ไม่ใช้ LoRA = ไม่ผ่านแถว Stage 2 + sol-attn อัตโนมัติ (ควรเพิ่ม Stage 2 Steps)\nStage 1: เปิด DMAD/Turbo ให้ใช้ sla · ถ้าปิดตัวเร่ง ให้เปลี่ยน node Stage 1 เป็น sol-attn เอง"
    },
    "color": "#432",
    "bgcolor": "#653"
@@ -3779,11 +3723,11 @@
    "type": "PixaromaLoraLoader",
    "pos": [
     3320,
-    890
+    950
    ],
    "size": [
     820,
-    128
+    240
    ],
    "flags": {
     "pinned": true
@@ -3795,7 +3739,7 @@
      "localized_name": "model",
      "name": "model",
      "type": "MODEL",
-     "link": 4
+     "link": 458
     },
     {
      "localized_name": "clip",
@@ -3827,7 +3771,7 @@
      "links": []
     }
    ],
-   "title": "LoRA เพิ่มเติมเฉพาะ Stage 2",
+   "title": "LoRA Stage 2 — ใช้ตอนอัปสเกล · ปิดตัวไหนก็ไม่กระทบ Stage 1",
    "properties": {
     "cnr_id": "comfyui-pixaroma",
     "ver": "1.4.162",
@@ -3837,14 +3781,34 @@
      "input_ue_unconnectable": {},
      "version": "7.8"
     },
-    "loraLoaderState": "{\"version\":1,\"loras\":[{\"id\":\"t0000001\",\"name\":\"MINIMAX\\\\Stage2\\\\minimax_h3_lms_v1.0_r64.safetensors\",\"on\":false,\"sm\":1,\"sc\":1,\"triggers\":[],\"custom\":[],\"at\":true}],\"sep\":\", \",\"step\":0.05,\"defStrength\":1,\"linkStrength\":true,\"civitai\":true,\"thumbs\":true,\"hideExt\":true,\"accent\":null,\"cacheMode\":\"last\"}"
+    "loraLoaderState": "{\"version\":1,\"loras\":[{\"id\":\"t0000081\",\"name\":\"MINIMAX\\\\Turbo\\\\minimax_h3_DMAD_4step_full_lora_avg_rank_39_bf16.safetensors\",\"on\":true,\"sm\":1,\"sc\":1,\"triggers\":[],\"custom\":[],\"at\":true},{\"id\":\"t0000082\",\"name\":\"MINIMAX\\\\Skin\\\\h3-realism-people-t2v-i2v-r2v.safetensors\",\"on\":true,\"sm\":0.75,\"sc\":0.75,\"triggers\":[],\"custom\":[],\"at\":true},{\"id\":\"t0000083\",\"name\":\"MINIMAX\\\\Stage2\\\\minimax_h3_lms_v1.0_r64.safetensors\",\"on\":false,\"sm\":1,\"sc\":1,\"triggers\":[],\"custom\":[],\"at\":true}],\"sep\":\", \",\"step\":0.05,\"defStrength\":1,\"linkStrength\":true,\"civitai\":true,\"thumbs\":true,\"hideExt\":true,\"accent\":null,\"cacheMode\":\"last\"}"
    },
    "widgets_values": [
     {
      "version": 1,
      "loras": [
       {
-       "id": "t0000001",
+       "id": "t0000081",
+       "name": "MINIMAX\\Turbo\\minimax_h3_DMAD_4step_full_lora_avg_rank_39_bf16.safetensors",
+       "on": true,
+       "sm": 1,
+       "sc": 1,
+       "triggers": [],
+       "custom": [],
+       "at": true
+      },
+      {
+       "id": "t0000082",
+       "name": "MINIMAX\\Skin\\h3-realism-people-t2v-i2v-r2v.safetensors",
+       "on": true,
+       "sm": 0.75,
+       "sc": 0.75,
+       "triggers": [],
+       "custom": [],
+       "at": true
+      },
+      {
+       "id": "t0000083",
        "name": "MINIMAX\\Stage2\\minimax_h3_lms_v1.0_r64.safetensors",
        "on": false,
        "sm": 1,
@@ -3870,7 +3834,27 @@
      "version": 1,
      "loras": [
       {
-       "id": "t0000001",
+       "id": "t0000081",
+       "name": "MINIMAX\\Turbo\\minimax_h3_DMAD_4step_full_lora_avg_rank_39_bf16.safetensors",
+       "on": true,
+       "sm": 1,
+       "sc": 1,
+       "triggers": [],
+       "custom": [],
+       "at": true
+      },
+      {
+       "id": "t0000082",
+       "name": "MINIMAX\\Skin\\h3-realism-people-t2v-i2v-r2v.safetensors",
+       "on": true,
+       "sm": 0.75,
+       "sc": 0.75,
+       "triggers": [],
+       "custom": [],
+       "at": true
+      },
+      {
+       "id": "t0000083",
        "name": "MINIMAX\\Stage2\\minimax_h3_lms_v1.0_r64.safetensors",
        "on": false,
        "sm": 1,
@@ -3933,7 +3917,9 @@
      "name": "model",
      "type": "MODEL",
      "links": [
-      222
+      222,
+      458,
+      459
      ]
     }
    ],
@@ -3978,7 +3964,7 @@
      "localized_name": "model",
      "name": "model",
      "type": "MODEL",
-     "link": 225
+     "link": 457
     },
     {
      "localized_name": "method",
@@ -4073,7 +4059,7 @@
      ]
     }
    ],
-   "title": "⚡ Sparse Attention — Stage 1 (มี Turbo LoRA → sla)",
+   "title": "⚡ Sparse Attention — Stage 1 · เปิด DMAD/Turbo → sla · ไม่มีตัวเร่ง → sol-attn",
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.34.0",
@@ -4839,7 +4825,7 @@
      ]
     }
    ],
-   "title": "⬆️ Stage 2 Megapixels (1.0 = 1376x768)",
+   "title": "⬆️ Stage 2 Megapixels (2.0 = 1952x1088)",
    "properties": {
     "cnr_id": "comfy-core",
     "ver": "0.39.0",
@@ -4853,10 +4839,10 @@
     }
    },
    "widgets_values": [
-    1
+    2.0
    ],
    "widgets_values_named": {
-    "value": 1
+    "value": 2.0
    }
   },
   {
@@ -5568,7 +5554,7 @@
      ]
     }
    ],
-   "title": "model Stage 2 = LoRA ชุดเดียวกับ Stage 1 (sla)",
+   "title": "ประตู: Stage 2 ใช้ LoRA (sla)",
    "properties": {
     "cnr_id": "rgthree-comfy",
     "ver": "6b76ee6f2c5a007710b5a16f97c94330d6ecc871",
@@ -5607,7 +5593,7 @@
      "dir": 3,
      "name": "any_02",
      "type": "MODEL",
-     "link": null
+     "link": 461
     },
     {
      "name": "any_03",
@@ -5636,7 +5622,7 @@
      ]
     }
    ],
-   "title": "model สำหรับ Stage 2",
+   "title": "model สำหรับ Stage 2 (อัตโนมัติตามสวิตช์)",
    "properties": {
     "cnr_id": "rgthree-comfy",
     "ver": "6b76ee6f2c5a007710b5a16f97c94330d6ecc871",
@@ -5709,11 +5695,11 @@
     }
    },
    "widgets_values": [
-    4,
+    8,
     2048
    ],
    "widgets_values_named": {
-    "chunks": 4,
+    "chunks": 8,
     "seq_threshold": 2048
    }
   },
@@ -5770,10 +5756,10 @@
     }
    },
    "widgets_values": [
-    4
+    8
    ],
    "widgets_values_named": {
-    "head_chunks": 4
+    "head_chunks": 8
    }
   },
   {
@@ -5902,17 +5888,322 @@
    },
    "color": "#14c114",
    "bgcolor": "#00ad00"
+  },
+  {
+   "id": 161,
+   "type": "BlockSparseAttention",
+   "pos": [
+    5520,
+    4280
+   ],
+   "size": [
+    560,
+    300
+   ],
+   "flags": {
+    "pinned": true
+   },
+   "order": 180,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "model",
+     "name": "model",
+     "type": "MODEL",
+     "link": 459
+    },
+    {
+     "localized_name": "method",
+     "name": "selection",
+     "type": "COMFY_DYNAMICCOMBO_V3",
+     "widget": {
+      "name": "selection"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "tau",
+     "name": "selection.tau",
+     "type": "FLOAT",
+     "widget": {
+      "name": "selection.tau"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "start_percent",
+     "name": "start_percent",
+     "type": "FLOAT",
+     "widget": {
+      "name": "start_percent"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "end_percent",
+     "name": "end_percent",
+     "type": "FLOAT",
+     "widget": {
+      "name": "end_percent"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "dense_blocks",
+     "name": "dense_blocks",
+     "type": "STRING",
+     "widget": {
+      "name": "dense_blocks"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "min_tokens",
+     "name": "min_tokens",
+     "type": "INT",
+     "widget": {
+      "name": "min_tokens"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "extra_tokens",
+     "name": "extra_tokens",
+     "type": "INT",
+     "widget": {
+      "name": "extra_tokens"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "sink_conditioning",
+     "name": "sink_conditioning",
+     "type": "COMBO",
+     "widget": {
+      "name": "sink_conditioning"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "verbose",
+     "name": "verbose",
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "verbose"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "model",
+     "name": "model",
+     "type": "MODEL",
+     "links": [
+      460
+     ]
+    }
+   ],
+   "title": "⚡ Sparse Attention — Stage 2 ไม่ใช้ LoRA → sol-attn",
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.34.0",
+    "Node name for S&R": "BlockSparseAttention",
+    "ue_properties": {
+     "widget_ue_connectable": {},
+     "input_ue_unconnectable": {},
+     "version": "7.8"
+    }
+   },
+   "widgets_values": [
+    "sol-attn",
+    1.3,
+    0.2,
+    1,
+    "",
+    12288,
+    256,
+    "exact_kv_and_rows",
+    false
+   ],
+   "widgets_values_named": {
+    "selection": "sol-attn",
+    "selection.tau": 1.3,
+    "start_percent": 0.2,
+    "end_percent": 1,
+    "dense_blocks": "",
+    "min_tokens": 12288,
+    "extra_tokens": 256,
+    "sink_conditioning": "exact_kv_and_rows",
+    "verbose": false
+   },
+   "color": "#322",
+   "bgcolor": "#533"
+  },
+  {
+   "id": 163,
+   "type": "Any Switch (rgthree)",
+   "pos": [
+    3730,
+    1790
+   ],
+   "size": [
+    338,
+    106
+   ],
+   "flags": {
+    "collapsed": true,
+    "pinned": true
+   },
+   "order": 181,
+   "mode": 2,
+   "inputs": [
+    {
+     "dir": 3,
+     "name": "any_01",
+     "type": "MODEL",
+     "link": 460
+    },
+    {
+     "name": "any_02",
+     "type": "MODEL",
+     "link": null
+    },
+    {
+     "name": "any_03",
+     "type": "MODEL",
+     "link": null
+    },
+    {
+     "name": "any_04",
+     "type": "MODEL",
+     "link": null
+    },
+    {
+     "name": "any_05",
+     "type": "MODEL",
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "dir": 4,
+     "label": "MODEL",
+     "name": "*",
+     "type": "MODEL",
+     "links": [
+      461
+     ]
+    }
+   ],
+   "title": "ประตู: Stage 2 ไม่ใช้ LoRA (sol-attn)",
+   "properties": {
+    "cnr_id": "rgthree-comfy",
+    "ver": "6b76ee6f2c5a007710b5a16f97c94330d6ecc871",
+    "ue_properties": {
+     "widget_ue_connectable": {},
+     "input_ue_unconnectable": {},
+     "version": "7.8"
+    }
+   }
+  },
+  {
+   "id": 165,
+   "type": "PixaromaGroupSwitch",
+   "pos": [
+    2400,
+    1974
+   ],
+   "size": [
+    720,
+    103
+   ],
+   "flags": {
+    "pinned": true
+   },
+   "order": 182,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [],
+   "title": "🔀 ⬆️ Stage 2 LoRA: ใช้ LoRA (แถว Stage 2 → sla) / ไม่ใช้ LoRA (sol-attn)",
+   "properties": {
+    "cnr_id": "comfyui-pixaroma",
+    "ver": "1.4.162",
+    "Node name for S&R": "PixaromaGroupSwitch",
+    "ue_properties": {
+     "widget_ue_connectable": {},
+     "input_ue_unconnectable": {},
+     "version": "7.8"
+    },
+    "groupSwitchState": {
+     "version": 1,
+     "action": "mute",
+     "scope": "pick",
+     "picked": [
+      "pg_lm_s2lora",
+      "pg_lm_s2nolora"
+     ],
+     "sort": "position",
+     "restriction": "always"
+    }
+   },
+   "widgets_values": [
+    {
+     "version": 1,
+     "action": "mute",
+     "scope": "pick",
+     "picked": [
+      "pg_lm_s2lora",
+      "pg_lm_s2nolora"
+     ],
+     "sort": "position",
+     "restriction": "always"
+    }
+   ],
+   "widgets_values_named": {
+    "group_switch_ui": {
+     "version": 1,
+     "action": "mute",
+     "scope": "pick",
+     "picked": [
+      "pg_lm_s2lora",
+      "pg_lm_s2nolora"
+     ],
+     "sort": "position",
+     "restriction": "always"
+    }
+   },
+   "color": "#d35050",
+   "bgcolor": "#3e2b2b"
+  },
+  {
+   "id": 171,
+   "type": "Note",
+   "pos": [
+    2400,
+    2090
+   ],
+   "size": [
+    720,
+    285
+   ],
+   "flags": {
+    "pinned": true
+   },
+   "order": 900,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [],
+   "title": "📊 ค่าเริ่มต้นการ์ด 16 GB (ทดสอบจริง RTX 5080)",
+   "properties": {},
+   "widgets_values": [
+    "ค่าเริ่มต้นชุดนี้คือ \"ค่าสมดุล\" ทดสอบบน RTX 5080 16 GB + RAM 64 GB · ทดสอบด้วยฉากเดียว ไม่ใช่การรับประกันทุกเครื่อง\n\n━━ ค่าที่ตั้งไว้ (ต่อ 1 part) ━━\nความยาว 8 วินาที · Stage 1 0.4 MP 6 step · Stage 2 2.0 MP (1952x1088, 24 fps) 2 step denoise 0.4\nChunk Feed-Forward 8 · Low VRAM Attention 8 · Sparse Attention sla keep 10\nเวลา ราว 3.8-3.9 นาที · ผ่าน 3 seed ไม่ OOM · ทดสอบแบบไม่แนบไฟล์อ้างอิง\n\n━━ กั๊ก VRAM 2 GB (ทุกผลทดสอบใช้แบบนี้) ━━\nเพิ่มคำสั่งนี้ตอนเปิด ComfyUI ในไฟล์ .bat:\npython main.py --reserve-vram 2\nเผื่อ VRAM ให้โปรแกรมอื่น เช่น เปิดวิดีโอระหว่างเจน · ถ้าไม่กั๊กอาจเร็วขึ้นหรือไม่ก็ได้ ยังไม่ได้ทดสอบ\n\n━━ ต่อ 2 part (รวมราว 16 วินาที) ━━\nPart 2 แนบ: ภาพตัวละคร = <Picture 1> · ท้าย Stage 1 ของ part 1 ยาว 4 วินาที มีเสียง = <Video 1>\nช่อง First Frame: เฟรมสุดท้ายจาก Stage 2 ของ part 1\nPart 2 ใช้เวลาราว 5.4-6.6 นาที · รวมทั้งคลิปราว 9-10.5 นาที\nคุณภาพเสียงขึ้นกับ seed: ทดสอบ 5 รอบ ผ่านครบ 1 รอบ รอบอื่นมีพูดสลับคนหรือพูดซ้ำช่วงต้น part 2\nแนะนำให้เจน Stage 1 หลาย seed ฟัง 2 วินาทีแรก แล้วค่อยเปิด Stage 2\nทางเลือก ยังไม่ได้ทดสอบ: ใช้ Video ref ไม่มีเสียง + แนบเสียงตัวละครแยกเป็น Audio ref\n\n━━ ผลอื่นที่เจอ ━━\nปิด Chunking ที่คลิป 20 วินาที ใช้เวลา 30.2 นาที จากปกติราว 6 นาที · การ์ด 16 GB ควรเปิดไว้\nเน้นความยาว: Stage 2 1.0 MP ทำได้ 20 วินาทีในรอบเดียว ราว 6.2 นาที\nStage 2 เกิน 2 step เวลาเพิ่ม แต่ค่าความคมที่วัดไม่ได้ดีขึ้น\n2.0 MP ทดสอบที่ 8 วินาทีเท่านั้น คลิปยาวกว่านี้ให้ลด MP ก่อนถ้าเริ่มช้าผิดปกติ"
+   ],
+   "color": "#232",
+   "bgcolor": "#353"
   }
  ],
  "links": [
-  [
-   4,
-   71,
-   0,
-   8,
-   0,
-   "MODEL"
-  ],
   [
    116,
    46,
@@ -6362,14 +6653,6 @@
    "LATENT"
   ],
   [
-   219,
-   7,
-   0,
-   71,
-   0,
-   "MODEL"
-  ],
-  [
    220,
    68,
    23,
@@ -6666,14 +6949,6 @@
    "STRING"
   ],
   [
-   225,
-   71,
-   0,
-   77,
-   0,
-   "MODEL"
-  ],
-  [
    227,
    8,
    0,
@@ -6743,6 +7018,46 @@
    0,
    164,
    0,
+   "MODEL"
+  ],
+  [
+   457,
+   7,
+   0,
+   77,
+   0,
+   "MODEL"
+  ],
+  [
+   458,
+   76,
+   0,
+   8,
+   0,
+   "MODEL"
+  ],
+  [
+   459,
+   76,
+   0,
+   161,
+   0,
+   "MODEL"
+  ],
+  [
+   460,
+   161,
+   0,
+   163,
+   0,
+   "MODEL"
+  ],
+  [
+   461,
+   163,
+   0,
+   164,
+   1,
    "MODEL"
   ]
  ],
@@ -11581,7 +11896,7 @@
    },
    {
     "id": "pg_lm_s2",
-    "title": "⑤ Stage 2 — อัปสเกล 1.0MP (24 fps)",
+    "title": "⑤ Stage 2 — อัปสเกล 2.0MP (24 fps)",
     "x": 4300,
     "y": 1410,
     "w": 1800,
@@ -11629,24 +11944,6 @@
     "y": 40,
     "w": 940,
     "h": 370,
-    "titleColor": "#00897b",
-    "bodyColor": "#203430",
-    "pinned": true
-   },
-   {
-    "titleAlpha": 0.92,
-    "bodyAlpha": 0.5,
-    "fontSize": 20,
-    "hOpen": 220,
-    "wOpen": 320,
-    "folded": false,
-    "showLinks": true,
-    "id": "pg_lm_real_lora",
-    "title": "🧑 โหมดสมจริง: Realism LoRA",
-    "x": 3310,
-    "y": 1030,
-    "w": 840,
-    "h": 170,
     "titleColor": "#00897b",
     "bodyColor": "#203430",
     "pinned": true
@@ -11712,6 +12009,42 @@
     "y": 2140,
     "w": 840,
     "h": 220,
+    "titleColor": "#6a1b9a",
+    "bodyColor": "#2e2238",
+    "titleAlpha": 0.92,
+    "bodyAlpha": 0.5,
+    "fontSize": 20,
+    "hOpen": 220,
+    "wOpen": 320,
+    "folded": false,
+    "showLinks": true,
+    "pinned": true
+   },
+   {
+    "id": "pg_lm_s2lora",
+    "title": "⬆️ Stage 2: ใช้ LoRA",
+    "x": 3310,
+    "y": 1720,
+    "w": 400,
+    "h": 190,
+    "titleColor": "#6a1b9a",
+    "bodyColor": "#2e2238",
+    "titleAlpha": 0.92,
+    "bodyAlpha": 0.5,
+    "fontSize": 20,
+    "hOpen": 220,
+    "wOpen": 320,
+    "folded": false,
+    "showLinks": true,
+    "pinned": true
+   },
+   {
+    "id": "pg_lm_s2nolora",
+    "title": "⬆️ Stage 2: ไม่ใช้ LoRA",
+    "x": 3715,
+    "y": 1720,
+    "w": 380,
+    "h": 190,
     "titleColor": "#6a1b9a",
     "bodyColor": "#2e2238",
     "titleAlpha": 0.92,

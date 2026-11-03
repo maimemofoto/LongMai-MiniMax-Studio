@@ -21,6 +21,24 @@ Workflow ComfyUI สำหรับสร้างวิดีโอพร้อ
 
 48 fps ต้องใช้การ์ด NVIDIA RTX 40 / 50 การ์ดรุ่นอื่นปิดส่วนนี้ได้
 
+## ค่าเริ่มต้น V3.1 สำหรับการ์ด 16 GB
+
+ทดสอบบน RTX 5080 16 GB + RAM 64 GB ด้วยฉากเดียว แบบไม่แนบไฟล์อ้างอิง ผลอาจต่างตามฉากและเครื่อง
+
+- ความยาว 8 วินาทีต่อ part
+- Stage 1: 0.4 MP, 6 step
+- Stage 2: 2.0 MP (1952x1088, 24 fps), 2 step, denoise 0.4
+- Chunk Feed-Forward 8, Low VRAM Attention 8, Sparse Attention `sla` keep percent 10
+- เวลา ราว 3.8–3.9 นาทีต่อ part
+
+ทุกผลทดสอบเปิด ComfyUI แบบกั๊ก VRAM 2 GB โดยเพิ่มคำสั่งนี้ในไฟล์ `.bat` ที่ใช้เปิด ComfyUI:
+
+```
+python main.py --reserve-vram 2
+```
+
+ต่อ 2 part และข้อควรรู้เรื่องเสียงดูในคู่มือ V3.1 หัวข้อ 10
+
 ## สัญญาอนุญาต
 
 แพตช์ใน `patches/H3ZeroStudio-LongMai/` อยู่ภายใต้ GPL-3.0 ตาม H3ZeroStudio ดูไฟล์ `LICENSE` ในโฟลเดอร์แพตช์
