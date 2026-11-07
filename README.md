@@ -5,15 +5,17 @@ Workflow ComfyUI สำหรับสร้างวิดีโอพร้อ
 | ไฟล์ | ใช้ทำอะไร |
 |---|---|
 | `workflows/LongMai MiniMax Studio FINAL V3.1.json` | ทำคลิปทีละช่วง เจนตัวอย่าง (Stage 1) ก่อน แล้วค่อยอัปสเกลและทำ 48 fps |
+| `workflows/LongMai MiniMax Studio V3.2.json` | V3.1 ฉบับกะทัดรัด ผลเหมือนกัน แต่ค่าตั้งและสวิตช์ทั้งหมดรวมอยู่ใน Engine ก้อนเดียว |
 | `workflows/LongMai H3ZeroStudio.json` | หน้าตัดต่อแบบไทม์ไลน์ ทำคลิปหลายท่อนให้ต่อเนื่องในงานเดียว |
 | `คู่มือ_LongMai_Studio_V3.1.pdf` | คู่มือ V3.1 พร้อมรายการติดตั้ง |
+| `คู่มือ_LongMai_Studio_V3.2.pdf` | คู่มือ V3.2 (แยกจาก V3.1) |
 | `คู่มือ_LongMai_H3ZeroStudio.pdf` | คู่มือ H3ZeroStudio พร้อมรายการติดตั้ง |
-| `custom_nodes/ComfyUI-LongMai-Tools/` | custom node ที่ทั้งสอง workflow ต้องใช้ |
+| `custom_nodes/ComfyUI-LongMai-Tools/` | custom node ที่ทุก workflow ต้องใช้ (V3.2 ต้องใช้รุ่น 8 พ.ย. 2026 ขึ้นไป) |
 | `patches/H3ZeroStudio-LongMai/` | แพตช์ UI ภาษาไทยและค่ากลางของ H3ZeroStudio |
 
 ## เริ่มใช้งาน
 
-1. ใช้ ComfyUI 0.42 ขึ้นไป (V3.1 แนะนำรุ่นล่าสุด ทดสอบบน 0.43.0-36)
+1. ใช้ ComfyUI 0.42 ขึ้นไป (V3.1 / V3.2 แนะนำรุ่นล่าสุด ทดสอบบน 0.44)
 2. กด **Code → Download ZIP** แล้วแตกไฟล์
 3. ติดตั้ง node ของเรา `ComfyUI-LongMai-Tools` เลือกวิธีเดียว อย่าลงซ้ำ: เปิด Terminal ที่ `ComfyUI/custom_nodes` แล้วรัน `git clone https://github.com/maimemofoto/LongMai-MiniMax-Studio` หรือคัดลอกโฟลเดอร์ `custom_nodes/ComfyUI-LongMai-Tools` จาก ZIP ไปไว้ใน `ComfyUI/custom_nodes/`
 4. เปิด workflow แล้วทำตามโน้ต 📦 ในนั้น หรือคู่มือ PDF ซึ่งบอกครบว่าต้องโหลด node และโมเดลอะไร วางไว้ที่ไหน
@@ -21,7 +23,7 @@ Workflow ComfyUI สำหรับสร้างวิดีโอพร้อ
 
 48 fps ต้องใช้การ์ด NVIDIA RTX 40 / 50 การ์ดรุ่นอื่นปิดส่วนนี้ได้
 
-## ค่าเริ่มต้น V3.1 สำหรับการ์ด 16 GB
+## ค่าเริ่มต้น V3.1 / V3.2 สำหรับการ์ด 16 GB
 
 ทดสอบบน RTX 5080 16 GB + RAM 64 GB ด้วยฉากเดียว แบบไม่แนบไฟล์อ้างอิง ผลอาจต่างตามฉากและเครื่อง
 
@@ -29,7 +31,7 @@ Workflow ComfyUI สำหรับสร้างวิดีโอพร้อ
 - Stage 1: 0.4 MP, 6 step
 - Stage 2: 2.0 MP (1952x1088, 24 fps), 2 step, denoise 0.4
 - Chunk Feed-Forward 8, Low VRAM Attention 8, Sparse Attention `sla` keep percent 10
-- เวลา ราว 3.8–3.9 นาทีต่อ part
+- เวลา ราว 3.7–3.9 นาทีต่อ part (แนบภาพอ้างอิงแล้วราว 4–4.5 นาที)
 
 ทุกผลทดสอบเปิด ComfyUI แบบกั๊ก VRAM 2 GB โดยเพิ่มคำสั่งนี้ในไฟล์ `.bat` ที่ใช้เปิด ComfyUI:
 
@@ -37,7 +39,16 @@ Workflow ComfyUI สำหรับสร้างวิดีโอพร้อ
 python main.py --reserve-vram 2
 ```
 
-ต่อ 2 part และข้อควรรู้เรื่องเสียงดูในคู่มือ V3.1 หัวข้อ 10
+## ไฟล์อ้างอิง (🛡️ LongMai Ref Limit)
+
+V3.1 และ V3.2 มี node **LongMai Ref Limit** อยู่หลัง Media Loader เปิดไว้เป็นค่าเริ่มต้น ย่อไฟล์อ้างอิงให้อัตโนมัติตอน Run กัน VRAM ล้น ไฟล์ต้นฉบับไม่ถูกแก้
+
+- รูป: ด้านยาวไม่เกิน 1024 px · ครอปหัว-ไหล่ใน Media Loader ได้หน้าเหมือนเท่ารูปเต็ม
+- วิดีโอ: เก็บ 2 วินาทีท้าย ด้านสั้น 480 px · fps ไหนก็ได้ Media Loader แปลงเป็น 24 fps ให้
+- ทดสอบ 3 รูป: รูปเต็ม 2560 ไม่ย่อ 10–13 นาทีต่อ part (VRAM ล้น) · ผ่าน node ราว 4–5 นาที
+- ไม่แนะนำเสียงอ้างอิงในฉากที่มีหลายคน ทำให้พูดสลับคน
+
+ต่อ 2 part ไฟล์อ้างอิง และข้อควรรู้เรื่องเสียง ดูในคู่มือ V3.1 หัวข้อ 9–11 หรือคู่มือ V3.2 หัวข้อ 8–10
 
 ## สัญญาอนุญาต
 

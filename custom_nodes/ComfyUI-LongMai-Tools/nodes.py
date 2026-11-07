@@ -636,7 +636,151 @@ class LongMaiLoadStage1Latent:
         return ({"samples": comfy.nested_tensor.NestedTensor((video, audio))}, json.dumps(info), name)
 
 
+class _AnyType(str):
+    """Matches every socket type, so one gate fits video, latent, string or anything else."""
+
+    def __ne__(self, other):
+        return False
+
+
+_ANY = _AnyType("*")
+
+
+class LongMaiGate:
+    """Passes `value` on when `enable` is on. When off it neither runs what feeds it nor lets the nodes after it
+    run: Save / Play Sound nodes behind a closed gate are skipped quietly. Used by V3.2 in place of group mutes,
+    which cannot reach nodes inside a subgraph."""
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {"required": {"enable": ("BOOLEAN", {"default": True}),
+                             "invert": ("BOOLEAN", {"default": False, "tooltip": "เปิด = ส่งต่อเมื่อ enable ปิด"})},
+                "optional": {"value": (_ANY, {"lazy": True})}}
+
+    RETURN_TYPES = (_ANY,)
+    RETURN_NAMES = ("value",)
+    FUNCTION = "run"
+    CATEGORY = "LongMai"
+
+    def check_lazy_status(self, enable, invert, value=None):
+        return ["value"] if bool(enable) != bool(invert) else []
+
+    def run(self, enable, invert, value=None):
+        if bool(enable) != bool(invert):
+            return (value,)
+        from comfy_execution.graph_utils import ExecutionBlocker
+        return (ExecutionBlocker(None),)
+
+
+class LongMaiOptionalImage:
+    """Load Image that may stay empty. Nothing is read unless a later node actually asks for the picture,
+    so First / Last Frame can be left blank while their switch is off."""
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        files = sorted(f for f in os.listdir(folder_paths.get_input_directory())
+                       if os.path.isfile(os.path.join(folder_paths.get_input_directory(), f)))
+        return {"required": {"image": (["(ไม่ใช้)"] + files, {"image_upload": True})}}
+
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "load"
+    CATEGORY = "LongMai"
+
+    @classmethod
+    def VALIDATE_INPUTS(cls, image):
+        return True
+
+    @classmethod
+    def IS_CHANGED(cls, image):
+        p = folder_paths.get_annotated_filepath(image) if image and image != "(ไม่ใช้)" else ""
+        return os.path.getmtime(p) if p and os.path.exists(p) else image
+
+    def load(self, image):
+        if not image or image == "(ไม่ใช้)":
+            raise ValueError("ยังไม่ได้เลือกภาพ: เลือกภาพในช่องนี้ หรือปิดสวิตช์ First/Last Frame ใน Engine")
+        return comfy_nodes.LoadImage().load_image(image)[:1]
+
+
+class LongMaiRefLimit:
+    """Keeps MiniMax H3 references inside what a 16 GB card handles without spilling VRAM.
+    Tested 2026-11-07 (V3.2, 8 s, 2.0 MP Stage 2): pictures over ~1536 px long edge, video refs over
+    2 s at Stage 1 size, or video refs at 768 px all pushed Stage 2 into system memory (10-14 min instead of 4).
+    Best picture: head-and-shoulders crop at 1024 px long edge (identity as good as the full 2560 px picture)."""
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {"required": {
+            "references": ("H3_REFS",),
+            "enable": ("BOOLEAN", {"default": True, "label_on": "เปิด: ย่อ ref อัตโนมัติ", "label_off": "ปิด: ส่ง ref ขนาดเดิม (เสี่ยง VRAM ล้น)",
+                                   "tooltip": "เปิด = ย่อรูป/วิดีโอ/เสียง ref ตามค่าด้านล่างก่อนส่งเข้า H3 (กัน VRAM ล้นบนการ์ด 16 GB). ปิด = ส่งไฟล์ขนาดเดิม"}),
+            "image_long_edge": ("INT", {"default": 1024, "min": 0, "max": 4096, "step": 64,
+                                        "tooltip": "ย่อรูป ref ให้ด้านยาวไม่เกินค่านี้ (0 = ไม่ย่อ). เทสแล้ว 1024 ไม่ล้น, 2048 ขึ้นไปล้นหนัก. ครอปหัว-ไหล่ใน Media Loader ได้หน้าเหมือนที่สุด"}),
+            "video_short_edge": ("INT", {"default": 480, "min": 0, "max": 1080, "step": 16,
+                                         "tooltip": "ย่อวิดีโอ ref ให้ด้านสั้นไม่เกินค่านี้ (0 = ไม่ย่อ; H3 ย่อเองที่ 768 อยู่แล้ว แต่ 768 ล้น)"}),
+            "video_seconds": ("FLOAT", {"default": 2.0, "min": 0.0, "max": 20.0, "step": 0.5,
+                                        "tooltip": "เก็บเฉพาะท้ายวิดีโอ ref กี่วินาที (0 = ทั้งคลิป). 2 วิไม่ล้น, 4 วิล้น"}),
+            "audio_seconds": ("FLOAT", {"default": 0.0, "min": 0.0, "max": 60.0, "step": 0.5,
+                                        "tooltip": "ตัดเสียง ref (Audio) เหลือกี่วินาทีแรก (0 = ทั้งไฟล์)"}),
+        }}
+
+    RETURN_TYPES = ("H3_REFS",)
+    RETURN_NAMES = ("references",)
+    FUNCTION = "run"
+    CATEGORY = "LongMai"
+
+    @staticmethod
+    def _scale(t, w, h):
+        import comfy.utils
+        return comfy.utils.common_upscale(t[..., :3].movedim(-1, 1), w, h, "lanczos", "disabled").movedim(1, -1)
+
+    @staticmethod
+    def _cut_audio(a, start_s, dur_s):
+        if a is None:
+            return None
+        sr, wav = a["sample_rate"], a["waveform"]
+        s0 = max(0, int(start_s * sr))
+        s1 = wav.shape[-1] if dur_s <= 0 else min(wav.shape[-1], s0 + int(dur_s * sr))
+        return {**a, "waveform": wav[..., s0:s1]}
+
+    def run(self, references, enable=True, image_long_edge=1024, video_short_edge=480, video_seconds=2.0, audio_seconds=0.0):
+        if not enable:
+            print("[LongMai Ref Limit] ปิดอยู่: ส่ง ref ขนาดเดิม")
+            return (references,)
+        refs = dict(references or {})
+        pics = []
+        for im in refs.get("pictures") or []:
+            if im is not None and image_long_edge > 0 and max(im.shape[1], im.shape[2]) > image_long_edge:
+                k = image_long_edge / max(im.shape[1], im.shape[2])
+                im = self._scale(im, max(16, round(im.shape[2] * k)), max(16, round(im.shape[1] * k)))
+            pics.append(im)
+        vids, vauds = [], []
+        old_vauds = list(refs.get("video_audios") or [])
+        for i, v in enumerate(refs.get("videos") or []):
+            va = old_vauds[i] if i < len(old_vauds) else None
+            if v is not None:
+                n = v.shape[0]
+                if video_seconds > 0 and n > int(video_seconds * 24):
+                    keep = int(video_seconds * 24)
+                    if va is not None:
+                        va = self._cut_audio(va, (n - keep) / 24.0, 0)
+                    v = v[n - keep:]
+                if video_short_edge > 0 and min(v.shape[1], v.shape[2]) > video_short_edge:
+                    k = video_short_edge / min(v.shape[1], v.shape[2])
+                    v = self._scale(v, round(v.shape[2] * k / 2) * 2, round(v.shape[1] * k / 2) * 2)
+            vids.append(v)
+            vauds.append(va)
+        auds = [self._cut_audio(a, 0, audio_seconds) if audio_seconds > 0 else a for a in (refs.get("audios") or [])]
+        refs.update(pictures=pics, videos=vids, video_audios=vauds if old_vauds else refs.get("video_audios"), audios=auds)
+        print(f"[LongMai Ref Limit] pictures {[tuple(p.shape[1:3]) for p in pics if p is not None]}, "
+              f"videos {[tuple(x.shape[:3]) for x in vids if x is not None]}, "
+              f"audios {[round(a['waveform'].shape[-1] / a['sample_rate'], 1) for a in auds if a is not None]} s")
+        return (refs,)
+
+
 NODE_CLASS_MAPPINGS = {
+    "LongMaiRefLimit": LongMaiRefLimit,
+    "LongMaiGate": LongMaiGate,
+    "LongMaiOptionalImage": LongMaiOptionalImage,
     "LongMaiSceneAwareRIFE": LongMaiSceneAwareRIFE,
     "LongMaiJoinClips": LongMaiJoinClips,
     "LongMaiLoadStage1Latent": LongMaiLoadStage1Latent,
@@ -647,6 +791,9 @@ NODE_CLASS_MAPPINGS = {
     "LongMaiHDRExport": LongMaiHDRExport,
 }
 NODE_DISPLAY_NAME_MAPPINGS = {
+    "LongMaiRefLimit": "LongMai Ref Limit (ย่อ ref กัน VRAM ล้น)",
+    "LongMaiGate": "LongMai Gate (switch an output on/off)",
+    "LongMaiOptionalImage": "LongMai Optional Image (may stay empty)",
     "LongMaiSceneAwareRIFE": "LongMai Scene-Aware RIFE (48 fps, clean cuts)",
     "LongMaiJoinClips": "LongMai Join Clips (seamless song)",
     "LongMaiLoadStage1Latent": "LongMai Load Stage-1 Latent (upscale without re-generating)",

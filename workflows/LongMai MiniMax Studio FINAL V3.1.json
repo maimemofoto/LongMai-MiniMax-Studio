@@ -1,8 +1,8 @@
 {
  "id": "9ed03852-f210-4d9e-8351-c8952a1f6fd5",
  "revision": 0,
- "last_node_id": 171,
- "last_link_id": 461,
+ "last_node_id": 172,
+ "last_link_id": 462,
  "nodes": [
   {
    "id": 1,
@@ -2439,7 +2439,7 @@
      "localized_name": "references",
      "name": "references",
      "type": "H3_REFS",
-     "link": 142
+     "link": 462
     },
     {
      "localized_name": "a",
@@ -3404,7 +3404,7 @@
     }
    },
    "widgets_values": [
-    "📦 สิ่งที่ต้องติดตั้งก่อนใช้ FINAL V3.1\nแนะนำ ComfyUI รุ่นล่าสุด (ทดสอบบน 0.43.0-36) รุ่นเก่าอาจมีค่าในช่อง codec เลื่อน · ทุกโฟลเดอร์นับจาก ComfyUI/ · วางไฟล์แล้วรีสตาร์ต ComfyUI\nคู่มือ PDF และ ComfyUI-LongMai-Tools: https://github.com/maimemofoto/LongMai-MiniMax-Studio\n\n━━ 1) Custom nodes → custom_nodes/ ━━\nวิธีง่าย: เปิด workflow → Manager → Install Missing Custom Nodes → ติดตั้งทุกตัว → รีสตาร์ต\nถ้า Manager หาไม่เจอ ให้เปิด Terminal ที่ custom_nodes แล้ว git clone เฉพาะตัวที่ขาด:\n  git clone https://github.com/kijai/ComfyUI-KJNodes      ← 🧩 Chunk / Low VRAM, เสียงแจ้งเตือน\n  git clone https://github.com/pixaroma/ComfyUI-Pixaroma      ← สวิตช์, แถว LoRA, ป้ายหัว\n  git clone https://github.com/yolain/ComfyUI-Easy-Use      ← ปุ่ม 🎲 seed\n  git clone https://github.com/rgthree/rgthree-comfy      ← Any Switch\n  git clone https://github.com/Adudeguyman/ComfyUI-Fantastic-MiniMaxH3-PromptBuilder      ← Media Loader\n  git clone https://github.com/ethanfel/ComfyUI-H3-Prompt-IDE      ← ช่องเขียน Prompt\n  git clone https://github.com/T8mars/comfyui-minimax-h3-audio-T8      ← Action Bridge\n  git clone https://github.com/LBH-123-AI/Comfyui_Minimax_h3_latent_Upscaler      ← อัปสเกล Stage 2\n  git clone https://github.com/Zironic/H3-Optimizations      ← ขนาด Stage 1\n  git clone https://github.com/Comfy-Org/Nvidia_RTX_Nodes_ComfyUI      ← 48 fps (การ์ด RTX 40 ขึ้นไป)\nตัวที่มี requirements.txt ให้ติดตั้งด้วย python ของ ComfyUI:  python -m pip install -r <โฟลเดอร์>/requirements.txt\n\n• ComfyUI-LongMai-Tools (node ของเรา) — เลือกวิธีเดียว อย่าลงซ้ำทั้ง 2 วิธี\n  วิธีที่ 1: เปิด Terminal ที่ custom_nodes แล้วพิมพ์ git clone https://github.com/maimemofoto/LongMai-MiniMax-Studio\n  วิธีที่ 2: ดาวน์โหลด repo ด้านบน (Code → Download ZIP) → คัดลอกโฟลเดอร์ custom_nodes/ComfyUI-LongMai-Tools ไปที่ custom_nodes/\n  ใช้ทำ: จำนวนเฟรม 48 fps ให้ตรงเสียง, บันทึก/เลือก Stage 1, ชื่อไฟล์ผลลัพธ์, node ต่อคลิป (ต้องมี ffmpeg)\n\n━━ 2) โมเดลที่จำเป็น (วางตามโฟลเดอร์นี้ workflow จะเลือกไฟล์ให้เอง) ━━\n• models/diffusion_models/MinimaxH3/\n  Minimax-h3_Singularity_ref2va_v2_pruned_int8.safetensors\n  จาก https://huggingface.co/WarmBloodAban/Minimax-h3_Singularity\n• models/text_encoders/\n  qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors\n  จาก https://huggingface.co/Comfy-Org/MiniMax-H3 (โฟลเดอร์ text_encoders)\n• models/vae/\n  minimax_h3_video_vae_int8_convrot.safetensors\n  จาก https://huggingface.co/Kijai/MiniMax-H3-experimental\n• models/vae/\n  minimax_h3_audio_vae_fp32.safetensors\n  จาก https://huggingface.co/Comfy-Org/MiniMax-H3 (โฟลเดอร์ vae)\n• models/loras/MINIMAX/Turbo/\n  minimax_h3_DMAD_4step_full_lora_avg_rank_39_bf16.safetensors\n  จาก https://huggingface.co/Kijai/MiniMax-H3-experimental (โฟลเดอร์ loras)\n• models/loras/MINIMAX/Skin/\n  h3-realism-people-t2v-i2v-r2v.safetensors (โหมดสมจริง เปิดไว้เป็นค่าเริ่มต้น · ไม่โหลดตัวนี้ต้องปิดสวิตช์ \"โหมดสมจริง\")\n  จาก https://huggingface.co/fal/MiniMax-H3-Realism-People-LoRA\n• models/latent_upscale_models/\n  minimax_h3_latent_upscaler_3d_conv_v1_fp16.safetensors\n  จาก https://huggingface.co/LBH-123-AI/Minimax_h3_latent_Upscaler (โฟลเดอร์ minimax_h3_latent_upscaler_3d_conv_v1)\n• models/semantic_bridge/t8_compat/\n  BUNNY_H3_ActionLogic_Bridge_V1_T8_Compat.safetensors\n  จาก https://huggingface.co/t8star/Semantic-Bridge-Comfy\n\n━━ 3) LoRA เสริม (ไม่บังคับ · ปิดไว้ในแถว · ไม่มีก็ใช้งานได้) ━━\n• models/loras/MINIMAX/Turbo/  minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors\n  จาก https://huggingface.co/Comfy-Org/MiniMax-H3 (โฟลเดอร์ loras)\n• models/loras/MINIMAX/Motion/  Motion_Repair_V2.safetensors\n  จาก https://huggingface.co/JOKER141/MiniMax-H3-General-Motion-Continuity-Repair\n• models/loras/MINIMAX/Action/  H3_Combat_V2.safetensors\n  จาก https://huggingface.co/JOKER141/MiniMax-H3-Combat-Base-V2\n• models/loras/MINIMAX/Action/  GunFu.safetensors\n  จาก https://huggingface.co/JOKER141/MiniMaxH3-GunFu-Gunfight-LORA\n• models/loras/MINIMAX/Stage2/  minimax_h3_lms_v1.0_r64.safetensors (แถว LoRA เฉพาะ Stage 2)\n  จาก https://huggingface.co/Alissonerdx/Minimax-H3-ComfyUI (โฟลเดอร์ loras)\n\n━━ 4) การ์ดจอ ━━\n48 fps ใช้ได้กับ RTX 40 / 50 · การ์ดต่ำกว่านั้นให้เปิดแค่ Stage 2 (ได้ไฟล์ 24 fps)\n⚡ โหมดเร็ว error หรือการ์ดรุ่นเก่า → ปิดสวิตช์ ⚡\n\nnode สีแดง = ยังไม่ได้ติดตั้ง custom node · เลือกไฟล์โมเดลไม่ได้ = วางผิดโฟลเดอร์หรือยังไม่รีสตาร์ต\nผลลัพธ์อยู่ที่ output/LongMai/"
+    "📦 สิ่งที่ต้องติดตั้งก่อนใช้ FINAL V3.1\nแนะนำ ComfyUI รุ่นล่าสุด (ทดสอบบน 0.44) รุ่นเก่าอาจมีค่าในช่อง codec เลื่อน · ทุกโฟลเดอร์นับจาก ComfyUI/ · วางไฟล์แล้วรีสตาร์ต ComfyUI\nคู่มือ PDF และ ComfyUI-LongMai-Tools: https://github.com/maimemofoto/LongMai-MiniMax-Studio\n\n━━ 1) Custom nodes → custom_nodes/ ━━\nวิธีง่าย: เปิด workflow → Manager → Install Missing Custom Nodes → ติดตั้งทุกตัว → รีสตาร์ต\nถ้า Manager หาไม่เจอ ให้เปิด Terminal ที่ custom_nodes แล้ว git clone เฉพาะตัวที่ขาด:\n  git clone https://github.com/kijai/ComfyUI-KJNodes      ← 🧩 Chunk / Low VRAM, เสียงแจ้งเตือน\n  git clone https://github.com/pixaroma/ComfyUI-Pixaroma      ← สวิตช์, แถว LoRA, ป้ายหัว\n  git clone https://github.com/yolain/ComfyUI-Easy-Use      ← ปุ่ม 🎲 seed\n  git clone https://github.com/rgthree/rgthree-comfy      ← Any Switch\n  git clone https://github.com/Adudeguyman/ComfyUI-Fantastic-MiniMaxH3-PromptBuilder      ← Media Loader\n  git clone https://github.com/ethanfel/ComfyUI-H3-Prompt-IDE      ← ช่องเขียน Prompt\n  git clone https://github.com/T8mars/comfyui-minimax-h3-audio-T8      ← Action Bridge\n  git clone https://github.com/LBH-123-AI/Comfyui_Minimax_h3_latent_Upscaler      ← อัปสเกล Stage 2\n  git clone https://github.com/Zironic/H3-Optimizations      ← ขนาด Stage 1\n  git clone https://github.com/Comfy-Org/Nvidia_RTX_Nodes_ComfyUI      ← 48 fps (การ์ด RTX 40 ขึ้นไป)\nตัวที่มี requirements.txt ให้ติดตั้งด้วย python ของ ComfyUI:  python -m pip install -r <โฟลเดอร์>/requirements.txt\n\n• ComfyUI-LongMai-Tools (node ของเรา) — เลือกวิธีเดียว อย่าลงซ้ำทั้ง 2 วิธี\n  วิธีที่ 1: เปิด Terminal ที่ custom_nodes แล้วพิมพ์ git clone https://github.com/maimemofoto/LongMai-MiniMax-Studio\n  วิธีที่ 2: ดาวน์โหลด repo ด้านบน (Code → Download ZIP) → คัดลอกโฟลเดอร์ custom_nodes/ComfyUI-LongMai-Tools ไปที่ custom_nodes/\n  ใช้ทำ: จำนวนเฟรม 48 fps ให้ตรงเสียง, บันทึก/เลือก Stage 1, ชื่อไฟล์ผลลัพธ์, node ต่อคลิป (ต้องมี ffmpeg), 🛡️ Ref Limit ย่อไฟล์อ้างอิงกัน VRAM ล้น\n  ต้องใช้รุ่น 8 พ.ย. 2026 ขึ้นไป (มี Ref Limit) · ถ้าเคยลงรุ่นเก่าให้อัปเดตก่อน\n\n━━ 2) โมเดลที่จำเป็น (วางตามโฟลเดอร์นี้ workflow จะเลือกไฟล์ให้เอง) ━━\n• models/diffusion_models/MinimaxH3/\n  Minimax-h3_Singularity_ref2va_v2_pruned_int8.safetensors\n  จาก https://huggingface.co/WarmBloodAban/Minimax-h3_Singularity\n• models/text_encoders/\n  qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors\n  จาก https://huggingface.co/Comfy-Org/MiniMax-H3 (โฟลเดอร์ text_encoders)\n• models/vae/\n  minimax_h3_video_vae_int8_convrot.safetensors\n  จาก https://huggingface.co/Kijai/MiniMax-H3-experimental\n• models/vae/\n  minimax_h3_audio_vae_fp32.safetensors\n  จาก https://huggingface.co/Comfy-Org/MiniMax-H3 (โฟลเดอร์ vae)\n• models/loras/MINIMAX/Turbo/\n  minimax_h3_DMAD_4step_full_lora_avg_rank_39_bf16.safetensors\n  จาก https://huggingface.co/Kijai/MiniMax-H3-experimental (โฟลเดอร์ loras)\n• models/loras/MINIMAX/Skin/\n  h3-realism-people-t2v-i2v-r2v.safetensors (โหมดสมจริง เปิดไว้เป็นค่าเริ่มต้น · ไม่โหลดตัวนี้ต้องปิดสวิตช์ \"โหมดสมจริง\")\n  จาก https://huggingface.co/fal/MiniMax-H3-Realism-People-LoRA\n• models/latent_upscale_models/\n  minimax_h3_latent_upscaler_3d_conv_v1_fp16.safetensors\n  จาก https://huggingface.co/LBH-123-AI/Minimax_h3_latent_Upscaler (โฟลเดอร์ minimax_h3_latent_upscaler_3d_conv_v1)\n• models/semantic_bridge/t8_compat/\n  BUNNY_H3_ActionLogic_Bridge_V1_T8_Compat.safetensors\n  จาก https://huggingface.co/t8star/Semantic-Bridge-Comfy\n\n━━ 3) LoRA เสริม (ไม่บังคับ · ปิดไว้ในแถว · ไม่มีก็ใช้งานได้) ━━\n• models/loras/MINIMAX/Turbo/  minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors\n  จาก https://huggingface.co/Comfy-Org/MiniMax-H3 (โฟลเดอร์ loras)\n• models/loras/MINIMAX/Motion/  Motion_Repair_V2.safetensors\n  จาก https://huggingface.co/JOKER141/MiniMax-H3-General-Motion-Continuity-Repair\n• models/loras/MINIMAX/Action/  H3_Combat_V2.safetensors\n  จาก https://huggingface.co/JOKER141/MiniMax-H3-Combat-Base-V2\n• models/loras/MINIMAX/Action/  GunFu.safetensors\n  จาก https://huggingface.co/JOKER141/MiniMaxH3-GunFu-Gunfight-LORA\n• models/loras/MINIMAX/Stage2/  minimax_h3_lms_v1.0_r64.safetensors (แถว LoRA เฉพาะ Stage 2)\n  จาก https://huggingface.co/Alissonerdx/Minimax-H3-ComfyUI (โฟลเดอร์ loras)\n\n━━ 4) การ์ดจอ ━━\n48 fps ใช้ได้กับ RTX 40 / 50 · การ์ดต่ำกว่านั้นให้เปิดแค่ Stage 2 (ได้ไฟล์ 24 fps)\n⚡ โหมดเร็ว error หรือการ์ดรุ่นเก่า → ปิดสวิตช์ ⚡\n\nnode สีแดง = ยังไม่ได้ติดตั้ง custom node · เลือกไฟล์โมเดลไม่ได้ = วางผิดโฟลเดอร์หรือยังไม่รีสตาร์ต\nผลลัพธ์อยู่ที่ output/LongMai/"
    ],
    "widgets_values_named": {
     "text": "📦 สิ่งที่ต้องติดตั้งก่อนใช้ FINAL V3.1\nแนะนำ ComfyUI รุ่นล่าสุด (ทดสอบบน 0.43.0-36) รุ่นเก่าอาจมีค่าในช่อง codec เลื่อน · ทุกโฟลเดอร์นับจาก ComfyUI/ · วางไฟล์แล้วรีสตาร์ต ComfyUI\nคู่มือ PDF และ ComfyUI-LongMai-Tools: https://github.com/maimemofoto/LongMai-MiniMax-Studio\n\n━━ 1) Custom nodes → custom_nodes/ ━━\nวิธีง่าย: เปิด workflow → Manager → Install Missing Custom Nodes → ติดตั้งทุกตัว → รีสตาร์ต\nถ้า Manager หาไม่เจอ ให้เปิด Terminal ที่ custom_nodes แล้ว git clone เฉพาะตัวที่ขาด:\n  git clone https://github.com/kijai/ComfyUI-KJNodes      ← 🧩 Chunk / Low VRAM, เสียงแจ้งเตือน\n  git clone https://github.com/pixaroma/ComfyUI-Pixaroma      ← สวิตช์, แถว LoRA, ป้ายหัว\n  git clone https://github.com/yolain/ComfyUI-Easy-Use      ← ปุ่ม 🎲 seed\n  git clone https://github.com/rgthree/rgthree-comfy      ← Any Switch\n  git clone https://github.com/Adudeguyman/ComfyUI-Fantastic-MiniMaxH3-PromptBuilder      ← Media Loader\n  git clone https://github.com/ethanfel/ComfyUI-H3-Prompt-IDE      ← ช่องเขียน Prompt\n  git clone https://github.com/T8mars/comfyui-minimax-h3-audio-T8      ← Action Bridge\n  git clone https://github.com/LBH-123-AI/Comfyui_Minimax_h3_latent_Upscaler      ← อัปสเกล Stage 2\n  git clone https://github.com/Zironic/H3-Optimizations      ← ขนาด Stage 1\n  git clone https://github.com/Comfy-Org/Nvidia_RTX_Nodes_ComfyUI      ← 48 fps (การ์ด RTX 40 ขึ้นไป)\nตัวที่มี requirements.txt ให้ติดตั้งด้วย python ของ ComfyUI:  python -m pip install -r <โฟลเดอร์>/requirements.txt\n\n• ComfyUI-LongMai-Tools (node ของเรา) — เลือกวิธีเดียว อย่าลงซ้ำทั้ง 2 วิธี\n  วิธีที่ 1: เปิด Terminal ที่ custom_nodes แล้วพิมพ์ git clone https://github.com/maimemofoto/LongMai-MiniMax-Studio\n  วิธีที่ 2: ดาวน์โหลด repo ด้านบน (Code → Download ZIP) → คัดลอกโฟลเดอร์ custom_nodes/ComfyUI-LongMai-Tools ไปที่ custom_nodes/\n  ใช้ทำ: จำนวนเฟรม 48 fps ให้ตรงเสียง, บันทึก/เลือก Stage 1, ชื่อไฟล์ผลลัพธ์, node ต่อคลิป (ต้องมี ffmpeg)\n\n━━ 2) โมเดลที่จำเป็น (วางตามโฟลเดอร์นี้ workflow จะเลือกไฟล์ให้เอง) ━━\n• models/diffusion_models/MinimaxH3/\n  Minimax-h3_Singularity_ref2va_v2_pruned_int8.safetensors\n  จาก https://huggingface.co/WarmBloodAban/Minimax-h3_Singularity\n• models/text_encoders/\n  qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors\n  จาก https://huggingface.co/Comfy-Org/MiniMax-H3 (โฟลเดอร์ text_encoders)\n• models/vae/\n  minimax_h3_video_vae_int8_convrot.safetensors\n  จาก https://huggingface.co/Kijai/MiniMax-H3-experimental\n• models/vae/\n  minimax_h3_audio_vae_fp32.safetensors\n  จาก https://huggingface.co/Comfy-Org/MiniMax-H3 (โฟลเดอร์ vae)\n• models/loras/MINIMAX/Turbo/\n  minimax_h3_DMAD_4step_full_lora_avg_rank_39_bf16.safetensors\n  จาก https://huggingface.co/Kijai/MiniMax-H3-experimental (โฟลเดอร์ loras)\n• models/loras/MINIMAX/Skin/\n  h3-realism-people-t2v-i2v-r2v.safetensors (โหมดสมจริง เปิดไว้เป็นค่าเริ่มต้น · ไม่โหลดตัวนี้ต้องปิดสวิตช์ \"โหมดสมจริง\")\n  จาก https://huggingface.co/fal/MiniMax-H3-Realism-People-LoRA\n• models/latent_upscale_models/\n  minimax_h3_latent_upscaler_3d_conv_v1_fp16.safetensors\n  จาก https://huggingface.co/LBH-123-AI/Minimax_h3_latent_Upscaler (โฟลเดอร์ minimax_h3_latent_upscaler_3d_conv_v1)\n• models/semantic_bridge/t8_compat/\n  BUNNY_H3_ActionLogic_Bridge_V1_T8_Compat.safetensors\n  จาก https://huggingface.co/t8star/Semantic-Bridge-Comfy\n\n━━ 3) LoRA เสริม (ไม่บังคับ · ปิดไว้ในแถว · ไม่มีก็ใช้งานได้) ━━\n• models/loras/MINIMAX/Turbo/  minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors\n  จาก https://huggingface.co/Comfy-Org/MiniMax-H3 (โฟลเดอร์ loras)\n• models/loras/MINIMAX/Motion/  Motion_Repair_V2.safetensors\n  จาก https://huggingface.co/JOKER141/MiniMax-H3-General-Motion-Continuity-Repair\n• models/loras/MINIMAX/Action/  H3_Combat_V2.safetensors\n  จาก https://huggingface.co/JOKER141/MiniMax-H3-Combat-Base-V2\n• models/loras/MINIMAX/Action/  GunFu.safetensors\n  จาก https://huggingface.co/JOKER141/MiniMaxH3-GunFu-Gunfight-LORA\n• models/loras/MINIMAX/Stage2/  minimax_h3_lms_v1.0_r64.safetensors (แถว LoRA เฉพาะ Stage 2)\n  จาก https://huggingface.co/Alissonerdx/Minimax-H3-ComfyUI (โฟลเดอร์ loras)\n\n━━ 4) การ์ดจอ ━━\n48 fps ใช้ได้กับ RTX 40 / 50 · การ์ดต่ำกว่านั้นให้เปิดแค่ Stage 2 (ได้ไฟล์ 24 fps)\n⚡ โหมดเร็ว error หรือการ์ดรุ่นเก่า → ปิดสวิตช์ ⚡\n\nnode สีแดง = ยังไม่ได้ติดตั้ง custom node · เลือกไฟล์โมเดลไม่ได้ = วางผิดโฟลเดอร์หรือยังไม่รีสตาร์ต\nผลลัพธ์อยู่ที่ output/LongMai/"
@@ -6217,8 +6217,52 @@
    "title": "📊 ค่าเริ่มต้นการ์ด 16 GB (ทดสอบจริง RTX 5080)",
    "properties": {},
    "widgets_values": [
-    "ค่าเริ่มต้นชุดนี้คือ \"ค่าสมดุล\" ทดสอบบน RTX 5080 16 GB + RAM 64 GB · ทดสอบด้วยฉากเดียว ไม่ใช่การรับประกันทุกเครื่อง\n\n━━ ค่าที่ตั้งไว้ (ต่อ 1 part) ━━\nความยาว 8 วินาที · Stage 1 0.4 MP 6 step · Stage 2 2.0 MP (1952x1088, 24 fps) 2 step denoise 0.4\nChunk Feed-Forward 8 · Low VRAM Attention 8 · Sparse Attention sla keep 10\nเวลา ราว 3.8-3.9 นาที · ผ่าน 3 seed ไม่ OOM · ทดสอบแบบไม่แนบไฟล์อ้างอิง\n\n━━ กั๊ก VRAM 2 GB (ทุกผลทดสอบใช้แบบนี้) ━━\nเพิ่มคำสั่งนี้ตอนเปิด ComfyUI ในไฟล์ .bat:\npython main.py --reserve-vram 2\nเผื่อ VRAM ให้โปรแกรมอื่น เช่น เปิดวิดีโอระหว่างเจน · ถ้าไม่กั๊กอาจเร็วขึ้นหรือไม่ก็ได้ ยังไม่ได้ทดสอบ\n\n━━ ต่อ 2 part (รวมราว 16 วินาที) ━━\nPart 2 แนบ: ภาพตัวละคร = <Picture 1> · ท้าย Stage 1 ของ part 1 ยาว 4 วินาที มีเสียง = <Video 1>\nช่อง First Frame: เฟรมสุดท้ายจาก Stage 2 ของ part 1\nPart 2 ใช้เวลาราว 5.4-6.6 นาที · รวมทั้งคลิปราว 9-10.5 นาที\nคุณภาพเสียงขึ้นกับ seed: ทดสอบ 5 รอบ ผ่านครบ 1 รอบ รอบอื่นมีพูดสลับคนหรือพูดซ้ำช่วงต้น part 2\nแนะนำให้เจน Stage 1 หลาย seed ฟัง 2 วินาทีแรก แล้วค่อยเปิด Stage 2\nทางเลือก ยังไม่ได้ทดสอบ: ใช้ Video ref ไม่มีเสียง + แนบเสียงตัวละครแยกเป็น Audio ref\n\n━━ ผลอื่นที่เจอ ━━\nปิด Chunking ที่คลิป 20 วินาที ใช้เวลา 30.2 นาที จากปกติราว 6 นาที · การ์ด 16 GB ควรเปิดไว้\nเน้นความยาว: Stage 2 1.0 MP ทำได้ 20 วินาทีในรอบเดียว ราว 6.2 นาที\nStage 2 เกิน 2 step เวลาเพิ่ม แต่ค่าความคมที่วัดไม่ได้ดีขึ้น\n2.0 MP ทดสอบที่ 8 วินาทีเท่านั้น คลิปยาวกว่านี้ให้ลด MP ก่อนถ้าเริ่มช้าผิดปกติ"
+    "ค่าเริ่มต้นชุดนี้คือ \"ค่าสมดุล\" ทดสอบบน RTX 5080 16 GB + RAM 64 GB · ทดสอบด้วยฉากเดียว ไม่ใช่การรับประกันทุกเครื่อง\n\n━━ ค่าที่ตั้งไว้ (ต่อ 1 part) ━━\nความยาว 8 วินาที · Stage 1 0.4 MP 6 step · Stage 2 2.0 MP (1952x1088, 24 fps) 2 step denoise 0.4\nChunk Feed-Forward 8 · Low VRAM Attention 8 · Sparse Attention sla keep 10\nเวลา ราว 3.8-3.9 นาที · ผ่าน 3 seed ไม่ OOM · ทดสอบแบบไม่แนบไฟล์อ้างอิง\n\n━━ กั๊ก VRAM 2 GB (ทุกผลทดสอบใช้แบบนี้) ━━\nเพิ่มคำสั่งนี้ตอนเปิด ComfyUI ในไฟล์ .bat:\npython main.py --reserve-vram 2\nเผื่อ VRAM ให้โปรแกรมอื่น เช่น เปิดวิดีโอระหว่างเจน · ถ้าไม่กั๊กอาจเร็วขึ้นหรือไม่ก็ได้ ยังไม่ได้ทดสอบ\n\n━━ ต่อ 2 part (รวมราว 16 วินาที) ━━\nPart 2 แนบ: ภาพตัวละคร = <Picture 1> · คลิปตัวอย่าง Stage 1 ของ part 1 = <Video 1> (🛡️ Ref Limit เก็บ 2 วินาทีท้ายให้เอง)\nช่อง First Frame: เฟรมสุดท้ายจาก Stage 2 ของ part 1\nPart 2 ใช้เวลาราว 4.8-5.4 นาที · รวมทั้งคลิปราว 9-10 นาที\nคุณภาพเสียงขึ้นกับ seed: ทดสอบ 5 รอบ ผ่านครบ 1 รอบ รอบอื่นมีพูดสลับคนหรือพูดซ้ำช่วงต้น part 2\nแนะนำให้เจน Stage 1 หลาย seed ฟัง 2 วินาทีแรก แล้วค่อยเปิด Stage 2\nไม่แนะนำให้แนบเสียงตัวละครแยกเป็น Audio ref ทดสอบแล้วพูดสลับคนบ่อยขึ้น\n\n━━ ไฟล์อ้างอิง (🛡️ LongMai Ref Limit เปิดไว้) ━━\nnode ย่อให้อัตโนมัติตอน Run: รูปด้านยาว 1024 · วิดีโอเก็บ 2 วินาทีท้าย ด้านสั้น 480 · ไฟล์ต้นฉบับไม่ถูกแก้\nทดสอบ 3 รูป: รูปเต็ม 2560 ไม่ย่อ 10-13 นาที (VRAM ล้น) · ย่อ 1024 ราว 4 นาที\nหน้าเหมือนที่สุด: ครอปหัว-ไหล่ใน Media Loader (ปุ่ม Crop) ได้เท่ารูปเต็ม · อยากได้ชุดด้วย ใส่ไฟล์เดิมอีกรูปแล้วครอปตัวเต็ม\nวิดีโอใส่ fps ไหนก็ได้ (Media Loader แปลงเป็น 24 fps) · วิดีโอท้าย 4 วิ หรือขนาด 768 ทำให้ล้น\nเสียงอ้างอิงในฉากหลายคน ทำให้พูดสลับคน → ใช้ Force Audio แทนถ้าต้องล็อกเสียง\n\n━━ ผลอื่นที่เจอ ━━\nปิด Chunking ที่คลิป 20 วินาที ใช้เวลา 30.2 นาที จากปกติราว 6 นาที · การ์ด 16 GB ควรเปิดไว้\nเน้นความยาว: Stage 2 1.0 MP ทำได้ 20 วินาทีในรอบเดียว ราว 6.2 นาที\nStage 2 เกิน 2 step เวลาเพิ่ม แต่ค่าความคมที่วัดไม่ได้ดีขึ้น\n2.0 MP ทดสอบที่ 8 วินาทีเท่านั้น คลิปยาวกว่านี้ให้ลด MP ก่อนถ้าเริ่มช้าผิดปกติ"
    ],
+   "color": "#232",
+   "bgcolor": "#353"
+  },
+  {
+   "id": 172,
+   "type": "LongMaiRefLimit",
+   "pos": [
+    20,
+    1011
+   ],
+   "size": [
+    560,
+    210
+   ],
+   "flags": {},
+   "order": 1,
+   "mode": 0,
+   "inputs": [
+    {
+     "name": "references",
+     "type": "H3_REFS",
+     "link": 142
+    }
+   ],
+   "outputs": [
+    {
+     "name": "references",
+     "type": "H3_REFS",
+     "links": [
+      462
+     ]
+    }
+   ],
+   "properties": {
+    "Node name for S&R": "LongMaiRefLimit"
+   },
+   "widgets_values": [
+    true,
+    1024,
+    480,
+    2.0,
+    0.0
+   ],
+   "title": "🛡️ LongMai Ref Limit (ย่อ ref กัน VRAM ล้น)",
    "color": "#232",
    "bgcolor": "#353"
   }
@@ -6308,8 +6352,8 @@
    142,
    10,
    0,
-   68,
-   1,
+   172,
+   0,
    "H3_REFS"
   ],
   [
@@ -7079,6 +7123,14 @@
    164,
    1,
    "MODEL"
+  ],
+  [
+   462,
+   172,
+   0,
+   68,
+   1,
+   "H3_REFS"
   ]
  ],
  "groups": [
