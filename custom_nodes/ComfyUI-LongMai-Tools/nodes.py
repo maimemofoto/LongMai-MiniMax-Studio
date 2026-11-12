@@ -777,7 +777,25 @@ class LongMaiRefLimit:
         return (refs,)
 
 
+class LongMaiStage2Sigmas:
+    """Sigma list for the tiled Stage 2: start_sigma down to 0 in `steps` even steps. V3.3 default is 1 step at 0.632."""
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {"required": {"steps": ("INT", {"default": 1, "min": 1, "max": 3}),
+                             "start_sigma": ("FLOAT", {"default": 0.632, "min": 0.05, "max": 0.99, "step": 0.001,
+                                                       "tooltip": "สูง = เปลี่ยนจากร่างมาก · 1 step ที่สูงเกิน 0.8 ภาพจะพัง"})}}
+
+    RETURN_TYPES = ("SIGMAS",)
+    FUNCTION = "run"
+    CATEGORY = "LongMai"
+
+    def run(self, steps, start_sigma):
+        return (torch.linspace(float(start_sigma), 0.0, int(steps) + 1, dtype=torch.float32),)
+
+
 NODE_CLASS_MAPPINGS = {
+    "LongMaiStage2Sigmas": LongMaiStage2Sigmas,
     "LongMaiRefLimit": LongMaiRefLimit,
     "LongMaiGate": LongMaiGate,
     "LongMaiOptionalImage": LongMaiOptionalImage,
@@ -791,6 +809,7 @@ NODE_CLASS_MAPPINGS = {
     "LongMaiHDRExport": LongMaiHDRExport,
 }
 NODE_DISPLAY_NAME_MAPPINGS = {
+    "LongMaiStage2Sigmas": "LongMai Stage 2 Sigmas (tiled upscale)",
     "LongMaiRefLimit": "LongMai Ref Limit (ย่อ ref กัน VRAM ล้น)",
     "LongMaiGate": "LongMai Gate (switch an output on/off)",
     "LongMaiOptionalImage": "LongMai Optional Image (may stay empty)",

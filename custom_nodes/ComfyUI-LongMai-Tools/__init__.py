@@ -7,6 +7,10 @@ import folder_paths
 from server import PromptServer
 
 from .nodes import NODE_CLASS_MAPPINGS, NODE_DISPLAY_NAME_MAPPINGS
+from .deno_port import NODE_CLASS_MAPPINGS as _DENO_C, NODE_DISPLAY_NAME_MAPPINGS as _DENO_D
+
+NODE_CLASS_MAPPINGS.update(_DENO_C)
+NODE_DISPLAY_NAME_MAPPINGS.update(_DENO_D)
 
 WEB_DIRECTORY = "./web"
 VIDEO_EXT = (".mp4", ".mov", ".webm", ".mkv", ".avi", ".m4v")

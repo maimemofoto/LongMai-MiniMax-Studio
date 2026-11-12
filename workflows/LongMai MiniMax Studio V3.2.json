@@ -72,10 +72,10 @@
     }
    },
    "widgets_values": [
-    "{\"text\": \"สูตร SEEDHUNTER: DMAD LoRA ทั้ง 2 Stage · er_sde · อัปสเกล 2 steps · VAE int8 · 48 fps NVIDIA · Force Audio · สมจริง (ปิดไว้) · 🧩 ประหยัด VRAM · 🔔\", \"fontSize\": 22, \"fontFamily\": \"Arial\", \"fontColor\": \"#cfcfcf\", \"textAlign\": \"left\", \"backgroundColor\": \"transparent\", \"padding\": 10, \"borderRadius\": 6, \"opacity\": 1, \"fontWeight\": \"bold\", \"lineHeight\": 1}"
+    "{\"text\": \"สูตร LongMai: DMAD LoRA ทั้ง 2 Stage · er_sde · อัปสเกล 2 steps · VAE int8 · 48 fps NVIDIA · Force Audio · สมจริง (ปิดไว้) · 🧩 ประหยัด VRAM · 🔔\", \"fontSize\": 22, \"fontFamily\": \"Arial\", \"fontColor\": \"#cfcfcf\", \"textAlign\": \"left\", \"backgroundColor\": \"transparent\", \"padding\": 10, \"borderRadius\": 6, \"opacity\": 1, \"fontWeight\": \"bold\", \"lineHeight\": 1}"
    ],
    "widgets_values_named": {
-    "label_json": "{\"text\": \"สูตร SEEDHUNTER: DMAD LoRA ทั้ง 2 Stage · er_sde · อัปสเกล 2 steps · VAE int8 · 48 fps NVIDIA · Force Audio · สมจริง (ปิดไว้) · 🧩 ประหยัด VRAM · 🔔\", \"fontSize\": 22, \"fontFamily\": \"Arial\", \"fontColor\": \"#cfcfcf\", \"textAlign\": \"left\", \"backgroundColor\": \"transparent\", \"padding\": 10, \"borderRadius\": 6, \"opacity\": 1, \"fontWeight\": \"bold\", \"lineHeight\": 1}"
+    "label_json": "{\"text\": \"สูตร LongMai: DMAD LoRA ทั้ง 2 Stage · er_sde · อัปสเกล 2 steps · VAE int8 · 48 fps NVIDIA · Force Audio · สมจริง (ปิดไว้) · 🧩 ประหยัด VRAM · 🔔\", \"fontSize\": 22, \"fontFamily\": \"Arial\", \"fontColor\": \"#cfcfcf\", \"textAlign\": \"left\", \"backgroundColor\": \"transparent\", \"padding\": 10, \"borderRadius\": 6, \"opacity\": 1, \"fontWeight\": \"bold\", \"lineHeight\": 1}"
    },
    "color": "rgba(0,0,0,0)",
    "bgcolor": "rgba(0,0,0,0)"
