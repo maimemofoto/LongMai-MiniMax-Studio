@@ -573,6 +573,45 @@ class LongMaiMatchFrameCount:
         return (images,)
 
 
+class LongMaiShotCutFix:
+    """For frame interpolators without shot-change detection (e.g. RIFE): finds hard cuts in the source clip and
+    replaces the in-between frames generated across each cut (a blurry blend of two shots) with copies of the
+    frames on either side, so the cut stays clean. Expects interpolated output laid out as (N-1) x M + 1 frames
+    where frame i x M is source frame i (RIFE / FILM style). Cut test: the frame-to-frame difference is above
+    `threshold` and at least twice its neighbours (an isolated jump, not fast motion)."""
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {"required": {
+            "images": ("IMAGE", {"tooltip": "Interpolated frames"}),
+            "source_images": ("IMAGE", {"tooltip": "The clip before interpolation"}),
+            "multiplier": ("INT", {"default": 2, "min": 1, "max": 16}),
+            "threshold": ("FLOAT", {"default": 0.06, "min": 0.0, "max": 1.0, "step": 0.01,
+                                    "tooltip": "Minimum mean frame difference (0-1) for a cut. 0 = off."}),
+        }}
+
+    RETURN_TYPES = ("IMAGE", "INT")
+    RETURN_NAMES = ("images", "cuts_found")
+    FUNCTION = "run"
+    CATEGORY = "LongMai"
+
+    def run(self, images, source_images, multiplier, threshold):
+        m, n = int(multiplier), int(source_images.shape[0])
+        if m < 2 or n < 3 or threshold <= 0 or int(images.shape[0]) < (n - 1) * m + 1:
+            return (images, 0)
+        small = torch.nn.functional.interpolate(source_images[..., :3].movedim(-1, 1).float(), size=(36, 64), mode="area").mean(1)
+        d = (small[1:] - small[:-1]).abs().mean(dim=(1, 2))
+        cuts = [i for i in range(len(d))
+                if float(d[i]) > threshold and float(d[i]) > 2.0 * max(float(d[i - 1]) if i > 0 else 0.0, float(d[i + 1]) if i + 1 < len(d) else 0.0, 0.005)]
+        # frames are replaced in place: a full copy of a 2 MP 48 fps clip would cost ~10 GB of RAM
+        for i in cuts:
+            for j in range(1, m):
+                images[i * m + j] = images[i * m] if j * 2 <= m else images[(i + 1) * m]
+        if cuts:
+            print(f"[LongMai] Shot Cut Fix: {len(cuts)} cut(s) cleaned at source frame(s) {cuts}")
+        return (images, len(cuts))
+
+
 class LongMaiOutputNames:
     """Turns a generation name into the file-name prefixes of every clip it produces."""
 
@@ -805,6 +844,7 @@ NODE_CLASS_MAPPINGS = {
     "LongMaiSaveStage1Latent": LongMaiSaveStage1Latent,
     "LongMaiOutputNames": LongMaiOutputNames,
     "LongMaiMatchFrameCount": LongMaiMatchFrameCount,
+    "LongMaiShotCutFix": LongMaiShotCutFix,
     "LongMaiFaceRefineMulti": LongMaiFaceRefineMulti,
     "LongMaiHDRExport": LongMaiHDRExport,
 }
@@ -819,6 +859,7 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "LongMaiSaveStage1Latent": "LongMai Save Stage-1 Latent (named by time + seed)",
     "LongMaiOutputNames": "LongMai Output Names (preview / 24fps / 48fps)",
     "LongMaiMatchFrameCount": "LongMai Match Frame Count (keep 48 fps in sync with audio)",
+    "LongMaiShotCutFix": "LongMai Shot Cut Fix (clean cuts after RIFE)",
     "LongMaiFaceRefineMulti": "LongMai Face Refine (any number of faces)",
     "LongMaiHDRExport": "LongMai HDR Export (RTX TrueHDR, extra HDR file)",
 }

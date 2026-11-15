@@ -7,12 +7,16 @@ Workflow ComfyUI สำหรับสร้างวิดีโอพร้อ
 | `workflows/LongMai MiniMax Studio FINAL V3.1.json` | ทำคลิปทีละช่วง เจนตัวอย่าง (Stage 1) ก่อน แล้วค่อยอัปสเกลและทำ 48 fps |
 | `workflows/LongMai MiniMax Studio V3.2.json` | V3.1 ฉบับกะทัดรัด ผลเหมือนกัน แต่ค่าตั้งและสวิตช์ทั้งหมดรวมอยู่ใน Engine ก้อนเดียว |
 | `workflows/LongMai MiniMax Studio V3.3.json` | V3.2 + Stage 2 แบบ Tiled: อัปสเกล 2 MP เร็วขึ้นบนการ์ด 16 GB ทำ 15 วินาทีรอบเดียวได้ |
+| `workflows/LongMai MiniMax Studio V3.3.1.json` | V3.3 ที่ทำ 48 fps ด้วย RIFE ใช้ได้กับการ์ด NVIDIA ทุกรุ่น (RTX 20 / 30 / 40 / 50) |
+| `workflows/LongMai MiniMax Studio V3.3.1 Low VRAM.json` | V3.3.1 ตั้งค่าเริ่มต้นสำหรับการ์ด 8–12 GB (base int4, Stage 2 1.2 MP, Chunking เปิด) |
 | `workflows/LongMai H3ZeroStudio.json` | หน้าตัดต่อแบบไทม์ไลน์ ทำคลิปหลายท่อนให้ต่อเนื่องในงานเดียว |
 | `คู่มือ_LongMai_Studio_V3.1.pdf` | คู่มือ V3.1 พร้อมรายการติดตั้ง |
 | `คู่มือ_LongMai_Studio_V3.2.pdf` | คู่มือ V3.2 (แยกจาก V3.1) |
 | `คู่มือ_LongMai_Studio_V3.3.pdf` | คู่มือ V3.3 (แยกจาก V3.2) |
+| `คู่มือ_LongMai_Studio_V3.3.1.pdf` | คู่มือ V3.3.1 |
+| `คู่มือ_LongMai_Studio_V3.3.1_Low_VRAM.pdf` | คู่มือ V3.3.1 Low VRAM |
 | `คู่มือ_LongMai_H3ZeroStudio.pdf` | คู่มือ H3ZeroStudio พร้อมรายการติดตั้ง |
-| `custom_nodes/ComfyUI-LongMai-Tools/` | custom node ที่ทุก workflow ต้องใช้ (V3.2 ต้องใช้รุ่น 8 พ.ย. 2026 ขึ้นไป · V3.3 ต้องใช้รุ่น 12 พ.ย. 2026 ขึ้นไป) |
+| `custom_nodes/ComfyUI-LongMai-Tools/` | custom node ที่ทุก workflow ต้องใช้ (V3.2 ต้องใช้รุ่น 8 พ.ย. 2026 ขึ้นไป · V3.3 ต้องใช้รุ่น 12 พ.ย. 2026 ขึ้นไป · V3.3.1 ต้องใช้รุ่น 15 พ.ย. 2026 ขึ้นไป) |
 | `patches/H3ZeroStudio-LongMai/` | แพตช์ UI ภาษาไทยและค่ากลางของ H3ZeroStudio |
 
 ## เริ่มใช้งาน
@@ -23,7 +27,9 @@ Workflow ComfyUI สำหรับสร้างวิดีโอพร้อ
 4. เปิด workflow แล้วทำตามโน้ต 📦 ในนั้น หรือคู่มือ PDF ซึ่งบอกครบว่าต้องโหลด node และโมเดลอะไร วางไว้ที่ไหน
 5. ถ้าใช้ H3ZeroStudio ให้ลงแพตช์ตามคู่มือ
 
-48 fps ต้องใช้การ์ด NVIDIA RTX 40 / 50 การ์ดรุ่นอื่นปิดส่วนนี้ได้
+48 fps ใน V3.1 / V3.2 / V3.3 ใช้ **ComfyUI Nvidia VFX Nodes** (github.com/Comfy-Org/ComfyUI_Nvidia_VFX_Nodes) ซึ่งทำ 48 fps ได้เฉพาะการ์ด RTX 40 / 50 และต้องใช้ PyTorch cu130 ขึ้นไป แต่ต้องลงไว้ทุกเครื่อง ไม่อย่างนั้น ComfyUI จะไม่ให้กด Run (ขึ้น Missing node: RTXVideoFrameGeneration) · การ์ดรุ่นอื่นใช้ **V3.3.1** แทน
+
+ComfyUI รุ่นใหม่ไม่มี Manager มาให้: ติดตั้งด้วย `python -m pip install -U --pre comfyui-manager` แล้วเปิด ComfyUI ด้วย `--enable-manager` จึงจะกด Install Missing Custom Nodes ได้
 
 ## ค่าเริ่มต้น V3.1 / V3.2 สำหรับการ์ด 16 GB
 
@@ -54,6 +60,20 @@ V3.3 คือ V3.2 ที่เปลี่ยนการอัปสเกล
 เจน 2 ขั้น (แนะนำ): ปิด 3 ปุ่มบน (⑤ ⑥ ④-B) แล้ว Run ได้ภาพพรีวิว → ชอบแล้วเปิด 3 ปุ่มบน แล้ว Run อีกครั้ง ระบบอัปสเกล Stage 1 ที่บันทึกไว้ + ทำ 48 fps ไม่ต้องเจนใหม่ · คลิป 15 วิ: 2:08 + 4:56 = 7:03 นาที (RTX 5080)
 
 ทุกสวิตช์ของ V3.3 ทดสอบผ่านแล้ว (First / Last Frame, Force Audio, ใช้ Stage 1 ที่บันทึกไว้, 48 fps, ปิด LoRA Stage 2) รายละเอียดในคู่มือ V3.3
+
+## V3.3.1 และ V3.3.1 Low VRAM
+
+**V3.3.1** คือ V3.3 ที่เปลี่ยนตัวทำ 48 fps เป็น **RIFE** (ต้องลง [ComfyUI-Frame-Interpolation](https://github.com/Fannovel16/ComfyUI-Frame-Interpolation)) ใช้ได้กับการ์ด NVIDIA ทุกรุ่น ไม่ต้องลง ComfyUI Nvidia VFX Nodes และมี node ใหม่ **✂️ LongMai Shot Cut Fix** แทนเฟรมเบลอตรงรอยตัดช็อตให้คม ส่วนอื่นเหมือน V3.3 ทุกอย่าง
+
+**V3.3.1 Low VRAM** คือ V3.3.1 ที่ตั้งค่าเริ่มต้นสำหรับการ์ด 8–12 GB: base `Minimax-h3_Singularity_ref2va_v1.3_Pruned_w4a8.safetensors` (int4, 11.8 GB จาก huggingface.co/WarmBloodAban/Minimax-h3_Singularity) · ⬆️ Stage 2 1.2 MP · 🧩 Chunking เปิด · แผ่น Tiled 768×512
+
+| คลิป 21 วิ 9:16 (3 part × 7 วิ) อัปสเกล + 48 fps · RTX 5080 | เวลา |
+|---|---|
+| V3.3 | 10.6 นาที |
+| V3.3.1 | 11.4 นาที |
+| V3.3.1 Low VRAM จำลองการ์ด 8 GB (`--reserve-vram 8`) | 10.9 นาที |
+
+ยังไม่ได้ทดสอบบนการ์ด 8 GB จริง รายละเอียดในคู่มือ V3.3.1 และคู่มือ V3.3.1 Low VRAM
 
 ## ไฟล์อ้างอิง (🛡️ LongMai Ref Limit)
 
