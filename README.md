@@ -9,14 +9,16 @@ Workflow ComfyUI สำหรับสร้างวิดีโอพร้อ
 | `workflows/LongMai MiniMax Studio V3.3.json` | V3.2 + Stage 2 แบบ Tiled: อัปสเกล 2 MP เร็วขึ้นบนการ์ด 16 GB ทำ 15 วินาทีรอบเดียวได้ |
 | `workflows/LongMai MiniMax Studio V3.3.1.json` | V3.3 ที่ทำ 48 fps ด้วย RIFE ใช้ได้กับการ์ด NVIDIA ทุกรุ่น (RTX 20 / 30 / 40 / 50) |
 | `workflows/LongMai MiniMax Studio V3.3.1 Low VRAM.json` | V3.3.1 ตั้งค่าเริ่มต้นสำหรับการ์ด 8–12 GB (base int4, Stage 2 1.2 MP, Chunking เปิด) |
+| `workflows/LongMai MiniMax Studio V3.4.json` | V3.3 ที่เปลี่ยนชุดโมเดล: Base hybrid fl2va + ref2va, Turbo LoRA ของ MiniMax และ Cinema LoRA (โทนภาพยนตร์) |
 | `workflows/LongMai H3ZeroStudio.json` | หน้าตัดต่อแบบไทม์ไลน์ ทำคลิปหลายท่อนให้ต่อเนื่องในงานเดียว |
 | `คู่มือ_LongMai_Studio_V3.1.pdf` | คู่มือ V3.1 พร้อมรายการติดตั้ง |
 | `คู่มือ_LongMai_Studio_V3.2.pdf` | คู่มือ V3.2 (แยกจาก V3.1) |
 | `คู่มือ_LongMai_Studio_V3.3.pdf` | คู่มือ V3.3 (แยกจาก V3.2) |
 | `คู่มือ_LongMai_Studio_V3.3.1.pdf` | คู่มือ V3.3.1 |
 | `คู่มือ_LongMai_Studio_V3.3.1_Low_VRAM.pdf` | คู่มือ V3.3.1 Low VRAM |
+| `คู่มือ_LongMai_Studio_V3.4.pdf` | คู่มือ V3.4 (ส่วนที่ต่างจาก V3.3) |
 | `คู่มือ_LongMai_H3ZeroStudio.pdf` | คู่มือ H3ZeroStudio พร้อมรายการติดตั้ง |
-| `custom_nodes/ComfyUI-LongMai-Tools/` | custom node ที่ทุก workflow ต้องใช้ (V3.2 ต้องใช้รุ่น 8 พ.ย. 2026 ขึ้นไป · V3.3 ต้องใช้รุ่น 12 พ.ย. 2026 ขึ้นไป · V3.3.1 ต้องใช้รุ่น 15 พ.ย. 2026 ขึ้นไป) |
+| `custom_nodes/ComfyUI-LongMai-Tools/` | custom node ที่ทุก workflow ต้องใช้ (V3.2 ต้องใช้รุ่น 8 พ.ย. 2026 ขึ้นไป · V3.3 ต้องใช้รุ่น 12 พ.ย. 2026 ขึ้นไป · V3.3.1 ต้องใช้รุ่น 15 พ.ย. 2026 ขึ้นไป · V3.4 ต้องใช้รุ่น 12 พ.ย. 2026 ขึ้นไป) |
 | `patches/H3ZeroStudio-LongMai/` | แพตช์ UI ภาษาไทยและค่ากลางของ H3ZeroStudio |
 
 ## เริ่มใช้งาน
@@ -74,6 +76,21 @@ V3.3 คือ V3.2 ที่เปลี่ยนการอัปสเกล
 | V3.3.1 Low VRAM จำลองการ์ด 8 GB (`--reserve-vram 8`) | 10.9 นาที |
 
 ยังไม่ได้ทดสอบบนการ์ด 8 GB จริง รายละเอียดในคู่มือ V3.3.1 และคู่มือ V3.3.1 Low VRAM
+
+## V3.4: โมเดล hybrid + Cinema LoRA
+
+**V3.4** คือ V3.3 ที่เปลี่ยนชุดโมเดล ส่วนหน้าจอ Stage 2 แบบ Tiled, Ref Limit และ Force Audio เหมือน V3.3 ทุกอย่าง
+
+| | ไฟล์ | โหลดจาก |
+|---|---|---|
+| Base | `models/diffusion_models/MinimaxH3/minimax_h3_hybrid_fl2va_ref2va_b30-49-int8.safetensors` | huggingface.co/smhfacct/Minimax-H3-fl2va-ref2va-hybrid-models |
+| Turbo LoRA 1.0 (ต้องเปิดเสมอ) | `models/loras/MINIMAX/Turbo/minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors` | huggingface.co/Comfy-Org/MiniMax-H3 (โฟลเดอร์ loras) |
+| Cinema LoRA 0.6 | `models/loras/MINIMAX/Mood/Cinema-MH3-V02_000010000.safetensors` | civitai.com/models/2849726 |
+
+Trigger ใส่ให้อัตโนมัติ: `r34l1sm ,ASTROCINEMAV01K2T` · Realism LoRA 0.75 เหมือนเดิม
+
+ผลทดสอบบน RTX 5080 16 GB: คลิป 8 วิ ใช้ 4.5 นาที (V3.3 4.7 นาที) · คลิป 45 วิ (3 × 15 วิ) ใช้ 19.8 นาที (V3.3 17.2 นาที) · ภาพโทนหนังกว่า สว่างและอุ่นกว่า V3.3
+ถ้าใช้ part 15 วิ ให้ปิด ⑥ 48 fps ไว้ก่อน เพราะ 15 วิ + 48 fps บางครั้งใช้ RAM เกิน 95 % ของ 64 GB · รายละเอียดในคู่มือ V3.4
 
 ## ไฟล์อ้างอิง (🛡️ LongMai Ref Limit)
 
